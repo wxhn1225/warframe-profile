@@ -57,7 +57,7 @@ export default function Missions(props: Props) {
   };
 
   return (
-    <Show when={exports()} fallback={<p class="text-sm text-slate-400">加载中...</p>}>
+    <Show when={exports()} fallback={<p class="text-sm text-[#a89880]">加载中...</p>}>
       {(data) => (
         <div>
           <input
@@ -65,12 +65,12 @@ export default function Missions(props: Props) {
             placeholder="搜索节点..."
             value={search()}
             onInput={(e) => setSearch(e.currentTarget.value)}
-            class="mb-3 w-full max-w-xs px-3 py-1.5 text-sm border border-slate-200 rounded-md focus:outline-none focus:border-blue-400"
+            class="mb-3 w-full max-w-xs px-3 py-1.5 text-sm border border-[#e0d0bc] rounded-md focus:outline-none focus:border-blue-400"
           />
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
               <thead>
-                <tr class="text-left text-xs text-slate-500 border-b border-slate-200">
+                <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
                   <th class="pb-2 pr-4 font-medium">节点</th>
                   <th class="pb-2 pr-4 font-medium text-right">完成次数</th>
                   <th class="pb-2 pr-4 font-medium text-center">钢铁之路</th>
@@ -108,12 +108,12 @@ export default function Missions(props: Props) {
                     };
 
                     return (
-                      <tr class="border-b border-slate-100 hover:bg-slate-50">
-                        <td class="py-1.5 pr-4 text-slate-700">{nodeName()}</td>
-                        <td class="py-1.5 pr-4 text-right tabular-nums text-slate-600">
+                      <tr class="border-b border-[#ede4d8] hover:bg-[#fdf5ec]">
+                        <td class="py-1.5 pr-4 text-[#3d2e1e]">{nodeName()}</td>
+                        <td class="py-1.5 pr-4 text-right tabular-nums text-[#5a4030]">
                           {Completes.toLocaleString()}
                         </td>
-                        <td class="py-1.5 pr-4 text-center text-slate-500">
+                        <td class="py-1.5 pr-4 text-center text-[#8a7060]">
                           {Tier ? "✓" : ""}
                         </td>
                         <td class="py-1.5 text-xs text-amber-600">{masteryNote()}</td>

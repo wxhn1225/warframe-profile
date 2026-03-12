@@ -81,7 +81,7 @@ export default function Fashion(props: Props) {
   };
 
   return (
-    <Show when={exports()} fallback={<p class="text-sm text-slate-400">加载中...</p>}>
+    <Show when={exports()} fallback={<p class="text-sm text-[#a89880]">加载中...</p>}>
       {(ex) => (
         <div class="space-y-6">
           <For each={CATEGORIES}>
@@ -123,8 +123,8 @@ export default function Fashion(props: Props) {
                   ? (t(props.dict, custom.name) || custom.name || skinPath)
                   : skinPath;
                 return (
-                  <div class="flex items-center gap-1.5 text-xs text-slate-600">
-                    <span class="text-slate-400 w-14 shrink-0">{slotLabel}</span>
+                  <div class="flex items-center gap-1.5 text-xs text-[#5a4030]">
+                    <span class="text-[#a89880] w-14 shrink-0">{slotLabel}</span>
                     <span>{name}</span>
                   </div>
                 );
@@ -137,16 +137,16 @@ export default function Fashion(props: Props) {
                 const colorSet = config()?.[sectionKey] as ColorSet | undefined;
                 return (
                   <div>
-                    <p class="text-xs font-medium text-slate-500 mb-1">{sectionLabel}</p>
+                    <p class="text-xs font-medium text-[#8a7060] mb-1">{sectionLabel}</p>
                     <div class="grid grid-cols-2 gap-x-4 gap-y-0.5">
                       <For each={COLOR_SLOTS}>
                         {({ key: ck, label: cl }) => {
                           const raw = colorSet?.[ck];
                           if (raw === undefined) {
                             return (
-                              <div class="flex items-center gap-1.5 text-xs text-slate-400 py-0.5">
+                              <div class="flex items-center gap-1.5 text-xs text-[#a89880] py-0.5">
                                 <span class="w-12 shrink-0">{cl}</span>
-                                <span class="w-4 h-4 rounded border border-slate-200 bg-slate-50 inline-block" />
+                                <span class="w-4 h-4 rounded border border-[#e0d0bc] bg-[#fdf5ec] inline-block" />
                                 <span>默认</span>
                               </div>
                             );
@@ -155,15 +155,15 @@ export default function Fashion(props: Props) {
                           const hex = toHexString(r, g, b);
                           const palette = findPalette(r, g, b);
                           return (
-                            <div class="flex items-center gap-1.5 text-xs text-slate-600 py-0.5">
-                              <span class="w-12 shrink-0 text-slate-400">{cl}</span>
+                            <div class="flex items-center gap-1.5 text-xs text-[#5a4030] py-0.5">
+                              <span class="w-12 shrink-0 text-[#a89880]">{cl}</span>
                               <span
-                                class="w-4 h-4 rounded border border-slate-200 inline-block shrink-0"
+                                class="w-4 h-4 rounded border border-[#e0d0bc] inline-block shrink-0"
                                 style={{ "background-color": hex }}
                               />
-                              <span class="font-mono text-slate-500">{hex}</span>
+                              <span class="font-mono text-[#8a7060]">{hex}</span>
                               {palette && (
-                                <span class="text-slate-400 truncate">{palette}</span>
+                                <span class="text-[#a89880] truncate">{palette}</span>
                               )}
                             </div>
                           );
@@ -175,16 +175,16 @@ export default function Fashion(props: Props) {
               };
 
               return (
-                <div class="border border-slate-200 rounded-lg p-4">
+                <div class="border border-[#e0d0bc] rounded-lg p-4">
                   {/* 标题行 */}
                   <div class="flex items-center gap-3 mb-3">
-                    <h3 class="text-sm font-semibold text-slate-700">
+                    <h3 class="text-sm font-semibold text-[#3d2e1e]">
                       {label}：{itemName()}
                     </h3>
                     <select
                       value={configIdx()}
                       onChange={(e) => setConfigIdx(+e.currentTarget.value)}
-                      class="text-xs border border-slate-200 rounded px-2 py-1 bg-white text-slate-600 focus:outline-none"
+                      class="text-xs border border-[#e0d0bc] rounded px-2 py-1 bg-[#fdf8f2] text-[#5a4030] focus:outline-none"
                     >
                       <For each={item?.Configs ?? []}>
                         {(_, i) => (
@@ -226,8 +226,8 @@ export default function Fashion(props: Props) {
           </For>
 
           <Show when={props.result.OperatorLoadOuts?.length}>
-            <div class="border border-slate-200 rounded-lg p-4">
-              <h3 class="text-sm font-semibold text-slate-700 mb-3">指挥官外观</h3>
+            <div class="border border-[#e0d0bc] rounded-lg p-4">
+              <h3 class="text-sm font-semibold text-[#3d2e1e] mb-3">指挥官外观</h3>
               <For each={props.result.OperatorLoadOuts ?? []}>
                 {(op, i) => {
                   const OPERATOR_SLOTS: Record<number, string> = {
@@ -244,8 +244,8 @@ export default function Fashion(props: Props) {
                     30: "妆容",
                   };
                   return (
-                    <div class={i() > 0 ? "mt-3 pt-3 border-t border-slate-100" : ""}>
-                      <p class="text-xs text-slate-400 mb-1.5">套装 {i() + 1}</p>
+                    <div class={i() > 0 ? "mt-3 pt-3 border-t border-[#ede4d8]" : ""}>
+                      <p class="text-xs text-[#a89880] mb-1.5">套装 {i() + 1}</p>
                       <div class="space-y-0.5">
                         <For each={Object.entries(OPERATOR_SLOTS)}>
                           {([idx, label]) => {
@@ -256,8 +256,8 @@ export default function Fashion(props: Props) {
                               ? (t(props.dict, custom.name) || custom.name)
                               : skinPath.split("/").pop() ?? skinPath;
                             return (
-                              <div class="flex items-center gap-1.5 text-xs text-slate-600">
-                                <span class="text-slate-400 w-16 shrink-0">{label}</span>
+                              <div class="flex items-center gap-1.5 text-xs text-[#5a4030]">
+                                <span class="text-[#a89880] w-16 shrink-0">{label}</span>
                                 <span>{name}</span>
                               </div>
                             );

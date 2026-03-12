@@ -19,7 +19,7 @@ export default function Achievements(props: Props) {
   return (
     <Show
       when={exportAchievements()}
-      fallback={<p class="text-sm text-slate-400">加载中...</p>}
+      fallback={<p class="text-sm text-[#a89880]">加载中...</p>}
     >
       {(achievements) => {
         const entries = Object.entries(achievements()).filter(
@@ -38,7 +38,7 @@ export default function Achievements(props: Props) {
                 const done = progress >= required;
 
                 return (
-                  <div class="flex gap-3 rounded-lg border border-slate-200 p-3">
+                  <div class="flex gap-3 rounded-lg border border-[#e0d0bc] p-3">
                     {/* 图标 */}
                     <Show when={achievement.icon}>
                       <img
@@ -49,23 +49,23 @@ export default function Achievements(props: Props) {
                     </Show>
 
                     <div class="flex-1 min-w-0">
-                      <p class={`text-sm font-medium truncate ${done ? "text-slate-800" : "text-slate-500"}`}>
+                      <p class={`text-sm font-medium truncate ${done ? "text-[#2a1f14]" : "text-[#8a7060]"}`}>
                         {t(props.dict, achievement.name) || tag}
                       </p>
                       <Show when={achievement.description}>
-                        <p class="text-xs text-slate-400 mt-0.5 line-clamp-2">
+                        <p class="text-xs text-[#a89880] mt-0.5 line-clamp-2">
                           {t(props.dict, achievement.description!)}
                         </p>
                       </Show>
                       {/* 进度条 */}
                       <div class="mt-1.5 flex items-center gap-2">
-                        <div class="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div class="flex-1 h-1.5 bg-[#fdf5ec] rounded-full overflow-hidden">
                           <div
                             class={`h-full rounded-full transition-all ${done ? "bg-green-500" : "bg-blue-400"}`}
                             style={{ width: `${pct}%` }}
                           />
                         </div>
-                        <span class="text-xs tabular-nums text-slate-400 shrink-0">
+                        <span class="text-xs tabular-nums text-[#a89880] shrink-0">
                           {progress.toLocaleString()}/{required.toLocaleString()}
                         </span>
                       </div>

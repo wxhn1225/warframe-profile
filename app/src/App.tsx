@@ -84,7 +84,7 @@ export default function App() {
   const currentDict: Accessor<Record<string, string>> = () => dict() ?? {};
 
   return (
-    <div class="min-h-screen bg-slate-100">
+    <div class="min-h-screen bg-[#f2ebe2]">
       <Header
         lang={lang()}
         setLang={setLang}

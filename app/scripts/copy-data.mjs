@@ -22,6 +22,7 @@ const NEEDED_EXPORTS = [
   "ExportEnemies",
   "ExportFactions",
   "ExportFlavour",
+  "ExportIntrinsics",
   "ExportNightwave",
   "ExportRegions",
   "ExportSentinels",

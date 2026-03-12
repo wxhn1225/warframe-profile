@@ -47,7 +47,7 @@ export default function Syndicates(props: Props) {
   });
 
   return (
-    <Show when={exports()} fallback={<p class="text-sm text-slate-400">加载中...</p>}>
+    <Show when={exports()} fallback={<p class="text-sm text-[#a89880]">加载中...</p>}>
       {(data) => (
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
           <For each={data().tags}>
@@ -71,7 +71,7 @@ export default function Syndicates(props: Props) {
               const iconFilter = `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="a"><feColorMatrix color-interpolation-filters="sRGB" in="SourceGraphic" type="matrix" values="${r / 255} 0 0 0 0 0 ${g / 255} 0 0 0 0 0 ${b / 255} 0 0 0 0 0 1 0"/></filter></svg>#a')`;
 
               return (
-                <div class="flex rounded-lg border border-slate-200 overflow-hidden">
+                <div class="flex rounded-lg border border-[#e0d0bc] overflow-hidden">
                   {/* 图标区 */}
                   <div
                     class="w-16 shrink-0 flex items-center justify-center p-2"
@@ -86,16 +86,16 @@ export default function Syndicates(props: Props) {
                   </div>
                   {/* 信息区 */}
                   <div class="flex-1 px-3 py-2 min-w-0">
-                    <p class="text-sm font-medium text-slate-800 truncate">
+                    <p class="text-sm font-medium text-[#2a1f14] truncate">
                       {t(props.dict, syndicate.name)}
                     </p>
-                    <p class="text-xs text-slate-500 mt-0.5">
+                    <p class="text-xs text-[#8a7060] mt-0.5">
                       等级 {level}
                       {titleEntry && (
                         <span> · {toTitleCase(t(props.dict, titleEntry.name))}</span>
                       )}
                     </p>
-                    <p class="text-xs text-slate-400 mt-0.5">
+                    <p class="text-xs text-[#a89880] mt-0.5">
                       声望: {(standing - minStanding).toLocaleString()}
                       {minStanding !== 0 && (
                         <span>（累计 {standing.toLocaleString()}）</span>
@@ -122,7 +122,7 @@ export default function Syndicates(props: Props) {
                       const remaining = key ? (props.result[key] as number | undefined) : undefined;
                       if (remaining == null) return null;
                       return (
-                        <p class="text-xs text-slate-400 mt-0.5">
+                        <p class="text-xs text-[#a89880] mt-0.5">
                           每日声望剩余: {remaining.toLocaleString()}
                         </p>
                       );

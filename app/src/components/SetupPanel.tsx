@@ -41,7 +41,6 @@ export default function SetupPanel(props: Props) {
     props.setDetectedName("");
     props.setAccountId("");
     try {
-      // Rust 端流式读取，找到即停，不加载整个文件
       const result = await invoke<ParsedLogin>("auto_detect_log");
       applyParsed(result);
     } catch (e) {
@@ -58,7 +57,6 @@ export default function SetupPanel(props: Props) {
     props.setDetectedName("");
     props.setAccountId("");
     try {
-      // 只读前 2MB，EE.log 的登录行通常在最前面，2MB 绰绰有余
       const slice = file.slice(0, 2 * 1024 * 1024);
       const content = await slice.text();
       const result = await invoke<ParsedLogin>("parse_account_id", { content });
@@ -70,11 +68,11 @@ export default function SetupPanel(props: Props) {
   };
 
   return (
-    <div class="max-w-xl mx-auto mt-10">
-      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="px-6 pt-6 pb-4 border-b border-slate-100">
-          <h1 class="text-lg font-semibold text-slate-800">查询个人档案</h1>
-          <p class="text-sm text-slate-500 mt-1">
+    <div class="max-w-md mx-auto mt-12">
+      <div class="bg-[#fdf8f2] rounded-xl border border-[#e0d4c4] shadow-sm overflow-hidden">
+        <div class="px-6 pt-6 pb-4 border-b border-[#ede4d8]">
+          <h1 class="text-lg font-semibold text-[#2a1f14]">查询个人档案</h1>
+          <p class="text-sm text-[#8a7060] mt-1">
             此工具仅适用于 Warframe 国际服账号
           </p>
         </div>
@@ -82,17 +80,15 @@ export default function SetupPanel(props: Props) {
         <div class="px-6 py-5 space-y-5">
           {/* 平台选择 */}
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-2">
-              平台
-            </label>
+            <label class="block text-sm font-medium text-[#4a3824] mb-2">平台</label>
             <div class="flex gap-2 flex-wrap">
               {PLATFORMS.map((p) => (
                 <button
                   onClick={() => props.setPlatform(p.id)}
-                  class={`px-4 py-1.5 rounded-md text-sm border transition-colors ${
+                  class={`px-4 py-1.5 rounded text-sm border transition-colors ${
                     props.platform === p.id
-                      ? "bg-blue-600 text-white border-blue-600"
-                      : "bg-white text-slate-700 border-slate-200 hover:border-blue-300 hover:text-blue-600"
+                      ? "bg-[#2a1f14] text-[#f0e8dc] border-[#2a1f14]"
+                      : "bg-transparent text-[#5a4632] border-[#d4c4b0] hover:border-[#9b7050] hover:text-[#2a1f14]"
                   }`}
                 >
                   {p.label}
@@ -101,41 +97,31 @@ export default function SetupPanel(props: Props) {
             </div>
           </div>
 
-          {/* EE.log 区域 */}
+          {/* EE.log */}
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-2">
+            <label class="block text-sm font-medium text-[#4a3824] mb-2">
               账号
-              <span class="ml-1.5 font-normal text-slate-400">
-                — 从 EE.log 自动提取
-              </span>
+              <span class="ml-1.5 font-normal text-[#9a8474]">— 从 EE.log 提取</span>
             </label>
             <div class="flex gap-2 mb-2">
               <button
                 onClick={handleAutoDetect}
                 disabled={logLoading()}
-                class="px-3 py-1.5 text-sm rounded-md border border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-blue-600 transition-colors disabled:opacity-60"
+                class="px-3 py-1.5 text-sm rounded border border-[#d4c4b0] bg-transparent text-[#5a4632] hover:border-[#9b7050] hover:text-[#2a1f14] transition-colors disabled:opacity-50"
               >
                 {logLoading() ? "读取中..." : "自动检测"}
               </button>
-              <label class="px-3 py-1.5 text-sm rounded-md border border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:text-blue-600 transition-colors cursor-pointer">
+              <label class="px-3 py-1.5 text-sm rounded border border-[#d4c4b0] bg-transparent text-[#5a4632] hover:border-[#9b7050] hover:text-[#2a1f14] transition-colors cursor-pointer">
                 选择文件
-                <input
-                  type="file"
-                  accept=".log"
-                  class="hidden"
-                  onChange={handleFileUpload}
-                />
+                <input type="file" accept=".log" class="hidden" onChange={handleFileUpload} />
               </label>
-              <span class="text-xs text-slate-400 self-center">
-                %LOCALAPPDATA%\Warframe\EE.log
-              </span>
+              <span class="text-xs text-[#a09080] self-center">%LOCALAPPDATA%\Warframe\EE.log</span>
             </div>
 
             <Show when={logError()}>
-              <p class="text-xs text-red-500 mb-2">{logError()}</p>
+              <p class="text-xs text-[#b05030] mb-2">{logError()}</p>
             </Show>
 
-            {/* 检测到昵称时显示昵称，否则显示 ID 输入框 */}
             <Show
               when={props.detectedName}
               fallback={
@@ -143,19 +129,19 @@ export default function SetupPanel(props: Props) {
                   type="text"
                   value={props.accountId}
                   onInput={(e) => props.setAccountId(e.currentTarget.value)}
-                  placeholder="输入或粘贴账号 ID（24位十六进制）"
-                  class="w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:border-blue-400 font-mono placeholder:text-slate-400"
+                  placeholder="输入账号 ID（24位十六进制）"
+                  class="w-full px-3 py-2 text-sm border border-[#d4c4b0] rounded bg-[#fdf8f2] text-[#2a1f14] focus:outline-none focus:border-[#9b7050] font-mono placeholder:text-[#b8a898]"
                 />
               }
             >
-              <div class="flex items-center gap-2 px-3 py-2 bg-green-50 border border-green-200 rounded-md">
-                <svg class="w-4 h-4 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="flex items-center gap-2 px-3 py-2 bg-[#f5f0e8] border border-[#d4c8a8] rounded">
+                <svg class="w-4 h-4 text-[#7a9050] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
-                <span class="text-sm font-medium text-slate-800">{props.detectedName}</span>
+                <span class="text-sm font-medium text-[#2a1f14]">{props.detectedName}</span>
                 <button
                   onClick={() => { props.setDetectedName(""); props.setAccountId(""); }}
-                  class="ml-auto text-xs text-slate-400 hover:text-slate-600"
+                  class="ml-auto text-xs text-[#9a8474] hover:text-[#4a3824]"
                 >
                   清除
                 </button>
@@ -163,9 +149,8 @@ export default function SetupPanel(props: Props) {
             </Show>
           </div>
 
-          {/* 错误提示 */}
           <Show when={props.error}>
-            <div class="text-sm text-red-600 bg-red-50 border border-red-100 rounded-md px-3 py-2">
+            <div class="text-sm text-[#b05030] bg-[#fdf0e8] border border-[#e8c8b0] rounded px-3 py-2">
               {props.error}
             </div>
           </Show>
@@ -173,7 +158,7 @@ export default function SetupPanel(props: Props) {
           <button
             onClick={props.onFetch}
             disabled={props.loading || !props.accountId.trim()}
-            class="w-full py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            class="w-full py-2.5 rounded text-sm font-medium bg-[#2a1f14] text-[#f0e8dc] hover:bg-[#3d2e1e] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {props.loading ? "查询中..." : "查询个人档案"}
           </button>

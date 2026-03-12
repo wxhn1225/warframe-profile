@@ -30,27 +30,24 @@ export default function ProfileView(props: Props) {
 
   return (
     <div>
-      {/* 返回按钮 */}
       <button
         onClick={props.onBack}
-        class="mb-4 text-sm text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-1"
+        class="mb-4 text-sm text-[#8a7060] hover:text-[#2a1f14] transition-colors flex items-center gap-1"
       >
-        &larr; 返回查询
+        ← 返回查询
       </button>
 
-      {/* 个人信息头部 */}
       <ProfileHeader result={result()} dict={props.dict} />
 
-      {/* 标签页导航 */}
-      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="flex border-b border-slate-200 overflow-x-auto">
+      <div class="bg-[#fdf8f2] rounded-xl border border-[#e0d4c4] shadow-sm overflow-hidden">
+        <div class="flex border-b border-[#e0d4c4] overflow-x-auto">
           {TABS.map((tab) => (
             <button
               onClick={() => setActiveTab(tab.id)}
               class={`px-5 py-3 text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
                 activeTab() === tab.id
-                  ? "border-blue-500 text-blue-600"
-                  : "border-transparent text-slate-600 hover:text-slate-800"
+                  ? "border-[#9b6030] text-[#2a1f14]"
+                  : "border-transparent text-[#8a7060] hover:text-[#2a1f14]"
               }`}
             >
               {tab.label}
@@ -58,13 +55,10 @@ export default function ProfileView(props: Props) {
           ))}
         </div>
 
-        {/* 标签页内容 */}
         <div class="p-5">
           <Suspense
             fallback={
-              <div class="py-10 text-center text-slate-400 text-sm">
-                加载中...
-              </div>
+              <div class="py-10 text-center text-[#a09080] text-sm">加载中...</div>
             }
           >
             <Show when={activeTab() === "fashion"}>
