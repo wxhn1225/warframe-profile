@@ -19,9 +19,5 @@ export default defineConfig({
     target: "chrome105",
     minify: !process.env.TAURI_ENV_DEBUG ? "esbuild" : false,
     sourcemap: !!process.env.TAURI_ENV_DEBUG,
-    rollupOptions: {
-      // Tauri 插件在运行时由 Tauri 注入，Vite 独立构建时视为外部依赖
-      external: (id) => id.startsWith("@tauri-apps/"),
-    },
   },
 });
