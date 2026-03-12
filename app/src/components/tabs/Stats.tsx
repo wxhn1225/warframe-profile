@@ -144,7 +144,7 @@ export default function Stats(props: Props) {
         <div class="space-y-4">
 
           {/* 二级标签页 */}
-          <div class="flex gap-1 border-b border-[#e0d0bc] overflow-x-auto pb-0">
+          <div class="flex flex-wrap gap-1 border-b border-[#e0d0bc]">
             {STAT_TABS.map((tab) => (
               <button
                 onClick={() => setStatTab(tab.id)}
@@ -165,12 +165,12 @@ export default function Stats(props: Props) {
               <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {([
                   ["总游戏时间", formatHours(stats().TimePlayedSec ?? 0)],
-                  ["任务完成数", formatNumber(stats().MissionsCompleted ?? 0)],
-                  ["任务失败数", formatNumber(stats().MissionsFailed ?? 0)],
-                  ["任务放弃数", formatNumber(stats().MissionsQuit ?? 0)],
+                  ["任务完成", formatNumber(stats().MissionsCompleted ?? 0)],
+                  ["任务失败", formatNumber(stats().MissionsFailed ?? 0)],
+                  ["任务放弃", formatNumber(stats().MissionsQuit ?? 0)],
                   ["任务中断", formatNumber(stats().MissionsInterrupted ?? 0)],
                   ["任务转移", formatNumber(stats().MissionsDumped ?? 0)],
-                  ["总收入", formatNumber(stats().Income ?? 0) + " 信用点"],
+                  ["现金", formatNumber(stats().Income ?? 0)],
                   ["死亡次数", formatNumber(stats().Deaths ?? 0)],
                   ["复活", formatNumber(stats().ReviveCount ?? 0)],
                   ["治疗", formatNumber(stats().HealCount ?? 0)],

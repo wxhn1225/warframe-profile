@@ -77,7 +77,8 @@ export default function ProfileHeader(props: Props) {
             <p class="text-xs text-[#9a8878] mt-0.5">
               对齐：{alignmentLabel()}
               <Show when={(r().Alignment?.Wisdom ?? 0) > 0}>
-                <span class="ml-2">智慧 {r().Alignment!.Wisdom}</span>
+                <span class="ml-1 text-[#b0a090]">·</span>
+                <span class="ml-1">智慧 {r().Alignment!.Wisdom}</span>
               </Show>
             </p>
           </Show>
