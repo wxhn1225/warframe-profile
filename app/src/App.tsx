@@ -26,6 +26,7 @@ export default function App() {
   const [availableLangs, setAvailableLangs] = createSignal<LangInfo[]>([]);
   const [updateVersion, setUpdateVersion] = createSignal<string | null>(null);
   const [updateLoading, setUpdateLoading] = createSignal(false);
+  const [updateError, setUpdateError] = createSignal<string | null>(null);
   const [showBackTop, setShowBackTop] = createSignal(false);
 
   const [dict] = createResource(lang, (code) => loadDict(code));
@@ -49,6 +50,7 @@ export default function App() {
 
   const handleUpdate = async () => {
     setUpdateLoading(true);
+    setUpdateError(null);
     try {
       const update = await check();
       if (update?.available) {
@@ -56,7 +58,9 @@ export default function App() {
         await relaunch();
       }
     } catch (e) {
-      console.error("Update failed:", e);
+      const msg = e instanceof Error ? e.message : String(e);
+      console.error("Update failed:", msg);
+      setUpdateError(msg);
     } finally {
       setUpdateLoading(false);
     }
@@ -97,6 +101,7 @@ export default function App() {
         availableLangs={availableLangs()}
         updateVersion={updateVersion()}
         updateLoading={updateLoading()}
+        updateError={updateError()}
         onUpdate={handleUpdate}
       />
       <main class="max-w-6xl mx-auto px-4 py-6">

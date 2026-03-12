@@ -7,6 +7,7 @@ interface Props {
   availableLangs: LangInfo[];
   updateVersion: string | null;
   updateLoading: boolean;
+  updateError: string | null;
   onUpdate: () => void;
 }
 
@@ -24,15 +25,22 @@ export default function Header(props: Props) {
 
         <div class="flex items-center gap-3">
           <Show when={props.updateVersion}>
-            <button
-              onClick={props.onUpdate}
-              disabled={props.updateLoading}
-              class="flex items-center gap-1.5 text-xs px-3 py-1 rounded bg-[#3d2e1e] text-[#d4b080] border border-[#5a4030] hover:bg-[#4a3824] transition-colors disabled:opacity-60"
-            >
-              <Show when={props.updateLoading} fallback={<span>↑ v{props.updateVersion} 有更新</span>}>
-                <span>下载中...</span>
+            <div class="flex flex-col items-end gap-1">
+              <button
+                onClick={props.onUpdate}
+                disabled={props.updateLoading}
+                class="flex items-center gap-1.5 text-xs px-3 py-1 rounded bg-[#3d2e1e] text-[#d4b080] border border-[#5a4030] hover:bg-[#4a3824] transition-colors disabled:opacity-60"
+              >
+                <Show when={props.updateLoading} fallback={<span>↑ v{props.updateVersion} 有更新</span>}>
+                  <span>下载中...</span>
+                </Show>
+              </button>
+              <Show when={props.updateError}>
+                <span class="text-[10px] text-red-400 max-w-[200px] truncate" title={props.updateError!}>
+                  更新失败：{props.updateError}
+                </span>
               </Show>
-            </button>
+            </div>
           </Show>
 
           <Show when={props.availableLangs.length > 1}>
