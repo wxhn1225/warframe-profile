@@ -1,0 +1,28 @@
+{
+  "name": "warframe-profile",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/copy-data.mjs zh && tauri dev",
+    "build:zh": "node scripts/copy-data.mjs zh && tauri build --config src-tauri/tauri.zh.conf.json",
+    "build:full": "node scripts/copy-data.mjs full && tauri build --config src-tauri/tauri.full.conf.json",
+    "vite:dev": "vite",
+    "vite:build": "vite build",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.10.1",
+    "@tauri-apps/plugin-process": "^2.3.1",
+    "@tauri-apps/plugin-updater": "^2.10.0",
+    "solid-js": "^1.9.11"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "@tauri-apps/cli": "^2.10.1",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-solid": "^2.11.10"
+  }
+}

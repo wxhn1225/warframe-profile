@@ -1,0 +1,7 @@
+# 采样数据，含账号 ID 等隐私信息
+sample-profile.json
+*.json.local
+
+# 系统文件
+.DS_Store
+Thumbs.db
