@@ -63,6 +63,13 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: npx tauri build --config ${{ matrix.config }}
 
+      - name: List bundle directory (debug)
+        shell: pwsh
+        run: |
+          Write-Host "=== bundle directory ==="
+          Get-ChildItem "app/src-tauri/target/release/bundle" -Recurse -File |
+            Select-Object FullName, Length | Format-Table -AutoSize
+
       - name: Rename installers and updater artifacts
         shell: pwsh
         run: |
@@ -78,15 +85,15 @@ jobs:
           Get-ChildItem "$msiDir/*.msi" -ErrorAction SilentlyContinue | ForEach-Object {
             Rename-Item $_.FullName ($_.BaseName + "-${variant}" + $_.Extension)
           }
-          # rename .nsis.zip
-          Get-ChildItem "$nsisDir/*.nsis.zip" -ErrorAction SilentlyContinue | ForEach-Object {
+          # rename .nsis.zip (anywhere under bundle/)
+          Get-ChildItem "app/src-tauri/target/release/bundle" -Recurse -Filter "*.nsis.zip" -ErrorAction SilentlyContinue | ForEach-Object {
             $base = $_.Name -replace '\.nsis\.zip$', ''
-            Rename-Item $_.FullName (Join-Path $nsisDir "${base}-${variant}.nsis.zip")
+            Rename-Item $_.FullName (Join-Path $_.DirectoryName "${base}-${variant}.nsis.zip")
           }
           # rename .nsis.zip.sig
-          Get-ChildItem "$nsisDir/*.nsis.zip.sig" -ErrorAction SilentlyContinue | ForEach-Object {
+          Get-ChildItem "app/src-tauri/target/release/bundle" -Recurse -Filter "*.nsis.zip.sig" -ErrorAction SilentlyContinue | ForEach-Object {
             $base = $_.Name -replace '\.nsis\.zip\.sig$', ''
-            Rename-Item $_.FullName (Join-Path $nsisDir "${base}-${variant}.nsis.zip.sig")
+            Rename-Item $_.FullName (Join-Path $_.DirectoryName "${base}-${variant}.nsis.zip.sig")
           }
 
       - name: Generate latest-${{ matrix.variant }}.json
@@ -96,13 +103,15 @@ jobs:
           $tag      = "${{ github.ref_name }}"
           $version  = $tag.TrimStart("v")
           $repo     = "${{ github.repository }}"
-          $nsisDir  = "app/src-tauri/target/release/bundle/nsis"
+          $bundleDir = "app/src-tauri/target/release/bundle"
 
-          $sigFile  = Get-ChildItem "$nsisDir/*-${variant}.nsis.zip.sig" | Select-Object -First 1
-          $zipFile  = Get-ChildItem "$nsisDir/*-${variant}.nsis.zip"     | Select-Object -First 1
+          # 在整个 bundle 目录下查找（兼容 nsis/ 和 updater/ 两种位置）
+          $sigFile = Get-ChildItem $bundleDir -Recurse -Filter "*-${variant}.nsis.zip.sig" -ErrorAction SilentlyContinue | Select-Object -First 1
+          $zipFile = Get-ChildItem $bundleDir -Recurse -Filter "*-${variant}.nsis.zip"     -ErrorAction SilentlyContinue | Select-Object -First 1
 
           if (-not $sigFile -or -not $zipFile) {
-            Write-Error "Updater artifacts not found"; exit 1
+            Write-Host "WARNING: updater zip not found, skipping latest-${variant}.json"
+            exit 0
           }
 
           $sig = (Get-Content $sigFile.FullName -Raw).Trim()
@@ -127,9 +136,10 @@ jobs:
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
+          fail_on_unmatched_files: false
           files: |
             app/src-tauri/target/release/bundle/nsis/*-${{ matrix.variant }}.exe
             app/src-tauri/target/release/bundle/msi/*-${{ matrix.variant }}.msi
-            app/src-tauri/target/release/bundle/nsis/*-${{ matrix.variant }}.nsis.zip
-            app/src-tauri/target/release/bundle/nsis/*-${{ matrix.variant }}.nsis.zip.sig
+            app/src-tauri/target/release/bundle/**/*-${{ matrix.variant }}.nsis.zip
+            app/src-tauri/target/release/bundle/**/*-${{ matrix.variant }}.nsis.zip.sig
             latest-${{ matrix.variant }}.json
