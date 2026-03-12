@@ -66,6 +66,7 @@ export interface ExportRegion {
   missionType?: string;
   missionName?: string;
   faction?: string;
+  factionName?: string;
   masteryExp?: number;
 }
 
