@@ -4,3 +4,5 @@ public/data/
 src-tauri/target/
 src-tauri/gen/
 *.lock
+tauri.key
+tauri.key.pub
