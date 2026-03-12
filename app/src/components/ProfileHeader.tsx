@@ -1,6 +1,6 @@
 import { Show, For } from "solid-js";
 import type { ProfileResult } from "../types/profile";
-import { sanitiseName, oidToDate } from "../lib/utils";
+import { sanitiseName } from "../lib/utils";
 import { t } from "../lib/dict";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const FOUNDER_TIERS = ["", "Disciple", "Hunter", "Master", "Grand Master"];
-const GUIDE_TIERS = ["", "LOTUS 的初级向导员", "LOTUS 的高级向导员"];
+const GUIDE_TIERS = ["", "Guide of Lotus (Junior)", "Guide of Lotus (Senior)"];
 const CLAN_TIERS = ["", "幽灵", "暗影", "风暴", "山脉", "月亮"];
 
 export default function ProfileHeader(props: Props) {
@@ -18,22 +18,22 @@ export default function ProfileHeader(props: Props) {
   const accolades = () => {
     const list: string[] = [];
     if (r().Staff) {
-      list.push("DIGITAL EXTREMES");
+      list.push("Staff");
       return list;
     }
     if (r().Founder) list.push(`创始人 (${FOUNDER_TIERS[r().Founder!]})`);
     if (r().Guide) list.push(GUIDE_TIERS[r().Guide!]);
-    if (r().Moderator) list.push("工作人员");
-    if (r().Partner) list.push("WARFRAME 创作者");
-
-    const oid = r().AccountId.$oid;
-    const ts = parseInt(oid.substring(0, 8), 16);
-    if (ts < 1363651200) list.push("封测玩家");
-    if (r().Accolades?.Heirloom) list.push("十周年支持者");
+    if (r().Moderator) list.push("Moderator");
+    if (r().Partner) list.push("Partner");
+    if (r().Accolades?.Heirloom) list.push("Heirloom");
     return list;
   };
 
-  const regDate = () => oidToDate(r().AccountId.$oid).toLocaleDateString();
+  const regDate = () => {
+    const ts = r().Created?.$date?.$numberLong;
+    if (!ts) return null;
+    return new Date(parseInt(ts)).toLocaleDateString();
+  };
 
   const alignmentLabel = () => {
     const a = r().Alignment?.Alignment ?? 0;
@@ -68,7 +68,9 @@ export default function ProfileHeader(props: Props) {
           </div>
 
           {/* 注册日期 */}
-          <p class="text-sm text-[#8a7060] mt-0.5">注册于 {regDate()}</p>
+          <Show when={regDate()}>
+            <p class="text-sm text-[#8a7060] mt-0.5">注册于 {regDate()}</p>
+          </Show>
 
           {/* 对齐值 */}
           <Show when={r().Alignment !== undefined}>

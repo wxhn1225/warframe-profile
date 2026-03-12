@@ -73,8 +73,7 @@ export default function Missions(props: Props) {
                 <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
                   <th class="pb-2 pr-4 font-medium">节点</th>
                   <th class="pb-2 pr-4 font-medium text-right">完成次数</th>
-                  <th class="pb-2 pr-4 font-medium text-center">钢铁之路</th>
-                  <th class="pb-2 font-medium">精通段位经验</th>
+                  <th class="pb-2 font-medium text-center">钢铁之路</th>
                 </tr>
               </thead>
               <tbody>
@@ -99,24 +98,15 @@ export default function Missions(props: Props) {
                       return name;
                     };
 
-                    const masteryNote = () => {
-                      if (!node?.masteryExp) return "";
-                      if (Completes === 0)
-                        return `缺少 ${node.masteryExp * 2} 精通段位经验`;
-                      if (!Tier) return `缺少 ${node.masteryExp} 精通段位经验`;
-                      return "";
-                    };
-
                     return (
                       <tr class="border-b border-[#ede4d8] hover:bg-[#fdf5ec]">
                         <td class="py-1.5 pr-4 text-[#3d2e1e]">{nodeName()}</td>
                         <td class="py-1.5 pr-4 text-right tabular-nums text-[#5a4030]">
                           {Completes.toLocaleString()}
                         </td>
-                        <td class="py-1.5 pr-4 text-center text-[#8a7060]">
+                        <td class="py-1.5 text-center text-[#8a7060]">
                           {Tier ? "✓" : ""}
                         </td>
-                        <td class="py-1.5 text-xs text-amber-600">{masteryNote()}</td>
                       </tr>
                     );
                   }}

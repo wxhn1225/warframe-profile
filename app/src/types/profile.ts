@@ -139,6 +139,8 @@ export interface Stats {
   Deaths?: number;
   PickupCount?: number;
   Rating?: number;
+  Rank?: number;
+  Tutorial?: Record<string, { stage: number }>;
   Weapons?: WeaponStat[];
   Enemies?: EnemyStat[];
   Scans?: ScanEntry[];
