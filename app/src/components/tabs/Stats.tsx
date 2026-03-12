@@ -276,10 +276,10 @@ export default function Stats(props: Props) {
             </section>
           </Show>
 
-          {/* 全部掌握度 XP（XPInfo） */}
+          {/* 精通段位经验（XPInfo） */}
           <Show when={exports() && props.result.LoadOutInventory?.XPInfo?.length}>
             <section>
-              <h3 class="text-sm font-semibold text-slate-700 mb-2">掌握度详情</h3>
+              <h3 class="text-sm font-semibold text-slate-700 mb-2">精通段位经验详情</h3>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                   <thead>

@@ -74,7 +74,7 @@ export default function Missions(props: Props) {
                   <th class="pb-2 pr-4 font-medium">节点</th>
                   <th class="pb-2 pr-4 font-medium text-right">完成次数</th>
                   <th class="pb-2 pr-4 font-medium text-center">钢铁之路</th>
-                  <th class="pb-2 font-medium">掌握度备注</th>
+                  <th class="pb-2 font-medium">精通段位经验</th>
                 </tr>
               </thead>
               <tbody>
@@ -102,8 +102,8 @@ export default function Missions(props: Props) {
                     const masteryNote = () => {
                       if (!node?.masteryExp) return "";
                       if (Completes === 0)
-                        return `缺少 ${node.masteryExp * 2} 掌握度`;
-                      if (!Tier) return `缺少 ${node.masteryExp} 掌握度`;
+                        return `缺少 ${node.masteryExp * 2} 精通段位经验`;
+                      if (!Tier) return `缺少 ${node.masteryExp} 精通段位经验`;
                       return "";
                     };
 

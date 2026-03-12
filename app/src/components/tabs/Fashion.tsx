@@ -206,18 +206,18 @@ export default function Fashion(props: Props) {
 
                   {/* 颜色 */}
                   <div class="space-y-3">
-                    {renderColorSection("pricol", "主体颜色")}
+                    {renderColorSection("pricol", "基本颜色")}
                     <Show when={key === "Suits" && config()?.Skins?.[6]}>
                       {renderColorSection("syancol", "背饰颜色")}
                     </Show>
                     <Show when={key === "Suits" && config()?.attcol}>
-                      {renderColorSection("attcol", "附件颜色")}
+                      {renderColorSection("attcol", "配件颜色")}
                     </Show>
                     <Show when={key === "Melee" && config()?.attcol}>
-                      {renderColorSection("attcol", "附件颜色")}
+                      {renderColorSection("attcol", "配件颜色")}
                     </Show>
                     <Show when={config()?.sigcol}>
-                      {renderColorSection("sigcol", "徽章颜色")}
+                      {renderColorSection("sigcol", "纹章色彩")}
                     </Show>
                   </div>
                 </div>
