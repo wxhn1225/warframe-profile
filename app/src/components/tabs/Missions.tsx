@@ -69,11 +69,11 @@ export default function Missions(props: Props) {
           />
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
-              <thead class="sticky top-0 bg-[#fdf8f2] z-10">
+              <thead>
                 <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
-                  <th class="pb-2 pr-4 font-medium">节点</th>
-                  <th class="pb-2 pr-4 font-medium text-right">完成次数</th>
-                  <th class="pb-2 font-medium text-center">钢铁之路</th>
+                  <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-4 font-medium">节点</th>
+                  <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-4 font-medium text-right">完成次数</th>
+                  <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 font-medium text-center">钢铁之路</th>
                 </tr>
               </thead>
               <tbody>

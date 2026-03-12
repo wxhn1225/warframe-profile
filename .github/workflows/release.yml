@@ -92,19 +92,14 @@ jobs:
           Get-ChildItem "$nsisDir/*.exe" -ErrorAction SilentlyContinue | ForEach-Object {
             Rename-Item $_.FullName ($_.BaseName + "-${variant}" + $_.Extension)
           }
+          # rename .exe.sig (Tauri v2 updater signature)
+          Get-ChildItem "$nsisDir/*.exe.sig" -ErrorAction SilentlyContinue | ForEach-Object {
+            $base = $_.Name -replace '\.exe\.sig$', ''
+            Rename-Item $_.FullName (Join-Path $_.DirectoryName "${base}-${variant}.exe.sig")
+          }
           # rename .msi
           Get-ChildItem "$msiDir/*.msi" -ErrorAction SilentlyContinue | ForEach-Object {
             Rename-Item $_.FullName ($_.BaseName + "-${variant}" + $_.Extension)
-          }
-          # rename .nsis.zip (anywhere under bundle/)
-          Get-ChildItem "app/src-tauri/target/release/bundle" -Recurse -Filter "*.nsis.zip" -ErrorAction SilentlyContinue | ForEach-Object {
-            $base = $_.Name -replace '\.nsis\.zip$', ''
-            Rename-Item $_.FullName (Join-Path $_.DirectoryName "${base}-${variant}.nsis.zip")
-          }
-          # rename .nsis.zip.sig
-          Get-ChildItem "app/src-tauri/target/release/bundle" -Recurse -Filter "*.nsis.zip.sig" -ErrorAction SilentlyContinue | ForEach-Object {
-            $base = $_.Name -replace '\.nsis\.zip\.sig$', ''
-            Rename-Item $_.FullName (Join-Path $_.DirectoryName "${base}-${variant}.nsis.zip.sig")
           }
 
       - name: Generate latest-${{ matrix.variant }}.json

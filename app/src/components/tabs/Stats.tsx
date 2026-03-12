@@ -195,10 +195,10 @@ export default function Stats(props: Props) {
             <Show when={stats().Abilities?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                  <thead class="sticky top-0 bg-[#fdf8f2] z-10">
+                  <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
-                      <th class="pb-2 pr-4 font-medium">技能</th>
-                      <th class="pb-2 font-medium text-right">使用次数</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-4 font-medium">技能</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 font-medium text-right">使用次数</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -221,17 +221,17 @@ export default function Stats(props: Props) {
             <Show when={exports() && stats().Weapons?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                  <thead class="sticky top-0 bg-[#fdf8f2] z-10">
+                  <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
-                      <th class="pb-2 pr-3 font-medium">装备</th>
-                      <th class="pb-2 pr-3 font-medium text-right">时长</th>
-                      <th class="pb-2 pr-3 font-medium text-right">击杀</th>
-                      <th class="pb-2 pr-3 font-medium text-right">爆头</th>
-                      <th class="pb-2 pr-3 font-medium text-right">命中</th>
-                      <th class="pb-2 pr-3 font-medium text-right">射击</th>
-                      <th class="pb-2 pr-3 font-medium text-right">协助</th>
-                      <th class="pb-2 pr-3 font-medium text-right">死亡</th>
-                      <th class="pb-2 font-medium text-right">经验值</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium">装备</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">时长</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">击杀</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">爆头</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">命中</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">射击</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">协助</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">死亡</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 font-medium text-right">经验值</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -261,16 +261,16 @@ export default function Stats(props: Props) {
             <Show when={exports() && stats().Enemies?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                  <thead class="sticky top-0 bg-[#fdf8f2] z-10">
+                  <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
-                      <th class="pb-2 pr-3 font-medium">敌人</th>
-                      <th class="pb-2 pr-3 font-medium text-right">击杀</th>
-                      <th class="pb-2 pr-3 font-medium text-right">爆头</th>
-                      <th class="pb-2 pr-3 font-medium text-right">协助</th>
-                      <th class="pb-2 pr-3 font-medium text-right">处决</th>
-                      <th class="pb-2 pr-3 font-medium text-right">死亡</th>
-                      <th class="pb-2 pr-3 font-medium text-right">捕获</th>
-                      <th class="pb-2 font-medium text-right">扫描</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium">敌人</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">击杀</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">爆头</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">协助</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">处决</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">死亡</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">捕获</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 font-medium text-right">扫描</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -302,10 +302,10 @@ export default function Stats(props: Props) {
             <Show when={stats().Scans?.some((sc) => !stats().Enemies?.find((e) => e.type === sc.type))} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                  <thead class="sticky top-0 bg-[#fdf8f2] z-10">
+                  <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
-                      <th class="pb-2 pr-4 font-medium">目标</th>
-                      <th class="pb-2 font-medium text-right">扫描次数</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-4 font-medium">目标</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 font-medium text-right">扫描次数</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -328,10 +328,10 @@ export default function Stats(props: Props) {
             <Show when={exports() && stats().Missions?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                  <thead class="sticky top-0 bg-[#fdf8f2] z-10">
+                  <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
-                      <th class="pb-2 pr-4 font-medium">节点</th>
-                      <th class="pb-2 font-medium text-right">最高分</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-4 font-medium">节点</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 font-medium text-right">最高分</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -354,10 +354,10 @@ export default function Stats(props: Props) {
             <Show when={exports() && props.result.LoadOutInventory?.XPInfo?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                  <thead class="sticky top-0 bg-[#fdf8f2] z-10">
+                  <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
-                      <th class="pb-2 pr-4 font-medium">装备</th>
-                      <th class="pb-2 font-medium text-right">经验值</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-4 font-medium">装备</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 font-medium text-right">经验值</th>
                     </tr>
                   </thead>
                   <tbody>
