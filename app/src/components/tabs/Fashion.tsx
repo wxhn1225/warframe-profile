@@ -32,23 +32,23 @@ const COLOR_SLOTS = [
 const SUIT_SKIN_SLOTS: Record<number, string> = {
   0: "头盔",
   7: "外观",
-  5: "动作集",
-  8: "胸甲",
+  5: "站姿",
+  8: "胸膛",
   1: "左肩",
   9: "右肩",
-  16: "残影",
+  16: "幻纹",
   2: "左腿",
   10: "右腿",
-  11: "辅助",
-  25: "武器特效",
-  3: "左徽",
-  4: "右徽",
-  12: "前徽",
-  13: "后徽",
+  11: "特殊配件",
+  25: "武器幻纹",
+  3: "左肩徽章",
+  4: "右肩徽章",
+  12: "正面纹章",
+  13: "背部纹章",
   6: "背饰",
 };
 const WEAPON_SKIN_SLOTS: Record<number, string> = { 0: "外观" };
-const MELEE_SKIN_SLOTS: Record<number, string> = { 0: "外观", 2: "收刀方式" };
+const MELEE_SKIN_SLOTS: Record<number, string> = { 0: "外观", 2: "收起方式" };
 
 export default function Fashion(props: Props) {
   const [exports] = createResource(async () => {

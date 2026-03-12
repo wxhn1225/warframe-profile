@@ -18,18 +18,18 @@ export default function ProfileHeader(props: Props) {
   const accolades = () => {
     const list: string[] = [];
     if (r().Staff) {
-      list.push("Digital Extremes Staff");
+      list.push("DIGITAL EXTREMES");
       return list;
     }
-    if (r().Founder) list.push(`Founder (${FOUNDER_TIERS[r().Founder!]})`);
+    if (r().Founder) list.push(`创始人 (${FOUNDER_TIERS[r().Founder!]})`);
     if (r().Guide) list.push(GUIDE_TIERS[r().Guide!]);
-    if (r().Moderator) list.push("Moderator");
+    if (r().Moderator) list.push("工作人员");
     if (r().Partner) list.push("WARFRAME 创作者");
 
     const oid = r().AccountId.$oid;
     const ts = parseInt(oid.substring(0, 8), 16);
     if (ts < 1363651200) list.push("封测玩家");
-    if (r().Accolades?.Heirloom) list.push("Ten Year Supporter");
+    if (r().Accolades?.Heirloom) list.push("十周年支持者");
     return list;
   };
 
@@ -80,7 +80,7 @@ export default function ProfileHeader(props: Props) {
             </p>
           </Show>
 
-          {/* 荣誉称号 */}
+          {/* 荣誉成员 */}
           <Show when={accolades().length > 0}>
             <div class="flex flex-wrap gap-1.5 mt-2">
               <For each={accolades()}>

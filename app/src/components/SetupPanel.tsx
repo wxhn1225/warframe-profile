@@ -175,7 +175,7 @@ export default function SetupPanel(props: Props) {
             disabled={props.loading || !props.accountId.trim()}
             class="w-full py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {props.loading ? "查询中..." : "查询资料"}
+            {props.loading ? "查询中..." : "查询个人档案"}
           </button>
         </div>
       </div>
