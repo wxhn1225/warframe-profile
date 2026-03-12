@@ -1,5 +1,6 @@
 use regex::Regex;
 use reqwest::Client;
+use std::io::{BufRead, BufReader};
 use std::time::Duration;
 
 #[derive(serde::Serialize)]
@@ -8,11 +9,11 @@ struct ParsedLogin {
     display_name: String,
 }
 
-#[tauri::command]
-async fn parse_account_id(content: String) -> Result<ParsedLogin, String> {
-    let re = Regex::new(r"Logged in ([^\(]+) \(([a-f0-9]+)\)").map_err(|e| e.to_string())?;
-    for line in content.lines() {
-        if let Some(caps) = re.captures(line) {
+fn parse_login_from_reader<R: std::io::Read>(reader: R) -> Result<ParsedLogin, String> {
+    let re = Regex::new(r"Logged in ([^\(]+) \(([a-f0-9]{24})\)").map_err(|e| e.to_string())?;
+    for line in BufReader::new(reader).lines() {
+        let line = line.map_err(|e| e.to_string())?;
+        if let Some(caps) = re.captures(&line) {
             return Ok(ParsedLogin {
                 display_name: caps[1].trim().to_string(),
                 account_id: caps[2].to_string(),
@@ -22,15 +23,23 @@ async fn parse_account_id(content: String) -> Result<ParsedLogin, String> {
     Err("未在 EE.log 中找到登录记录，请确认文件正确".to_string())
 }
 
+// 供前端上传文本内容时调用（前端只传前 2MB）
 #[tauri::command]
-async fn auto_detect_log() -> Result<String, String> {
+async fn parse_account_id(content: String) -> Result<ParsedLogin, String> {
+    parse_login_from_reader(content.as_bytes())
+}
+
+// 自动检测：流式读取本机 EE.log，找到即停，不加载整个文件
+#[tauri::command]
+async fn auto_detect_log() -> Result<ParsedLogin, String> {
     let localappdata = std::env::var("LOCALAPPDATA")
         .map_err(|_| "无法读取 LOCALAPPDATA 环境变量".to_string())?;
     let path = std::path::Path::new(&localappdata)
         .join("Warframe")
         .join("EE.log");
-    std::fs::read_to_string(&path)
-        .map_err(|e| format!("无法读取 EE.log（{}）：{}", path.display(), e))
+    let file = std::fs::File::open(&path)
+        .map_err(|e| format!("无法读取 EE.log（{}）：{}", path.display(), e))?;
+    parse_login_from_reader(file)
 }
 
 #[tauri::command]

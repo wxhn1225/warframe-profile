@@ -41,8 +41,8 @@ export default function SetupPanel(props: Props) {
     props.setDetectedName("");
     props.setAccountId("");
     try {
-      const content = await invoke<string>("auto_detect_log");
-      const result = await invoke<ParsedLogin>("parse_account_id", { content });
+      // Rust 端流式读取，找到即停，不加载整个文件
+      const result = await invoke<ParsedLogin>("auto_detect_log");
       applyParsed(result);
     } catch (e) {
       setLogError(e instanceof Error ? e.message : String(e));
@@ -55,17 +55,17 @@ export default function SetupPanel(props: Props) {
     const file = (e.currentTarget as HTMLInputElement).files?.[0];
     if (!file) return;
     setLogError(null);
-    // 先清除上一次的检测结果
     props.setDetectedName("");
     props.setAccountId("");
     try {
-      const content = await file.text();
+      // 只读前 2MB，EE.log 的登录行通常在最前面，2MB 绰绰有余
+      const slice = file.slice(0, 2 * 1024 * 1024);
+      const content = await slice.text();
       const result = await invoke<ParsedLogin>("parse_account_id", { content });
       applyParsed(result);
     } catch (e) {
       setLogError(e instanceof Error ? e.message : String(e));
     }
-    // 重置 input value，允许再次选择同一文件
     (e.currentTarget as HTMLInputElement).value = "";
   };
 

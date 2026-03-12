@@ -1,11 +1,12 @@
 import { createResource, For, Show } from "solid-js";
-import type { ProfileResult } from "../../types/profile";
+import type { ProfileResult, Stats as StatsType } from "../../types/profile";
 import { loadExport } from "../../lib/exportData";
 import { t } from "../../lib/dict";
 import { formatHours, formatNumber } from "../../lib/utils";
 
 interface Props {
   result: ProfileResult;
+  stats?: StatsType;
   dict: Record<string, string>;
 }
 
@@ -18,7 +19,7 @@ function abilityNameFromPath(path: string): string {
 }
 
 export default function Stats(props: Props) {
-  const s = () => props.result.Stats;
+  const s = () => props.stats;
 
   const [exports] = createResource(async () => {
     const [warframes, weapons, sentinels, enemies, regions, intrinsics] = await Promise.all([

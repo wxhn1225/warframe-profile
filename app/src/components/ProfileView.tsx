@@ -80,7 +80,7 @@ export default function ProfileView(props: Props) {
               <Achievements result={result()} dict={props.dict} />
             </Show>
             <Show when={activeTab() === "stats"}>
-              <Stats result={result()} dict={props.dict} />
+              <Stats result={result()} stats={props.profile.Stats} dict={props.dict} />
             </Show>
           </Suspense>
         </div>

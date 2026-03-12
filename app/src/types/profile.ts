@@ -1,5 +1,6 @@
 export interface ProfileData {
   Results: [ProfileResult];
+  Stats?: Stats;
 }
 
 export interface ProfileResult {
@@ -22,7 +23,6 @@ export interface ProfileResult {
   LoadOutInventory?: LoadOutInventory;
   OperatorLoadOuts?: OperatorLoadOut[];
   Accolades?: { Heirloom?: boolean };
-  Stats?: Stats;
   PlayerSkills?: Record<string, number>;
   DeathMarks?: string[];
   MigratedToConsole?: boolean;
