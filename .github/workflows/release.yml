@@ -123,8 +123,9 @@ jobs:
           }
 
           $sig = (Get-Content $sigFile.FullName -Raw).Trim()
-          $encodedName = [System.Uri]::EscapeDataString($exeFile.Name)
-          $url = "https://github.com/${repo}/releases/download/${tag}/${encodedName}"
+          # GitHub replaces spaces with dots in release asset filenames
+          $ghName = $exeFile.Name -replace ' ', '.'
+          $url = "https://github.com/${repo}/releases/download/${tag}/${ghName}"
 
           $json = [ordered]@{
             version  = $version
