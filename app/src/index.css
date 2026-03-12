@@ -33,10 +33,10 @@ body {
 }
 
 /* 自定义滚动条 */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #ede4d8; border-radius: 5px; }
+::-webkit-scrollbar-thumb { background: #b89878; border-radius: 5px; border: 2px solid #ede4d8; }
+::-webkit-scrollbar-thumb:hover { background: #8a6040; }
 
 /* 进度条动画 */
 @keyframes progress-shine {

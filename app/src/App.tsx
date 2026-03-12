@@ -2,6 +2,7 @@ import {
   createSignal,
   createResource,
   onMount,
+  onCleanup,
   Show,
   type Accessor,
 } from "solid-js";
@@ -25,12 +26,17 @@ export default function App() {
   const [availableLangs, setAvailableLangs] = createSignal<LangInfo[]>([]);
   const [updateVersion, setUpdateVersion] = createSignal<string | null>(null);
   const [updateLoading, setUpdateLoading] = createSignal(false);
+  const [showBackTop, setShowBackTop] = createSignal(false);
 
   const [dict] = createResource(lang, (code) => loadDict(code));
 
   onMount(async () => {
     const langs = await getAvailableLanguages();
     setAvailableLangs(langs);
+
+    const onScroll = () => setShowBackTop(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onCleanup(() => window.removeEventListener("scroll", onScroll));
 
     // 静默检测更新
     try {
@@ -124,6 +130,17 @@ export default function App() {
           )}
         </Show>
       </main>
+
+      {/* 回到顶部按钮 */}
+      <Show when={showBackTop()}>
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          class="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-[#2a1f14] text-[#e8ddd0] shadow-lg flex items-center justify-center hover:bg-[#4a3525] transition-colors"
+          title="回到顶部"
+        >
+          ↑
+        </button>
+      </Show>
     </div>
   );
 }
