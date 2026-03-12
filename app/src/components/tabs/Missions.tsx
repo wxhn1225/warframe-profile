@@ -67,7 +67,7 @@ export default function Missions(props: Props) {
             onInput={(e) => setSearch(e.currentTarget.value)}
             class="mb-3 w-full max-w-xs px-3 py-1.5 text-sm border border-[#e0d0bc] rounded-md focus:outline-none focus:border-blue-400"
           />
-          <div class="overflow-auto max-h-[70vh]">
+          <div class="overflow-auto max-h-[70vh] pr-2">
             <table class="w-full text-sm">
               <thead>
                 <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
