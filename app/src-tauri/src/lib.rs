@@ -11,7 +11,7 @@ struct ParsedLogin {
 #[tauri::command]
 async fn parse_account_id(content: String) -> Result<ParsedLogin, String> {
     let re = Regex::new(r"Logged in ([^\(]+) \(([a-f0-9]+)\)").map_err(|e| e.to_string())?;
-    for line in content.lines().rev() {
+    for line in content.lines() {
         if let Some(caps) = re.captures(line) {
             return Ok(ParsedLogin {
                 display_name: caps[1].trim().to_string(),

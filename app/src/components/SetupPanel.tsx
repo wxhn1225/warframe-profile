@@ -38,6 +38,8 @@ export default function SetupPanel(props: Props) {
   const handleAutoDetect = async () => {
     setLogLoading(true);
     setLogError(null);
+    props.setDetectedName("");
+    props.setAccountId("");
     try {
       const content = await invoke<string>("auto_detect_log");
       const result = await invoke<ParsedLogin>("parse_account_id", { content });
@@ -53,6 +55,9 @@ export default function SetupPanel(props: Props) {
     const file = (e.currentTarget as HTMLInputElement).files?.[0];
     if (!file) return;
     setLogError(null);
+    // 先清除上一次的检测结果
+    props.setDetectedName("");
+    props.setAccountId("");
     try {
       const content = await file.text();
       const result = await invoke<ParsedLogin>("parse_account_id", { content });
@@ -60,13 +65,15 @@ export default function SetupPanel(props: Props) {
     } catch (e) {
       setLogError(e instanceof Error ? e.message : String(e));
     }
+    // 重置 input value，允许再次选择同一文件
+    (e.currentTarget as HTMLInputElement).value = "";
   };
 
   return (
     <div class="max-w-xl mx-auto mt-10">
       <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="px-6 pt-6 pb-4 border-b border-slate-100">
-          <h1 class="text-lg font-semibold text-slate-800">查询个人资料</h1>
+          <h1 class="text-lg font-semibold text-slate-800">查询个人档案</h1>
           <p class="text-sm text-slate-500 mt-1">
             此工具仅适用于 Warframe 国际服账号
           </p>

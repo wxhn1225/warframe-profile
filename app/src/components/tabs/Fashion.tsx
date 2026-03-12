@@ -225,6 +225,54 @@ export default function Fashion(props: Props) {
             }}
           </For>
         </div>
+
+        {/* 操作者外观 */}
+        <Show when={props.result.OperatorLoadOuts?.length}>
+          <div class="border border-slate-200 rounded-lg p-4">
+            <h3 class="text-sm font-semibold text-slate-700 mb-3">操作者外观</h3>
+            <For each={props.result.OperatorLoadOuts ?? []}>
+              {(op, i) => {
+                const OPERATOR_SLOTS: Record<number, string> = {
+                  0: "头部",
+                  1: "体型",
+                  2: "发型",
+                  3: "面部纹饰",
+                  5: "风帽",
+                  6: "上衣",
+                  7: "袖子",
+                  8: "腿部",
+                  9: "声音",
+                  10: "裙装",
+                  30: "妆容",
+                };
+                return (
+                  <div class={i() > 0 ? "mt-3 pt-3 border-t border-slate-100" : ""}>
+                    <p class="text-xs text-slate-400 mb-1.5">套装 {i() + 1}</p>
+                    <div class="space-y-0.5">
+                      <For each={Object.entries(OPERATOR_SLOTS)}>
+                        {([idx, label]) => {
+                          const skinPath = op.Skins?.[+idx];
+                          if (!skinPath || skinPath === "") return null;
+                          const custom = ex().customs[skinPath];
+                          const name = custom
+                            ? (t(props.dict, custom.name) || custom.name)
+                            : skinPath.split("/").pop() ?? skinPath;
+                          return (
+                            <div class="flex items-center gap-1.5 text-xs text-slate-600">
+                              <span class="text-slate-400 w-16 shrink-0">{label}</span>
+                              <span>{name}</span>
+                            </div>
+                          );
+                        }}
+                      </For>
+                    </div>
+                  </div>
+                );
+              }}
+            </For>
+          </div>
+        </Show>
+      </div>
       )}
     </Show>
   );

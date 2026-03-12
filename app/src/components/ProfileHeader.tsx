@@ -1,9 +1,11 @@
 import { Show, For } from "solid-js";
 import type { ProfileResult } from "../types/profile";
 import { sanitiseName, oidToDate } from "../lib/utils";
+import { t } from "../lib/dict";
 
 interface Props {
   result: ProfileResult;
+  dict: Record<string, string>;
 }
 
 const FOUNDER_TIERS = ["", "Disciple", "Hunter", "Master", "Grand Master"];
@@ -31,10 +33,17 @@ export default function ProfileHeader(props: Props) {
     return list;
   };
 
-  const regDate = () => {
-    const oid = r().AccountId.$oid;
-    return oidToDate(oid).toLocaleDateString();
+  const regDate = () => oidToDate(r().AccountId.$oid).toLocaleDateString();
+
+  const alignmentLabel = () => {
+    const a = r().Alignment?.Alignment ?? 0;
+    if (a > 0) return `慈悲 +${a}`;
+    if (a < 0) return `牺牲 ${a}`;
+    return "对齐：中立";
   };
+
+  const deathMarkNames = () =>
+    (r().DeathMarks ?? []).map((key) => t(props.dict, key) || key.split("/").pop() || key);
 
   return (
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm px-6 py-5 mb-5">
@@ -46,13 +55,30 @@ export default function ProfileHeader(props: Props) {
         </div>
 
         <div class="min-w-0 flex-1">
-          {/* 用户名 */}
-          <h2 class="text-xl font-semibold text-slate-800 leading-tight truncate">
-            {sanitiseName(r().DisplayName)}
-          </h2>
+          {/* 用户名 + 指挥官状态 */}
+          <div class="flex items-center gap-2">
+            <h2 class="text-xl font-semibold text-slate-800 leading-tight truncate">
+              {sanitiseName(r().DisplayName)}
+            </h2>
+            <Show when={r().UnlockedOperator}>
+              <span class="text-xs px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-200 shrink-0">
+                指挥官已解锁
+              </span>
+            </Show>
+          </div>
 
           {/* 注册日期 */}
           <p class="text-sm text-slate-500 mt-0.5">注册于 {regDate()}</p>
+
+          {/* 对齐值 */}
+          <Show when={r().Alignment !== undefined}>
+            <p class="text-xs text-slate-400 mt-0.5">
+              {alignmentLabel()}
+              <Show when={(r().Alignment?.Wisdom ?? 0) > 0}>
+                <span class="ml-2">智慧 {r().Alignment!.Wisdom}</span>
+              </Show>
+            </p>
+          </Show>
 
           {/* 荣誉称号 */}
           <Show when={accolades().length > 0}>
@@ -67,17 +93,31 @@ export default function ProfileHeader(props: Props) {
             </div>
           </Show>
 
-          {/* 战队 */}
+          {/* 氏族 */}
           <Show when={r().GuildName}>
             <p class="text-sm text-slate-600 mt-1.5">
-              <span class="text-slate-400 mr-1">战队</span>
+              <span class="text-slate-400 mr-1">氏族</span>
               {r().GuildName}
               <Show when={r().GuildTier}>
                 <span class="text-slate-400 text-xs ml-2">
-                  {CLAN_TIERS[r().GuildTier!]} · Rank {r().GuildClass}
+                  {CLAN_TIERS[r().GuildTier!]} · 等级 {r().GuildClass}
                 </span>
               </Show>
             </p>
+          </Show>
+
+          {/* 死亡标记 */}
+          <Show when={deathMarkNames().length > 0}>
+            <div class="mt-2 flex flex-wrap items-center gap-1.5">
+              <span class="text-xs text-slate-400">死亡标记</span>
+              <For each={deathMarkNames()}>
+                {(name) => (
+                  <span class="text-xs px-2 py-0.5 rounded-full bg-red-50 text-red-600 border border-red-200">
+                    {name}
+                  </span>
+                )}
+              </For>
+            </div>
           </Show>
         </div>
       </div>

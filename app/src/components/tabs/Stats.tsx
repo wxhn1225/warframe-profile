@@ -21,14 +21,15 @@ export default function Stats(props: Props) {
   const s = () => props.result.Stats;
 
   const [exports] = createResource(async () => {
-    const [warframes, weapons, sentinels, enemies, regions] = await Promise.all([
+    const [warframes, weapons, sentinels, enemies, regions, intrinsics] = await Promise.all([
       loadExport<Record<string, { name: string }>>("ExportWarframes"),
       loadExport<Record<string, { name: string }>>("ExportWeapons"),
       loadExport<Record<string, { name: string }>>("ExportSentinels"),
       loadExport<{ avatars: Record<string, { name: string }> }>("ExportEnemies"),
       loadExport<Record<string, { name: string; systemName?: string }>>("ExportRegions"),
+      loadExport<Record<string, { name: string }>>("ExportIntrinsics"),
     ]);
-    return { warframes, weapons, sentinels, avatars: enemies.avatars, regions };
+    return { warframes, weapons, sentinels, avatars: enemies.avatars, regions, intrinsics };
   });
 
   const resolveName = (type: string) => {
@@ -77,21 +78,31 @@ export default function Stats(props: Props) {
             <h3 class="text-sm font-semibold text-slate-700 mb-2">总览</h3>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {([
-                ["游玩时长", formatHours(stats().TimePlayedSec ?? 0)],
-                ["完成任务", formatNumber(stats().MissionsCompleted ?? 0)],
-                ["任务失败", formatNumber(stats().MissionsFailed ?? 0)],
-                ["主动退出", formatNumber(stats().MissionsQuit ?? 0)],
+                ["总游戏时间", formatHours(stats().TimePlayedSec ?? 0)],
+                ["任务完成数", formatNumber(stats().MissionsCompleted ?? 0)],
+                ["任务失败数", formatNumber(stats().MissionsFailed ?? 0)],
+                ["任务放弃数", formatNumber(stats().MissionsQuit ?? 0)],
                 ["任务中断", formatNumber(stats().MissionsInterrupted ?? 0)],
-                ["放弃任务", formatNumber(stats().MissionsDumped ?? 0)],
+                ["任务转移", formatNumber(stats().MissionsDumped ?? 0)],
                 ["总收入", formatNumber(stats().Income ?? 0) + " cr"],
                 ["死亡次数", formatNumber(stats().Deaths ?? 0)],
-                ["复活次数", formatNumber(stats().ReviveCount ?? 0)],
-                ["治疗次数", formatNumber(stats().HealCount ?? 0)],
+                ["复活", formatNumber(stats().ReviveCount ?? 0)],
+                ["治疗", formatNumber(stats().HealCount ?? 0)],
                 ["近战击杀", formatNumber(stats().MeleeKills ?? 0)],
                 ["拾取物品", formatNumber(stats().PickupCount ?? 0)],
-                ["密码解出", formatNumber(stats().CiphersSolved ?? 0)],
-                ["平均解密", cipherAvg()],
+                ["破解成功", formatNumber(stats().CiphersSolved ?? 0)],
+                ["总破解时间", ((stats().CipherTime ?? 0)).toFixed(1) + " s"],
+                ["平均破解时间", cipherAvg()],
                 ["PvP 积分", formatNumber(stats().Rating ?? 0)],
+                ...(props.result.DailyFocus != null
+                  ? [["今日剩余专精", formatNumber(props.result.DailyFocus)]] as [string,string][]
+                  : []),
+                ...Object.entries(props.result.PlayerSkills ?? {}).map(([k, v]) => {
+                  const ex = exports();
+                  const nameKey = ex?.intrinsics[k]?.name;
+                  const label = nameKey ? (t(props.dict, nameKey) || nameKey.split("/").pop() || k) : k;
+                  return [label + " (内源之力)", String(v)] as [string, string];
+                }),
               ] as [string, string][]).map(([label, value]) => (
                 <div class="bg-slate-50 rounded-lg px-3 py-2.5 border border-slate-200">
                   <p class="text-xs text-slate-500">{label}</p>
@@ -166,11 +177,11 @@ export default function Stats(props: Props) {
                       <th class="pb-2 pr-3 font-medium">装备</th>
                       <th class="pb-2 pr-3 font-medium text-right">时长</th>
                       <th class="pb-2 pr-3 font-medium text-right">击杀</th>
-                      <th class="pb-2 pr-3 font-medium text-right">爆头</th>
-                      <th class="pb-2 pr-3 font-medium text-right">命中</th>
-                      <th class="pb-2 pr-3 font-medium text-right">发射</th>
-                      <th class="pb-2 pr-3 font-medium text-right">助攻</th>
-                      <th class="pb-2 pr-3 font-medium text-right">死亡</th>
+                      <th class="pb-2 pr-3 font-medium text-right">爆头击杀</th>
+                      <th class="pb-2 pr-3 font-medium text-right">命中次数</th>
+                      <th class="pb-2 pr-3 font-medium text-right">射击数</th>
+                      <th class="pb-2 pr-3 font-medium text-right">协助击杀</th>
+                      <th class="pb-2 pr-3 font-medium text-right">死亡次数</th>
                       <th class="pb-2 font-medium text-right">经验值</th>
                     </tr>
                   </thead>
@@ -206,10 +217,10 @@ export default function Stats(props: Props) {
                     <tr class="text-left text-xs text-slate-500 border-b border-slate-200">
                       <th class="pb-2 pr-3 font-medium">敌人</th>
                       <th class="pb-2 pr-3 font-medium text-right">击杀</th>
-                      <th class="pb-2 pr-3 font-medium text-right">爆头</th>
-                      <th class="pb-2 pr-3 font-medium text-right">助攻</th>
+                      <th class="pb-2 pr-3 font-medium text-right">爆头击杀</th>
+                      <th class="pb-2 pr-3 font-medium text-right">协助击杀</th>
                       <th class="pb-2 pr-3 font-medium text-right">处决</th>
-                      <th class="pb-2 pr-3 font-medium text-right">死亡</th>
+                      <th class="pb-2 pr-3 font-medium text-right">死亡次数</th>
                       <th class="pb-2 pr-3 font-medium text-right">捕获</th>
                       <th class="pb-2 font-medium text-right">扫描</th>
                     </tr>
@@ -256,6 +267,33 @@ export default function Stats(props: Props) {
                         <tr class="border-b border-slate-100 hover:bg-slate-50">
                           <td class="py-1.5 pr-4 text-slate-700">{resolveEnemyName(sc.type)}</td>
                           <td class="py-1.5 text-right tabular-nums text-slate-600">{formatNumber(sc.scans)}</td>
+                        </tr>
+                      )}
+                    </For>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </Show>
+
+          {/* 全部掌握度 XP（XPInfo） */}
+          <Show when={exports() && props.result.LoadOutInventory?.XPInfo?.length}>
+            <section>
+              <h3 class="text-sm font-semibold text-slate-700 mb-2">掌握度详情</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="text-left text-xs text-slate-500 border-b border-slate-200">
+                      <th class="pb-2 pr-4 font-medium">装备</th>
+                      <th class="pb-2 font-medium text-right">经验值</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <For each={[...(props.result.LoadOutInventory!.XPInfo!)].sort((a, b) => b.XP - a.XP)}>
+                      {(item) => (
+                        <tr class="border-b border-slate-100 hover:bg-slate-50">
+                          <td class="py-1.5 pr-4 text-slate-700">{resolveName(item.ItemType)}</td>
+                          <td class="py-1.5 text-right tabular-nums text-slate-600">{formatNumber(item.XP)}</td>
                         </tr>
                       )}
                     </For>

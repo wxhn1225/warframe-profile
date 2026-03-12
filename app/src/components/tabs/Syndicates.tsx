@@ -90,17 +90,43 @@ export default function Syndicates(props: Props) {
                       {t(props.dict, syndicate.name)}
                     </p>
                     <p class="text-xs text-slate-500 mt-0.5">
-                      Rank {level}
+                      等级 {level}
                       {titleEntry && (
                         <span> · {toTitleCase(t(props.dict, titleEntry.name))}</span>
                       )}
                     </p>
                     <p class="text-xs text-slate-400 mt-0.5">
-                      Standing: {(standing - minStanding).toLocaleString()}
+                      声望: {(standing - minStanding).toLocaleString()}
                       {minStanding !== 0 && (
-                        <span> ({standing.toLocaleString()} total)</span>
+                        <span>（累计 {standing.toLocaleString()}）</span>
                       )}
                     </p>
+                    {(() => {
+                      const dailyMap: Record<string, keyof typeof props.result> = {
+                        ArbitersSyndicate: "DailyAffiliation",
+                        ConclaveSyndicate: "DailyAffiliationPvp",
+                        LibrarySyndicate: "DailyAffiliationLibrary",
+                        CetusSyndicate: "DailyAffiliationCetus",
+                        QuillsSyndicate: "DailyAffiliationQuills",
+                        SolarisSyndicate: "DailyAffiliationSolaris",
+                        VentKidsSyndicate: "DailyAffiliationVentkids",
+                        VoxSyndicate: "DailyAffiliationVox",
+                        EntratiSyndicate: "DailyAffiliationEntrati",
+                        NecraloidSyndicate: "DailyAffiliationNecraloid",
+                        ZarimanSyndicate: "DailyAffiliationZariman",
+                        KahlSyndicate: "DailyAffiliationKahl",
+                        EntratiLabSyndicate: "DailyAffiliationCavia",
+                        HexSyndicate: "DailyAffiliationHex",
+                      };
+                      const key = dailyMap[tag];
+                      const remaining = key ? (props.result[key] as number | undefined) : undefined;
+                      if (remaining == null) return null;
+                      return (
+                        <p class="text-xs text-slate-400 mt-0.5">
+                          每日声望剩余: {remaining.toLocaleString()}
+                        </p>
+                      );
+                    })()}
                   </div>
                 </div>
               );

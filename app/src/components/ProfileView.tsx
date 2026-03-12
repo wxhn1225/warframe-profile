@@ -39,7 +39,7 @@ export default function ProfileView(props: Props) {
       </button>
 
       {/* 个人信息头部 */}
-      <ProfileHeader result={result()} />
+      <ProfileHeader result={result()} dict={props.dict} />
 
       {/* 标签页导航 */}
       <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">

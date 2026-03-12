@@ -31,6 +31,19 @@ export interface ProfileResult {
   Alignment?: { Alignment: number; Wisdom: number };
   DailyFocus?: number;
   DailyAffiliation?: number;
+  DailyAffiliationPvp?: number;
+  DailyAffiliationLibrary?: number;
+  DailyAffiliationCetus?: number;
+  DailyAffiliationQuills?: number;
+  DailyAffiliationSolaris?: number;
+  DailyAffiliationVentkids?: number;
+  DailyAffiliationVox?: number;
+  DailyAffiliationEntrati?: number;
+  DailyAffiliationNecraloid?: number;
+  DailyAffiliationZariman?: number;
+  DailyAffiliationKahl?: number;
+  DailyAffiliationCavia?: number;
+  DailyAffiliationHex?: number;
 }
 
 export interface Affiliation {
