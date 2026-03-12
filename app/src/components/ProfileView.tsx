@@ -9,8 +9,8 @@ const Achievements = lazy(() => import("./tabs/Achievements"));
 const Stats = lazy(() => import("./tabs/Stats"));
 
 const TABS = [
-  { id: "fashion", label: "时装" },
-  { id: "syndicates", label: "聚合体" },
+  { id: "fashion", label: "配置" },
+  { id: "syndicates", label: "集团" },
   { id: "missions", label: "任务" },
   { id: "achievements", label: "成就" },
   { id: "stats", label: "统计" },

@@ -1,11 +1,18 @@
 import { createSignal, Show } from "solid-js";
 import { invoke } from "@tauri-apps/api/core";
 
+interface ParsedLogin {
+  account_id: string;
+  display_name: string;
+}
+
 interface Props {
   platform: string;
   setPlatform: (p: string) => void;
   accountId: string;
   setAccountId: (id: string) => void;
+  detectedName: string;
+  setDetectedName: (name: string) => void;
   onFetch: () => void;
   loading: boolean;
   error: string | null;
@@ -23,13 +30,18 @@ export default function SetupPanel(props: Props) {
   const [logError, setLogError] = createSignal<string | null>(null);
   const [logLoading, setLogLoading] = createSignal(false);
 
+  const applyParsed = (result: ParsedLogin) => {
+    props.setAccountId(result.account_id);
+    props.setDetectedName(result.display_name);
+  };
+
   const handleAutoDetect = async () => {
     setLogLoading(true);
     setLogError(null);
     try {
       const content = await invoke<string>("auto_detect_log");
-      const id = await invoke<string>("parse_account_id", { content });
-      props.setAccountId(id);
+      const result = await invoke<ParsedLogin>("parse_account_id", { content });
+      applyParsed(result);
     } catch (e) {
       setLogError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -43,8 +55,8 @@ export default function SetupPanel(props: Props) {
     setLogError(null);
     try {
       const content = await file.text();
-      const id = await invoke<string>("parse_account_id", { content });
-      props.setAccountId(id);
+      const result = await invoke<ParsedLogin>("parse_account_id", { content });
+      applyParsed(result);
     } catch (e) {
       setLogError(e instanceof Error ? e.message : String(e));
     }
@@ -52,9 +64,7 @@ export default function SetupPanel(props: Props) {
 
   return (
     <div class="max-w-xl mx-auto mt-10">
-      {/* 卡片 */}
       <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        {/* 标题区 */}
         <div class="px-6 pt-6 pb-4 border-b border-slate-100">
           <h1 class="text-lg font-semibold text-slate-800">查询个人资料</h1>
           <p class="text-sm text-slate-500 mt-1">
@@ -87,7 +97,7 @@ export default function SetupPanel(props: Props) {
           {/* EE.log 区域 */}
           <div>
             <label class="block text-sm font-medium text-slate-700 mb-2">
-              账号 ID
+              账号
               <span class="ml-1.5 font-normal text-slate-400">
                 — 从 EE.log 自动提取
               </span>
@@ -118,13 +128,32 @@ export default function SetupPanel(props: Props) {
               <p class="text-xs text-red-500 mb-2">{logError()}</p>
             </Show>
 
-            <input
-              type="text"
-              value={props.accountId}
-              onInput={(e) => props.setAccountId(e.currentTarget.value)}
-              placeholder="输入或粘贴账号 ID (24位十六进制)"
-              class="w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:border-blue-400 font-mono placeholder:text-slate-400"
-            />
+            {/* 检测到昵称时显示昵称，否则显示 ID 输入框 */}
+            <Show
+              when={props.detectedName}
+              fallback={
+                <input
+                  type="text"
+                  value={props.accountId}
+                  onInput={(e) => props.setAccountId(e.currentTarget.value)}
+                  placeholder="输入或粘贴账号 ID（24位十六进制）"
+                  class="w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:border-blue-400 font-mono placeholder:text-slate-400"
+                />
+              }
+            >
+              <div class="flex items-center gap-2 px-3 py-2 bg-green-50 border border-green-200 rounded-md">
+                <svg class="w-4 h-4 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-sm font-medium text-slate-800">{props.detectedName}</span>
+                <button
+                  onClick={() => { props.setDetectedName(""); props.setAccountId(""); }}
+                  class="ml-auto text-xs text-slate-400 hover:text-slate-600"
+                >
+                  清除
+                </button>
+              </div>
+            </Show>
           </div>
 
           {/* 错误提示 */}
@@ -134,7 +163,6 @@ export default function SetupPanel(props: Props) {
             </div>
           </Show>
 
-          {/* 查询按钮 */}
           <button
             onClick={props.onFetch}
             disabled={props.loading || !props.accountId.trim()}

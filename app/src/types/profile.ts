@@ -23,6 +23,14 @@ export interface ProfileResult {
   OperatorLoadOuts?: OperatorLoadOut[];
   Accolades?: { Heirloom?: boolean };
   Stats?: Stats;
+  PlayerSkills?: Record<string, number>;
+  DeathMarks?: string[];
+  MigratedToConsole?: boolean;
+  UnlockedOperator?: boolean;
+  UnlockedAlignment?: boolean;
+  Alignment?: { Alignment: number; Wisdom: number };
+  DailyFocus?: number;
+  DailyAffiliation?: number;
 }
 
 export interface Affiliation {
@@ -62,6 +70,12 @@ export interface LoadOutItem {
   ItemName?: string;
   Configs: LoadOutConfig[];
   XP?: number;
+  FocusLens?: string;
+}
+
+export interface XPInfo {
+  ItemType: string;
+  XP: number;
 }
 
 export interface LoadOutConfig {
@@ -89,6 +103,7 @@ export interface LoadOutInventory {
   Pistols?: LoadOutItem[];
   Melee?: LoadOutItem[];
   WeaponSkins?: { ItemType: string }[];
+  XPInfo?: XPInfo[];
 }
 
 export interface OperatorLoadOut {
@@ -109,10 +124,14 @@ export interface Stats {
   ReviveCount?: number;
   HealCount?: number;
   Deaths?: number;
+  PickupCount?: number;
+  Rating?: number;
   Weapons?: WeaponStat[];
   Enemies?: EnemyStat[];
   Scans?: ScanEntry[];
   Abilities?: AbilityEntry[];
+  Missions?: MissionHighScore[];
+  PlayerLevel?: number;
 }
 
 export interface WeaponStat {
@@ -123,6 +142,8 @@ export interface WeaponStat {
   assists?: number;
   xp?: number;
   fired?: number;
+  hits?: number;
+  deaths?: number;
 }
 
 export interface EnemyStat {
@@ -132,6 +153,7 @@ export interface EnemyStat {
   assists?: number;
   executions?: number;
   deaths?: number;
+  captures?: number;
 }
 
 export interface ScanEntry {
@@ -142,4 +164,9 @@ export interface ScanEntry {
 export interface AbilityEntry {
   type: string;
   used: number;
+}
+
+export interface MissionHighScore {
+  type: string;
+  highScore: number;
 }

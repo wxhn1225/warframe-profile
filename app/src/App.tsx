@@ -18,6 +18,7 @@ export default function App() {
   const [lang, setLang] = createSignal("zh");
   const [platform, setPlatform] = createSignal("pc");
   const [accountId, setAccountId] = createSignal("");
+  const [detectedName, setDetectedName] = createSignal("");
   const [profile, setProfile] = createSignal<ProfileData | null>(null);
   const [loading, setLoading] = createSignal(false);
   const [fetchError, setFetchError] = createSignal<string | null>(null);
@@ -101,6 +102,8 @@ export default function App() {
               setPlatform={setPlatform}
               accountId={accountId()}
               setAccountId={setAccountId}
+              detectedName={detectedName()}
+              setDetectedName={setDetectedName}
               onFetch={handleFetch}
               loading={loading()}
               error={fetchError()}
@@ -114,6 +117,8 @@ export default function App() {
               onBack={() => {
                 setProfile(null);
                 setFetchError(null);
+                setDetectedName("");
+                setAccountId("");
               }}
             />
           )}

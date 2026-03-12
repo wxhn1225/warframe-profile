@@ -2,13 +2,21 @@ use regex::Regex;
 use reqwest::Client;
 use std::time::Duration;
 
+#[derive(serde::Serialize)]
+struct ParsedLogin {
+    account_id: String,
+    display_name: String,
+}
+
 #[tauri::command]
-async fn parse_account_id(content: String) -> Result<String, String> {
-    let re = Regex::new(r"Logged in [^\(]+ \(([a-f0-9]+)\)").map_err(|e| e.to_string())?;
-    // 从末尾往前找最后一条登录记录
+async fn parse_account_id(content: String) -> Result<ParsedLogin, String> {
+    let re = Regex::new(r"Logged in ([^\(]+) \(([a-f0-9]+)\)").map_err(|e| e.to_string())?;
     for line in content.lines().rev() {
         if let Some(caps) = re.captures(line) {
-            return Ok(caps[1].to_string());
+            return Ok(ParsedLogin {
+                display_name: caps[1].trim().to_string(),
+                account_id: caps[2].to_string(),
+            });
         }
     }
     Err("未在 EE.log 中找到登录记录，请确认文件正确".to_string())
@@ -52,8 +60,15 @@ async fn fetch_profile(account_id: String, platform: String) -> Result<String, S
         .await
         .map_err(|e| format!("网络请求失败: {}", e))?;
 
-    if !resp.status().is_success() {
-        return Err(format!("服务器返回错误: HTTP {}", resp.status()));
+    let status = resp.status();
+    if status == 409 {
+        return Err("此账号为国服账号，本工具仅支持国际服账号".to_string());
+    }
+    if status == 404 {
+        return Err("未找到该账号，请确认账号 ID 是否正确".to_string());
+    }
+    if !status.is_success() {
+        return Err(format!("服务器返回错误，请稍后重试（{}）", status.as_u16()));
     }
 
     resp.text()
