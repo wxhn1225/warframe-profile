@@ -193,7 +193,7 @@ export default function Stats(props: Props) {
           {/* ── 技能 ── */}
           <Show when={statTab() === "abilities"}>
             <Show when={stats().Abilities?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
-              <div class="overflow-x-auto">
+              <div class="overflow-auto max-h-[70vh]">
                 <table class="w-full text-sm">
                   <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
@@ -219,7 +219,7 @@ export default function Stats(props: Props) {
           {/* ── 武器 ── */}
           <Show when={statTab() === "weapons"}>
             <Show when={exports() && stats().Weapons?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
-              <div class="overflow-x-auto">
+              <div class="overflow-auto max-h-[70vh]">
                 <table class="w-full text-sm">
                   <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
@@ -259,7 +259,7 @@ export default function Stats(props: Props) {
           {/* ── 敌人 ── */}
           <Show when={statTab() === "enemies"}>
             <Show when={exports() && stats().Enemies?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
-              <div class="overflow-x-auto">
+              <div class="overflow-auto max-h-[70vh]">
                 <table class="w-full text-sm">
                   <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
@@ -300,7 +300,7 @@ export default function Stats(props: Props) {
           {/* ── 扫描 ── */}
           <Show when={statTab() === "scans"}>
             <Show when={stats().Scans?.some((sc) => !stats().Enemies?.find((e) => e.type === sc.type))} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
-              <div class="overflow-x-auto">
+              <div class="overflow-auto max-h-[70vh]">
                 <table class="w-full text-sm">
                   <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
@@ -326,7 +326,7 @@ export default function Stats(props: Props) {
           {/* ── 节点 ── */}
           <Show when={statTab() === "nodes"}>
             <Show when={exports() && stats().Missions?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
-              <div class="overflow-x-auto">
+              <div class="overflow-auto max-h-[70vh]">
                 <table class="w-full text-sm">
                   <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
@@ -352,7 +352,7 @@ export default function Stats(props: Props) {
           {/* ── 精通 ── */}
           <Show when={statTab() === "mastery"}>
             <Show when={exports() && props.result.LoadOutInventory?.XPInfo?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
-              <div class="overflow-x-auto">
+              <div class="overflow-auto max-h-[70vh]">
                 <table class="w-full text-sm">
                   <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
