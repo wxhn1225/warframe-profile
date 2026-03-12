@@ -79,20 +79,20 @@ export default function Stats(props: Props) {
             <h3 class="text-sm font-semibold text-[#3d2e1e] mb-2">总览</h3>
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {([
-                ["总游戏时�?, formatHours(stats().TimePlayedSec ?? 0)],
-                ["任务完成�?, formatNumber(stats().MissionsCompleted ?? 0)],
-                ["任务失败�?, formatNumber(stats().MissionsFailed ?? 0)],
-                ["任务放弃�?, formatNumber(stats().MissionsQuit ?? 0)],
+                ["总游戏时间", formatHours(stats().TimePlayedSec ?? 0)],
+                ["任务完成数", formatNumber(stats().MissionsCompleted ?? 0)],
+                ["任务失败数", formatNumber(stats().MissionsFailed ?? 0)],
+                ["任务放弃数", formatNumber(stats().MissionsQuit ?? 0)],
                 ["任务中断", formatNumber(stats().MissionsInterrupted ?? 0)],
                 ["任务转移", formatNumber(stats().MissionsDumped ?? 0)],
-                ["总收�?, formatNumber(stats().Income ?? 0) + " cr"],
+                ["总收入", formatNumber(stats().Income ?? 0) + " cr"],
                 ["死亡次数", formatNumber(stats().Deaths ?? 0)],
                 ["复活", formatNumber(stats().ReviveCount ?? 0)],
                 ["治疗", formatNumber(stats().HealCount ?? 0)],
                 ["近战击杀", formatNumber(stats().MeleeKills ?? 0)],
                 ["拾取物品", formatNumber(stats().PickupCount ?? 0)],
                 ["破解成功", formatNumber(stats().CiphersSolved ?? 0)],
-                ["总破解时�?, ((stats().CipherTime ?? 0)).toFixed(1) + " s"],
+                ["总破解时间", ((stats().CipherTime ?? 0)).toFixed(1) + " s"],
                 ["平均破解时间", cipherAvg()],
                 ["PvP 积分", formatNumber(stats().Rating ?? 0)],
                 ...(props.result.DailyFocus != null
@@ -113,15 +113,15 @@ export default function Stats(props: Props) {
             </div>
           </section>
 
-          {/* 技能使用次�?*/}
+          {/* 技能使用次数 */}
           <Show when={stats().Abilities?.length}>
             <section>
-              <h3 class="text-sm font-semibold text-[#3d2e1e] mb-2">技能使用次�?/h3>
+              <h3 class="text-sm font-semibold text-[#3d2e1e] mb-2">技能使用次数</h3>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                   <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
-                      <th class="pb-2 pr-4 font-medium">技�?/th>
+                      <th class="pb-2 pr-4 font-medium">技能</th>
                       <th class="pb-2 font-medium text-right">使用次数</th>
                     </tr>
                   </thead>
@@ -180,10 +180,10 @@ export default function Stats(props: Props) {
                       <th class="pb-2 pr-3 font-medium text-right">击杀</th>
                       <th class="pb-2 pr-3 font-medium text-right">爆头击杀</th>
                       <th class="pb-2 pr-3 font-medium text-right">命中次数</th>
-                      <th class="pb-2 pr-3 font-medium text-right">射击�?/th>
+                      <th class="pb-2 pr-3 font-medium text-right">射击数</th>
                       <th class="pb-2 pr-3 font-medium text-right">协助击杀</th>
                       <th class="pb-2 pr-3 font-medium text-right">死亡次数</th>
-                      <th class="pb-2 font-medium text-right">经验�?/th>
+                      <th class="pb-2 font-medium text-right">经验值</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -194,11 +194,11 @@ export default function Stats(props: Props) {
                           <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{formatHours(w.equipTime ?? 0)}</td>
                           <td class="py-1.5 pr-3 text-right tabular-nums text-[#5a4030]">{formatNumber(w.kills ?? 0)}</td>
                           <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{formatNumber(w.headshots ?? 0)}</td>
-                          <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{w.hits != null ? formatNumber(w.hits) : "�?}</td>
-                          <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{w.fired != null ? formatNumber(w.fired) : "�?}</td>
+                          <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{w.hits != null ? formatNumber(w.hits) : "—"}</td>
+                          <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{w.fired != null ? formatNumber(w.fired) : "—"}</td>
                           <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{formatNumber(w.assists ?? 0)}</td>
-                          <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{w.deaths != null ? formatNumber(w.deaths) : "�?}</td>
-                          <td class="py-1.5 text-right tabular-nums text-[#8a7060]">{w.xp != null ? formatNumber(w.xp) : "�?}</td>
+                          <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{w.deaths != null ? formatNumber(w.deaths) : "—"}</td>
+                          <td class="py-1.5 text-right tabular-nums text-[#8a7060]">{w.xp != null ? formatNumber(w.xp) : "—"}</td>
                         </tr>
                       )}
                     </For>
@@ -236,10 +236,10 @@ export default function Stats(props: Props) {
                             <td class="py-1.5 pr-3 text-right tabular-nums text-[#5a4030]">{formatNumber(e.kills ?? 0)}</td>
                             <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{formatNumber(e.headshots ?? 0)}</td>
                             <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{formatNumber(e.assists ?? 0)}</td>
-                            <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{e.executions != null ? formatNumber(e.executions) : "�?}</td>
-                            <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{e.deaths != null ? formatNumber(e.deaths) : "�?}</td>
-                            <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{e.captures != null ? formatNumber(e.captures) : "�?}</td>
-                            <td class="py-1.5 text-right tabular-nums text-[#8a7060]">{scan > 0 ? formatNumber(scan) : "�?}</td>
+                            <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{e.executions != null ? formatNumber(e.executions) : "—"}</td>
+                            <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{e.deaths != null ? formatNumber(e.deaths) : "—"}</td>
+                            <td class="py-1.5 pr-3 text-right tabular-nums text-[#8a7060]">{e.captures != null ? formatNumber(e.captures) : "—"}</td>
+                            <td class="py-1.5 text-right tabular-nums text-[#8a7060]">{scan > 0 ? formatNumber(scan) : "—"}</td>
                           </tr>
                         );
                       }}
@@ -250,10 +250,10 @@ export default function Stats(props: Props) {
             </section>
           </Show>
 
-          {/* 扫描（仅含非敌人条目：生�?碎片/物品�?*/}
+          {/* 扫描（仅含非敌人条目：生物 / 碎片 / 物品） */}
           <Show when={stats().Scans?.some((sc) => !stats().Enemies?.find((e) => e.type === sc.type))}>
             <section>
-              <h3 class="text-sm font-semibold text-[#3d2e1e] mb-2">扫描（生�?/ 碎片�?/h3>
+              <h3 class="text-sm font-semibold text-[#3d2e1e] mb-2">扫描（生物 / 碎片）</h3>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                   <thead>
@@ -277,16 +277,16 @@ export default function Stats(props: Props) {
             </section>
           </Show>
 
-          {/* 精通段位经验（XPInfo�?*/}
+          {/* 精通段位经验（XPInfo） */}
           <Show when={exports() && props.result.LoadOutInventory?.XPInfo?.length}>
             <section>
-              <h3 class="text-sm font-semibold text-[#3d2e1e] mb-2">精通段位经验详�?/h3>
+              <h3 class="text-sm font-semibold text-[#3d2e1e] mb-2">精通段位经验详情</h3>
               <div class="overflow-x-auto">
                 <table class="w-full text-sm">
                   <thead>
                     <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
                       <th class="pb-2 pr-4 font-medium">装备</th>
-                      <th class="pb-2 font-medium text-right">经验�?/th>
+                      <th class="pb-2 font-medium text-right">经验值</th>
                     </tr>
                   </thead>
                   <tbody>
