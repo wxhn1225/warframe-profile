@@ -123,7 +123,8 @@ jobs:
           }
 
           $sig = (Get-Content $sigFile.FullName -Raw).Trim()
-          $url = "https://github.com/${repo}/releases/download/${tag}/$($exeFile.Name)"
+          $encodedName = [System.Uri]::EscapeDataString($exeFile.Name)
+          $url = "https://github.com/${repo}/releases/download/${tag}/${encodedName}"
 
           $json = [ordered]@{
             version  = $version
