@@ -114,19 +114,21 @@ jobs:
           $tag      = "${{ github.ref_name }}"
           $version  = $tag.TrimStart("v")
           $repo     = "${{ github.repository }}"
-          $bundleDir = "app/src-tauri/target/release/bundle"
+          $nsisDir  = "app/src-tauri/target/release/bundle/nsis"
 
-          # 在整个 bundle 目录下查找（兼容 nsis/ 和 updater/ 两种位置）
-          $sigFile = Get-ChildItem $bundleDir -Recurse -Filter "*-${variant}.nsis.zip.sig" -ErrorAction SilentlyContinue | Select-Object -First 1
-          $zipFile = Get-ChildItem $bundleDir -Recurse -Filter "*-${variant}.nsis.zip"     -ErrorAction SilentlyContinue | Select-Object -First 1
+          # Tauri v2 generates .exe.sig (not .nsis.zip.sig)
+          $sigFile = Get-ChildItem $nsisDir -Filter "*-${variant}.exe.sig" -ErrorAction SilentlyContinue | Select-Object -First 1
+          $exeFile = Get-ChildItem $nsisDir -Filter "*-${variant}.exe"     -ErrorAction SilentlyContinue | Select-Object -First 1
 
-          if (-not $sigFile -or -not $zipFile) {
-            Write-Host "WARNING: updater zip not found, skipping latest-${variant}.json"
+          if (-not $sigFile -or -not $exeFile) {
+            Write-Host "WARNING: updater exe.sig not found, skipping latest-${variant}.json"
+            Write-Host "Files in nsis dir:"
+            Get-ChildItem $nsisDir -ErrorAction SilentlyContinue | Select-Object Name
             exit 0
           }
 
           $sig = (Get-Content $sigFile.FullName -Raw).Trim()
-          $url = "https://github.com/${repo}/releases/download/${tag}/$($zipFile.Name)"
+          $url = "https://github.com/${repo}/releases/download/${tag}/$($exeFile.Name)"
 
           $json = [ordered]@{
             version  = $version
@@ -150,7 +152,6 @@ jobs:
           fail_on_unmatched_files: false
           files: |
             app/src-tauri/target/release/bundle/nsis/*-${{ matrix.variant }}.exe
+            app/src-tauri/target/release/bundle/nsis/*-${{ matrix.variant }}.exe.sig
             app/src-tauri/target/release/bundle/msi/*-${{ matrix.variant }}.msi
-            app/src-tauri/target/release/bundle/**/*-${{ matrix.variant }}.nsis.zip
-            app/src-tauri/target/release/bundle/**/*-${{ matrix.variant }}.nsis.zip.sig
             latest-${{ matrix.variant }}.json
