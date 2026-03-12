@@ -52,6 +52,17 @@ jobs:
         working-directory: app
         run: pnpm install --frozen-lockfile
 
+      - name: Set version from tag
+        shell: pwsh
+        run: |
+          $version = "${{ github.ref_name }}".TrimStart("v")
+          foreach ($f in @("app/src-tauri/tauri.conf.json","app/src-tauri/tauri.zh.conf.json","app/src-tauri/tauri.full.conf.json")) {
+            $content = Get-Content $f -Raw
+            $content = $content -replace '"version":\s*"[^"]+"', "`"version`": `"$version`""
+            Set-Content $f $content -NoNewline
+          }
+          Write-Host "Version set to $version"
+
       - name: Copy data files (${{ matrix.variant }})
         working-directory: app
         run: node scripts/copy-data.mjs ${{ matrix.data_mode }}
