@@ -12,20 +12,20 @@ interface Props {
 type Category = "Suits" | "LongGuns" | "Pistols" | "Melee";
 const CATEGORIES: { key: Category; label: string; presetKey: "s" | "l" | "p" | "m" }[] = [
   { key: "Suits", label: "战甲", presetKey: "s" },
-  { key: "LongGuns", label: "主武器", presetKey: "l" },
-  { key: "Pistols", label: "副武器", presetKey: "p" },
-  { key: "Melee", label: "近战", presetKey: "m" },
+  { key: "LongGuns", label: "主要武器", presetKey: "l" },
+  { key: "Pistols", label: "次要武器", presetKey: "p" },
+  { key: "Melee", label: "近战武器", presetKey: "m" },
 ];
 
 const COLOR_SLOTS = [
-  { key: "t0" as const, label: "主色" },
-  { key: "t1" as const, label: "次色" },
-  { key: "t2" as const, label: "三色" },
-  { key: "t3" as const, label: "点缀" },
-  { key: "m0" as const, label: "发光1" },
-  { key: "m1" as const, label: "发光2" },
-  { key: "en" as const, label: "能量1" },
-  { key: "e1" as const, label: "能量2" },
+  { key: "t0" as const, label: "主要" },
+  { key: "t1" as const, label: "次要" },
+  { key: "t2" as const, label: "第三色彩" },
+  { key: "t3" as const, label: "高亮色彩" },
+  { key: "m0" as const, label: "放射色彩" },
+  { key: "m1" as const, label: "次要放射色彩" },
+  { key: "en" as const, label: "能量" },
+  { key: "e1" as const, label: "次要能量" },
 ];
 
 // 皮肤槽位索引含义

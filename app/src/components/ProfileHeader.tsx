@@ -9,8 +9,8 @@ interface Props {
 }
 
 const FOUNDER_TIERS = ["", "Disciple", "Hunter", "Master", "Grand Master"];
-const GUIDE_TIERS = ["", "Junior Guide of the Lotus", "Senior Guide of the Lotus"];
-const CLAN_TIERS = ["", "Ghost", "Shadow", "Storm", "Mountain", "Moon"];
+const GUIDE_TIERS = ["", "LOTUS 的初级向导员", "LOTUS 的高级向导员"];
+const CLAN_TIERS = ["", "幽灵", "暗影", "风暴", "山脉", "月亮"];
 
 export default function ProfileHeader(props: Props) {
   const r = () => props.result;
@@ -24,11 +24,11 @@ export default function ProfileHeader(props: Props) {
     if (r().Founder) list.push(`Founder (${FOUNDER_TIERS[r().Founder!]})`);
     if (r().Guide) list.push(GUIDE_TIERS[r().Guide!]);
     if (r().Moderator) list.push("Moderator");
-    if (r().Partner) list.push("Warframe Creator");
+    if (r().Partner) list.push("WARFRAME 创作者");
 
     const oid = r().AccountId.$oid;
     const ts = parseInt(oid.substring(0, 8), 16);
-    if (ts < 1363651200) list.push("Closed Beta Player");
+    if (ts < 1363651200) list.push("封测玩家");
     if (r().Accolades?.Heirloom) list.push("Ten Year Supporter");
     return list;
   };
