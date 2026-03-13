@@ -1,5 +1,11 @@
 [
   {
+    "tag_name": "v1.1.5",
+    "name": "v1.1.5",
+    "body": "",
+    "published_at": "2026-03-13T10:16:11Z"
+  },
+  {
     "tag_name": "v1.1.4",
     "name": "v1.1.4",
     "body": "",
@@ -112,11 +118,5 @@
     "name": "v0.2.8",
     "body": "",
     "published_at": "2026-03-12T13:50:53Z"
-  },
-  {
-    "tag_name": "v0.2.6",
-    "name": "v0.2.6",
-    "body": "",
-    "published_at": "2026-03-12T13:24:09Z"
   }
 ]
