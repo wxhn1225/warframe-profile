@@ -1,11 +1,11 @@
 {
-  "version": "1.1.6",
+  "version": "1.1.7",
   "notes": "",
-  "pub_date": "2026-03-13T10:27:51Z",
+  "pub_date": "2026-03-13T18:38:57Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSMFl0S1VoRmM4VzR1bWloQnpEV3dGS0kzZ0x6Q1cvZ2dBVmlZMVV6Wm9aNXZLMHZwTE13RVlwNzlJOENhOE5EajN6cnYvandjdWhlZTZXQ0owcFBwWWNhbmF4dnQvbVFnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzczMzk3NjY2CWZpbGU6V2FyZnJhbWUgUHJvZmlsZV8xLjEuNl94NjQtc2V0dXAuZXhlCnMxclB2VDV6NE1SZFprc3F2VFFXUDlubUlSMFVvc3BMcm43MHNHc0JyYmVhRHgrMHgvS0RkOG15bFlFa2YxeG5od0FUN3Yya2ZUNXhiUWZKOVBvS0J3PT0K",
-      "url": "https://github.com/wxhn1225/warframe-profile/releases/download/v1.1.6/Warframe.Profile_1.1.6_x64-setup-zh.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSMFl0S1VoRmM4VzZzR3paZGVpZVQvbWduNEVRUWVmZVRxMStjUlREd1NQUk1XRkpHa1IySWJoSkJINE41RGJlS2UxWlMyWnVjOVIzeExKQkV5bi9hUStUdjdPRlJlMXdJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzczNDI3MTMxCWZpbGU6V2FyZnJhbWUgUHJvZmlsZV8xLjEuN194NjQtc2V0dXAuZXhlCjZvMU1PZ3NWWWUvQ09pM3pFbzkwcU9JRnFLWk5rQWdTY3lZS1BaS3ZRdlFpNHZ6R0NOQXJlRmlselBCY282UmJBdlpSdXJ0emsvSG9FRjR3TTFWakR3PT0K",
+      "url": "https://github.com/wxhn1225/warframe-profile/releases/download/v1.1.7/Warframe.Profile_1.1.7_x64-setup-zh.exe"
     }
   }
 }
