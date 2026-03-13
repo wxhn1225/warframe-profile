@@ -1,0 +1,76 @@
+name: Update Downloads Page
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - DOWNLOADS.txt
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse DOWNLOADS.txt → docs/downloads.json
+        run: |
+          python3 - <<'PYEOF'
+          import re, json, os
+          from datetime import date
+
+          content = open('DOWNLOADS.txt', encoding='utf-8').read()
+
+          # Split blocks by blank lines
+          blocks = [b.strip() for b in re.split(r'\n\s*\n', content) if b.strip()]
+
+          downloads = []
+          version   = None
+
+          for block in blocks:
+              lines = [l.strip() for l in block.splitlines() if l.strip()]
+              filename = url = code = label = None
+              for line in lines:
+                  if re.match(r'\S+\.exe', line, re.IGNORECASE):
+                      filename = line
+                      m = re.search(r'_(\d+\.\d+\.\d+)_', line)
+                      if m and not version:
+                          version = m.group(1)
+                      if '-zh' in line:
+                          label = '简中版 .exe（阿里云盘）'
+                      elif '-full' in line:
+                          label = '多语言版 .exe（阿里云盘）'
+                      else:
+                          label = filename
+                  elif line.startswith(('https://', 'http://')):
+                      url = line
+                  elif re.match(r'提取码[：:]\s*\S+', line):
+                      code = re.sub(r'^提取码[：:]\s*', '', line).strip()
+
+              if url:
+                  entry = {'label': label or filename or 'Download', 'url': url}
+                  if filename: entry['filename'] = filename
+                  if code:     entry['code']     = code
+                  downloads.append(entry)
+
+          result = [{
+              'version':   version or 'latest',
+              'date':      date.today().isoformat(),
+              'notes':     '',
+              'downloads': downloads,
+          }]
+
+          os.makedirs('docs', exist_ok=True)
+          json.dump(result, open('docs/downloads.json', 'w'), ensure_ascii=False, indent=2)
+          print(f"version={version}, {len(downloads)} download(s)")
+          PYEOF
+
+      - name: Commit docs/downloads.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/downloads.json
+          git diff --staged --quiet && echo "No changes" || \
+            git commit -m "chore: update downloads.json [skip ci]" && \
+            git push origin main

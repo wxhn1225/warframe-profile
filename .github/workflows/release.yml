@@ -169,8 +169,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Wait a moment so all release assets are visible
-          sleep 10
           gh api "repos/${{ github.repository }}/releases?per_page=20" > /tmp/releases_raw.json
           python3 - <<'PYEOF'
           import json, os
@@ -178,7 +176,6 @@ jobs:
           raw = json.load(open('/tmp/releases_raw.json'))
           os.makedirs('docs', exist_ok=True)
 
-          # ── releases.json for the landing page ──
           data = []
           for r in raw:
               data.append({
@@ -186,34 +183,28 @@ jobs:
                   'name':         r.get('name') or r['tag_name'],
                   'body':         r.get('body') or '',
                   'published_at': r['published_at'],
-                  'assets': [
-                      {'name': a['name'], 'browser_download_url': a['browser_download_url']}
-                      for a in r.get('assets', [])
-                  ]
               })
           json.dump(data, open('docs/releases.json', 'w'), ensure_ascii=False, indent=2)
           print(f"Written {len(data)} releases to docs/releases.json")
-
-          # ── mirror latest-zh.json / latest-full.json to docs/ ──
-          # so the Tauri updater endpoint can use github.io instead of github.com
-          latest = raw[0] if raw else None
-          if latest:
-              for variant in ('zh', 'full'):
-                  asset = next(
-                      (a for a in latest.get('assets', []) if a['name'] == f'latest-{variant}.json'),
-                      None
-                  )
-                  if asset:
-                      import urllib.request
-                      urllib.request.urlretrieve(asset['browser_download_url'], f'docs/latest-{variant}.json')
-                      print(f"Mirrored latest-{variant}.json to docs/")
           PYEOF
 
-      - name: Commit docs/releases.json
+      - name: Mirror latest updater JSON to docs/
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Use gh CLI (handles auth + redirects) to download updater JSONs
+          gh release download "${{ github.ref_name }}" \
+            --pattern 'latest-*.json' \
+            --dir docs/ \
+            --clobber \
+            --repo "${{ github.repository }}" || echo "No latest-*.json assets found, skipping"
+
+      - name: Commit docs/
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/releases.json
+          git add docs/releases.json docs/latest-zh.json docs/latest-full.json 2>/dev/null || true
+          git add docs/
           git diff --staged --quiet && echo "No changes" || \
-            git commit -m "chore: update docs/releases.json for ${{ github.ref_name }} [skip ci]" && \
+            git commit -m "chore: update docs/ for ${{ github.ref_name }} [skip ci]" && \
             git push origin main
