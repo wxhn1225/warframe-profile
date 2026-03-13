@@ -14,6 +14,7 @@ interface Props {
   detectedName: string;
   setDetectedName: (name: string) => void;
   onFetch: () => void;
+  onClearError: () => void;
   loading: boolean;
   error: string | null;
 }
@@ -39,6 +40,7 @@ export default function SetupPanel(props: Props) {
   const handleAutoDetect = async () => {
     setLogLoading(true);
     setLogError(null);
+    props.onClearError();
     props.setDetectedName("");
     props.setAccountId("");
     try {
@@ -55,6 +57,7 @@ export default function SetupPanel(props: Props) {
     const file = (e.currentTarget as HTMLInputElement).files?.[0];
     if (!file) return;
     setLogError(null);
+    props.onClearError();
     props.setDetectedName("");
     props.setAccountId("");
     try {

@@ -66,6 +66,8 @@ export default function App() {
     }
   };
 
+  const clearFetchError = () => setFetchError(null);
+
   const handleFetch = async () => {
     const id = accountId().trim();
     if (!id) {
@@ -116,6 +118,7 @@ export default function App() {
               detectedName={detectedName()}
               setDetectedName={setDetectedName}
               onFetch={handleFetch}
+              onClearError={clearFetchError}
               loading={loading()}
               error={fetchError()}
             />
