@@ -65,7 +65,7 @@ export default function Missions(props: Props) {
             placeholder="搜索节点..."
             value={search()}
             onInput={(e) => setSearch(e.currentTarget.value)}
-            class="mb-3 w-full max-w-xs px-3 py-1.5 text-sm border border-[#e0d0bc] rounded-md focus:outline-none focus:border-blue-400"
+            class="mb-3 w-full max-w-xs px-3 py-1.5 text-sm border border-[#e0d0bc] rounded-md focus:outline-none focus:border-[#9b7050]"
           />
           <div class="overflow-auto max-h-[70vh] pr-2">
             <table class="w-full text-sm">
