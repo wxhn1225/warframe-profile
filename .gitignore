@@ -1,6 +1,9 @@
-# 采样数据，含账号 ID 等隐私信息
-sample-profile.json
-*.json.local
+# 根目录本地文件（采样数据 / 隐私图片等）
+/*.json
+/*.jpg
+/*.jpeg
+/*.png
+/*.webp
 
 # 系统文件
 .DS_Store
