@@ -1,0 +1,11 @@
+{
+  "version": "1.1.4",
+  "notes": "",
+  "pub_date": "2026-03-13T10:04:08Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSMFl0S1VoRmM4VzhnelZRTVZBaTRVZlg1SGxsb0NaV2x4OTNGbVdSOXRBMHBIaXc1VzNJNFgxRkthUlNUNkpYVVBaVG5TSCtNMHp1b0E1bHlPRWZEaXBVSm1lMWdGUndZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzczMzk2MjQzCWZpbGU6V2FyZnJhbWUgUHJvZmlsZV8xLjEuNF94NjQtc2V0dXAuZXhlClRibTdrMXpOczBobm16QVdaOEhiYnFDbU5ZVUVJS3hjdEN3c20zUnFRWnFnNDNhNjhmczJiRi82Uis4WDhvY2xmTEZmRXFldzNiOUh3b29HaGVGT0JRPT0K",
+      "url": "https://github.com/wxhn1225/warframe-profile/releases/download/v1.1.4/Warframe.Profile_1.1.4_x64-setup-full.exe"
+    }
+  }
+}
