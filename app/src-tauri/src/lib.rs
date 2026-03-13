@@ -93,7 +93,7 @@ async fn fetch_profile(account_id: String, platform: String) -> Result<String, S
         return Err("未找到该账号，请确认账号 ID 是否正确".to_string());
     }
     if !status.is_success() {
-        return Err(format!("服务器返回错误，请稍后重试（{}）", status.as_u16()));
+        return Err("服务器返回错误，请稍后重试".to_string());
     }
 
     resp.text()

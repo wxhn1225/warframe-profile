@@ -79,7 +79,12 @@ export default function App() {
         accountId: id,
         platform: platform(),
       });
-      const data = JSON.parse(raw) as ProfileData;
+      let data: ProfileData;
+      try {
+        data = JSON.parse(raw) as ProfileData;
+      } catch {
+        throw new Error("服务器返回了无效数据，请稍后重试");
+      }
       if (!data.Results?.[0]?.DisplayName) {
         throw new Error("未找到账号数据，请检查账号 ID 是否正确");
       }
