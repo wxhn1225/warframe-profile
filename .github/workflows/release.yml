@@ -173,9 +173,12 @@ jobs:
           sleep 10
           gh api "repos/${{ github.repository }}/releases?per_page=20" > /tmp/releases_raw.json
           python3 - <<'PYEOF'
-          import json
+          import json, os
 
           raw = json.load(open('/tmp/releases_raw.json'))
+          os.makedirs('docs', exist_ok=True)
+
+          # ── releases.json for the landing page ──
           data = []
           for r in raw:
               data.append({
@@ -188,9 +191,22 @@ jobs:
                       for a in r.get('assets', [])
                   ]
               })
-          import os; os.makedirs('docs', exist_ok=True)
           json.dump(data, open('docs/releases.json', 'w'), ensure_ascii=False, indent=2)
           print(f"Written {len(data)} releases to docs/releases.json")
+
+          # ── mirror latest-zh.json / latest-full.json to docs/ ──
+          # so the Tauri updater endpoint can use github.io instead of github.com
+          latest = raw[0] if raw else None
+          if latest:
+              for variant in ('zh', 'full'):
+                  asset = next(
+                      (a for a in latest.get('assets', []) if a['name'] == f'latest-{variant}.json'),
+                      None
+                  )
+                  if asset:
+                      import urllib.request
+                      urllib.request.urlretrieve(asset['browser_download_url'], f'docs/latest-{variant}.json')
+                      print(f"Mirrored latest-{variant}.json to docs/")
           PYEOF
 
       - name: Commit docs/releases.json
