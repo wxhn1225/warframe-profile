@@ -54,7 +54,9 @@ export default function SetupPanel(props: Props) {
   };
 
   const handleFileUpload = async (e: Event) => {
-    const file = (e.currentTarget as HTMLInputElement).files?.[0];
+    // save ref before any await — currentTarget becomes null after async operations
+    const input = e.currentTarget as HTMLInputElement;
+    const file = input.files?.[0];
     if (!file) return;
     setLogError(null);
     props.onClearError();
@@ -65,10 +67,10 @@ export default function SetupPanel(props: Props) {
       const content = await slice.text();
       const result = await invoke<ParsedLogin>("parse_account_id", { content });
       applyParsed(result);
-    } catch (e) {
-      setLogError(e instanceof Error ? e.message : String(e));
+    } catch (err) {
+      setLogError(err instanceof Error ? err.message : String(err));
     }
-    (e.currentTarget as HTMLInputElement).value = "";
+    input.value = "";
   };
 
   return (
