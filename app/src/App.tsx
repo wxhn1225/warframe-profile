@@ -41,10 +41,17 @@ export default function App() {
 
     // 静默检测更新
     try {
+      console.log("[updater] checking for updates...");
       const update = await check();
-      if (update?.available) setUpdateVersion(update.version);
-    } catch {
-      // 忽略更新检测失败
+      console.log("[updater] check result:", update);
+      if (update?.available) {
+        console.log("[updater] update available:", update.version);
+        setUpdateVersion(update.version);
+      } else {
+        console.log("[updater] no update available (current is latest)");
+      }
+    } catch (e) {
+      console.error("[updater] check failed:", e);
     }
   });
 
