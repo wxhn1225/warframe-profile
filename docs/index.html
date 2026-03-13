@@ -80,35 +80,42 @@
 
     /* download block in hero */
     .hero-dl-block {
-      display: inline-flex; flex-direction: column; align-items: center; gap: 12px;
+      display: inline-flex; flex-direction: row; align-items: center;
+      gap: 12px; flex-wrap: wrap; justify-content: center;
     }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 11px 24px; background: var(--white); color: var(--bg);
+      padding: 12px 22px; background: var(--white); color: var(--bg);
       font-weight: 600; font-size: 14px; border-radius: var(--radius);
       border: none; cursor: pointer; transition: opacity .15s, transform .15s; text-decoration: none;
+      white-space: nowrap;
     }
     .btn-primary:hover { opacity: .9; transform: translateY(-1px); }
     .btn-primary svg { width: 15px; height: 15px; flex-shrink: 0; }
 
     /* code box */
     .code-box {
-      display: inline-flex; align-items: center; gap: 0;
-      border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+      display: inline-flex; align-items: stretch; gap: 0;
+      border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
       background: var(--bg2);
     }
-    .code-label { padding: 8px 12px; font-size: 13px; color: var(--muted); border-right: 1px solid var(--border); }
+    .code-label {
+      padding: 12px 14px; font-size: 12px; color: var(--subtle);
+      border-right: 1px solid var(--border); display: flex; align-items: center;
+      white-space: nowrap;
+    }
     .code-val {
-      padding: 8px 14px;
+      padding: 12px 16px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 15px; font-weight: 600; color: var(--white);
-      letter-spacing: .05em;
+      font-size: 22px; font-weight: 700; color: var(--white);
+      letter-spacing: .08em; display: flex; align-items: center;
     }
     .code-copy {
-      padding: 8px 12px; border-left: 1px solid var(--border);
+      padding: 12px 14px; border-left: 1px solid var(--border);
       cursor: pointer; color: var(--subtle); font-size: 12px;
       transition: color .15s, background .15s; background: transparent; border: none;
-      border-left: 1px solid var(--border);
+      border-left: 1px solid var(--border); display: flex; align-items: center;
+      white-space: nowrap;
     }
     .code-copy:hover { color: var(--text); background: var(--bg3); }
 
@@ -189,8 +196,9 @@
 
     @media (max-width: 540px) {
       .nav-links { display: none; }
-      .hero-dl-block { width: 100%; }
+      .hero-dl-block { flex-direction: column; width: 100%; }
       .btn-primary { width: 100%; justify-content: center; }
+      .code-box { width: 100%; justify-content: center; }
       .dl-item { flex-direction: column; align-items: flex-start; }
     }
   </style>
