@@ -356,14 +356,14 @@
 </footer>
 
 <script>
-const REPO       = 'wxhn1225/warframe-profile';
-const LOCAL_JSON = './releases.json';
-const API_URL    = `https://api.github.com/repos/${REPO}/releases?per_page=10`;
+const REPO = 'wxhn1225/warframe-profile';
 
-function fmtDate(iso) {
-  return new Date(iso).toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric' });
+function fmtDate(s) {
+  return new Date(s).toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric' });
 }
-
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 function mdToHtml(md) {
   if (!md) return '<p style="color:var(--subtle)">暂无说明</p>';
   const lines = md.split('\n');
@@ -386,78 +386,82 @@ function mdToHtml(md) {
   return html;
 }
 
-function esc(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
 const iconDl = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
-const iconGh  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+const iconGh  = `<svg viewBox="0 0 16 16" fill="currentColor" width="15" height="15"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>`;
 
-function dlBtns(assets) {
-  const zh   = assets.find(a => a.name.endsWith('.exe') && a.name.includes('-zh'));
-  const full = assets.find(a => a.name.endsWith('.exe') && a.name.includes('-full'));
-  let h = `<a class="dl-btn" href="${zh?.browser_download_url||`https://github.com/${REPO}/releases/latest`}" target="_blank" rel="noopener">${iconDl} 简中版 .exe</a>`;
-  if (full) h += `<a class="dl-btn" href="${full.browser_download_url}" target="_blank" rel="noopener">${iconDl} 多语言版 .exe</a>`;
-  h += `<a class="dl-btn" href="https://github.com/${REPO}/releases" target="_blank" rel="noopener">${iconGh} 所有发行版</a>`;
-  return h;
-}
+// ── 下载区：读 downloads.json（网盘链接，手动维护）──
+fetch('./downloads.json')
+  .then(r => { if (!r.ok) throw 0; return r.json(); })
+  .then(list => {
+    if (!list?.length) throw 0;
+    const latest = list[0];
+    const first  = latest.downloads?.[0];
 
-const load = () =>
-  fetch(LOCAL_JSON).then(r => { if (!r.ok) throw 0; return r.json(); })
-  .catch(() => fetch(API_URL).then(r => r.json()));
+    // hero 按钮
+    document.getElementById('hero-dl').innerHTML = `
+      <a class="btn-primary" href="${esc(first?.url || '#')}" target="_blank" rel="noopener">
+        ${iconDl} 下载最新版
+      </a>
+      <a class="btn-ghost" href="https://github.com/${REPO}" target="_blank" rel="noopener">
+        ${iconGh} GitHub
+      </a>`;
+    document.getElementById('hero-meta').innerHTML =
+      `<span class="ver">v${esc(latest.version)}</span> · Windows x64 · ${fmtDate(latest.date)}`;
 
-load().then(releases => {
-  if (!Array.isArray(releases) || !releases.length) throw 0;
-  const latest = releases[0];
-  const exe = latest.assets?.find(a => a.name.endsWith('.exe') && a.name.includes('-zh'));
+    // 下载卡片
+    const dlBtns = (latest.downloads || []).map(d => {
+      const code = d.code ? `<span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--subtle);margin-left:4px;">提取码：${esc(d.code)}</span>` : '';
+      return `<a class="dl-btn" href="${esc(d.url)}" target="_blank" rel="noopener">${iconDl} ${esc(d.label)}</a>${code}`;
+    }).join('');
 
-  // hero
-  document.getElementById('hero-dl').innerHTML = `
-    <a class="btn-primary" href="${exe?.browser_download_url||`https://github.com/${REPO}/releases/latest`}" target="_blank" rel="noopener">
-      ${iconDl} 下载最新版
-    </a>
-    <a class="btn-ghost" href="https://github.com/${REPO}" target="_blank" rel="noopener">
-      <svg viewBox="0 0 16 16" fill="currentColor" width="15" height="15"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-      GitHub
-    </a>`;
-  document.getElementById('hero-meta').innerHTML =
-    `<span class="ver">${latest.tag_name}</span> · Windows x64 · ${fmtDate(latest.published_at)}`;
-
-  // download section
-  document.getElementById('dl-section').innerHTML = `
-    <div class="release-card">
-      <div class="release-head" style="cursor:default">
-        <div class="release-lhs">
-          <span class="tag-name">${latest.tag_name}</span>
-          <span class="tag-latest">latest</span>
-        </div>
-        <span class="release-date">${fmtDate(latest.published_at)}</span>
-      </div>
-      <div class="release-body">${mdToHtml(latest.body)}</div>
-      <div class="dl-row">${dlBtns(latest.assets||[])}</div>
-    </div>`;
-
-  // changelog
-  document.getElementById('changelog-list').innerHTML = releases.map((r, i) => {
-    const id = `r${i}`;
-    return `
+    document.getElementById('dl-section').innerHTML = `
       <div class="release-card">
-        <div class="release-head" onclick="tog('${id}')">
+        <div class="release-head" style="cursor:default">
           <div class="release-lhs">
-            <span class="tag-name">${r.tag_name}</span>
-            ${i===0?'<span class="tag-latest">latest</span>':''}
+            <span class="tag-name">v${esc(latest.version)}</span>
+            <span class="tag-latest">latest</span>
           </div>
-          <span class="release-date">${fmtDate(r.published_at)}</span>
+          <span class="release-date">${fmtDate(latest.date)}</span>
         </div>
-        <div class="release-body ${i===0?'':'collapsed'}" id="${id}">${mdToHtml(r.body)}</div>
-        <div class="dl-row">${dlBtns(r.assets||[])}</div>
+        ${latest.notes ? `<div class="release-body">${mdToHtml(latest.notes)}</div>` : ''}
+        <div class="dl-row" style="align-items:center">${dlBtns}</div>
       </div>`;
-  }).join('');
-}).catch(() => {
-  const fb = `<p style="font-size:13px;color:var(--muted)">无法加载版本信息，请前往 <a href="https://github.com/${REPO}/releases" style="color:var(--text);text-decoration:underline" target="_blank">GitHub Releases</a> 手动下载。</p>`;
-  ['hero-dl','dl-section','changelog-list'].forEach(id => document.getElementById(id).innerHTML = fb);
-  document.getElementById('hero-meta').innerHTML = '';
-});
+  })
+  .catch(() => {
+    document.getElementById('hero-dl').innerHTML =
+      `<a class="btn-ghost" href="https://github.com/${REPO}/releases" target="_blank" rel="noopener">${iconGh} GitHub Releases</a>`;
+    document.getElementById('hero-meta').innerHTML = '';
+    document.getElementById('dl-section').innerHTML =
+      `<p style="font-size:13px;color:var(--muted)">下载信息暂不可用，请前往 <a href="https://github.com/${REPO}/releases" style="color:var(--text);text-decoration:underline" target="_blank">GitHub Releases</a>。</p>`;
+  });
+
+// ── 更新日志：读 releases.json（CI 自动生成）──
+fetch('./releases.json')
+  .then(r => { if (!r.ok) throw 0; return r.json(); })
+  .catch(() => fetch(`https://api.github.com/repos/${REPO}/releases?per_page=10`).then(r => r.json()))
+  .then(releases => {
+    if (!Array.isArray(releases) || !releases.length) throw 0;
+    document.getElementById('changelog-list').innerHTML = releases.map((r, i) => {
+      const id  = `r${i}`;
+      const tag = r.tag_name || `v${r.version}`;
+      const dt  = fmtDate(r.published_at || r.date);
+      return `
+        <div class="release-card">
+          <div class="release-head" onclick="tog('${id}')">
+            <div class="release-lhs">
+              <span class="tag-name">${esc(tag)}</span>
+              ${i===0?'<span class="tag-latest">latest</span>':''}
+            </div>
+            <span class="release-date">${dt}</span>
+          </div>
+          <div class="release-body ${i===0?'':'collapsed'}" id="${id}">${mdToHtml(r.body || r.notes || '')}</div>
+        </div>`;
+    }).join('');
+  })
+  .catch(() => {
+    document.getElementById('changelog-list').innerHTML =
+      `<p style="font-size:13px;color:var(--muted)">更新日志暂不可用。</p>`;
+  });
 
 function tog(id) { document.getElementById(id).classList.toggle('collapsed'); }
 </script>
