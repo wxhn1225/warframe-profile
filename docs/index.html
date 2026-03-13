@@ -12,15 +12,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0e0c10;
-      --bg2:      #16131b;
-      --bg3:      #1f1c28;
-      --border:   #2e2a3a;
-      --gold:     #c8974a;
-      --gold-lt:  #e4b870;
-      --gold-dim: #7a5a2a;
-      --text:     #e8e0d4;
-      --muted:    #8a8090;
+      --bg:       #f5efe6;
+      --bg2:      #fdf8f2;
+      --bg3:      #ede4d8;
+      --border:   #ddd0be;
+      --brown:    #5a3e28;
+      --brown-md: #8a6a50;
+      --brown-lt: #b09070;
+      --accent:   #7a5030;
+      --accent-lt:#9a6840;
+      --text:     #2a1f14;
+      --muted:    #8a7060;
       --radius:   12px;
     }
 
@@ -32,95 +34,91 @@
       min-height: 100vh;
     }
 
-    a { color: var(--gold-lt); text-decoration: none; }
+    a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* ── layout ── */
     .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
 
     /* ── nav ── */
     nav {
+      background: var(--bg2);
       border-bottom: 1px solid var(--border);
-      padding: 16px 0;
+      padding: 14px 0;
+      position: sticky; top: 0; z-index: 50;
     }
     nav .inner {
       display: flex; align-items: center; justify-content: space-between;
       max-width: 860px; margin: 0 auto; padding: 0 24px;
     }
     .logo {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 600; font-size: 15px; color: var(--text);
+      display: flex; align-items: center; gap: 9px;
+      font-weight: 600; font-size: 15px; color: var(--brown);
     }
-    .logo svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .logo svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--accent); }
     .nav-links { display: flex; gap: 20px; }
     .nav-links a { font-size: 13px; color: var(--muted); transition: color .2s; }
-    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-links a:hover { color: var(--brown); text-decoration: none; }
 
     /* ── hero ── */
     .hero {
-      padding: 80px 0 60px;
+      padding: 72px 0 56px;
       text-align: center;
       position: relative;
     }
     .hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(200,151,74,.12), transparent);
+      background: radial-gradient(ellipse 60% 55% at 50% 0%, rgba(160,100,50,.08), transparent);
       pointer-events: none;
     }
     .badge {
       display: inline-block;
-      padding: 4px 12px;
-      border: 1px solid var(--gold-dim);
+      padding: 4px 14px;
+      border: 1px solid var(--border);
       border-radius: 20px;
       font-size: 12px;
-      color: var(--gold);
-      margin-bottom: 20px;
-      letter-spacing: .04em;
+      color: var(--muted);
+      background: var(--bg2);
+      margin-bottom: 22px;
+      letter-spacing: .03em;
     }
     h1 {
-      font-size: clamp(32px, 6vw, 52px);
+      font-size: clamp(30px, 6vw, 50px);
       font-weight: 700;
       letter-spacing: -.02em;
       line-height: 1.15;
       margin-bottom: 16px;
+      color: var(--brown);
     }
-    h1 span { color: var(--gold); }
+    h1 span { color: var(--accent); }
     .subtitle {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--muted);
-      max-width: 520px;
+      max-width: 500px;
       margin: 0 auto 36px;
+      line-height: 1.7;
     }
 
-    /* ── download area ── */
-    .dl-area {
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-    }
+    /* ── download ── */
+    .dl-area { display: flex; flex-direction: column; align-items: center; gap: 12px; }
     .dl-primary {
       display: inline-flex; align-items: center; gap: 10px;
-      background: var(--gold);
-      color: #0e0c10;
+      background: var(--accent);
+      color: #fff;
       font-weight: 600;
       font-size: 15px;
-      padding: 14px 28px;
+      padding: 13px 28px;
       border-radius: var(--radius);
       cursor: pointer;
       transition: background .2s, transform .15s;
       border: none;
       text-decoration: none;
     }
-    .dl-primary:hover { background: var(--gold-lt); transform: translateY(-1px); text-decoration: none; }
+    .dl-primary:hover { background: var(--accent-lt); transform: translateY(-1px); text-decoration: none; }
     .dl-primary:active { transform: translateY(0); }
-    .dl-primary svg { width: 18px; height: 18px; flex-shrink: 0; }
-    .dl-meta {
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .dl-meta .ver {
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--gold);
-    }
+    .dl-primary svg { width: 17px; height: 17px; flex-shrink: 0; }
+    .dl-meta { font-size: 12px; color: var(--muted); }
+    .dl-meta .ver { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
 
     /* ── pills ── */
     .platform-pills {
@@ -128,36 +126,29 @@
       margin-top: 28px;
     }
     .pill {
-      padding: 5px 14px;
+      padding: 4px 14px;
       border: 1px solid var(--border);
       border-radius: 20px;
       font-size: 12px;
       color: var(--muted);
+      background: var(--bg2);
     }
 
     /* ── section ── */
-    section { padding: 64px 0; }
+    section { padding: 60px 0; }
     section + section { border-top: 1px solid var(--border); }
     .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 10px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--accent-lt); margin-bottom: 10px;
     }
-    h2 {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -.01em;
-      margin-bottom: 32px;
-    }
+    h2 { font-size: 24px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 28px; color: var(--brown); }
 
-    /* ── feature grid ── */
+    /* ── features ── */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+      gap: 14px;
     }
     .feature {
       background: var(--bg2);
@@ -166,117 +157,112 @@
       padding: 20px;
     }
     .feature-icon {
-      width: 36px; height: 36px;
-      background: rgba(200,151,74,.12);
+      width: 34px; height: 34px;
+      background: rgba(120,70,30,.08);
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 12px;
     }
-    .feature-icon svg { width: 18px; height: 18px; color: var(--gold); }
-    .feature h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
-    .feature p  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .feature-icon svg { width: 17px; height: 17px; color: var(--accent); }
+    .feature h3 { font-size: 14px; font-weight: 600; margin-bottom: 5px; color: var(--brown); }
+    .feature p  { font-size: 13px; color: var(--muted); line-height: 1.55; }
 
-    /* ── changelog ── */
+    /* ── release cards ── */
     .release-card {
       background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     .release-head {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 20px;
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       cursor: pointer;
       user-select: none;
+      transition: background .15s;
     }
     .release-head:hover { background: var(--bg3); }
-    .release-tag {
-      display: flex; align-items: center; gap: 10px;
-    }
+    .release-tag { display: flex; align-items: center; gap: 10px; }
     .tag-name {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--gold-lt);
+      font-size: 14px; font-weight: 500;
+      color: var(--accent);
     }
     .tag-latest {
-      font-size: 10px;
-      padding: 2px 8px;
-      background: rgba(200,151,74,.15);
-      border: 1px solid var(--gold-dim);
-      border-radius: 10px;
-      color: var(--gold);
+      font-size: 10px; padding: 2px 8px;
+      background: rgba(120,70,30,.08);
+      border: 1px solid var(--border);
+      border-radius: 10px; color: var(--accent-lt);
     }
     .release-date { font-size: 12px; color: var(--muted); }
     .release-body {
-      padding: 16px 20px;
-      font-size: 13px;
-      color: var(--text);
+      padding: 14px 18px;
+      font-size: 13px; color: var(--text);
       line-height: 1.7;
     }
     .release-body ul { padding-left: 18px; }
     .release-body li { margin-bottom: 4px; }
-    .release-body p  { margin-bottom: 8px; }
-
+    .release-body p  { margin-bottom: 6px; }
     .release-body.collapsed { display: none; }
 
     .dl-row {
-      display: flex; gap: 10px; flex-wrap: wrap;
-      padding: 14px 20px;
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 12px 18px;
       border-top: 1px solid var(--border);
       background: var(--bg3);
     }
     .dl-btn {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 8px 16px;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px;
       border: 1px solid var(--border);
       border-radius: 8px;
       font-size: 12px;
-      color: var(--text);
-      background: transparent;
+      color: var(--brown-md);
+      background: var(--bg2);
       cursor: pointer;
       text-decoration: none;
       transition: border-color .2s, color .2s;
     }
-    .dl-btn:hover { border-color: var(--gold); color: var(--gold-lt); text-decoration: none; }
-    .dl-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .dl-btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+    .dl-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
 
     /* ── notice ── */
     .notice {
-      background: rgba(200,151,74,.06);
-      border: 1px solid var(--gold-dim);
+      background: rgba(120,70,30,.05);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px 18px;
+      padding: 13px 16px;
       font-size: 13px;
       color: var(--muted);
       display: flex; gap: 10px; align-items: flex-start;
+      margin-bottom: 24px;
     }
-    .notice svg { width: 16px; height: 16px; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+    .notice svg { width: 15px; height: 15px; color: var(--accent-lt); flex-shrink: 0; margin-top: 2px; }
 
-    /* ── loading ── */
+    /* ── skeleton ── */
     .skeleton {
-      background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3) 50%, var(--bg2) 75%);
+      background: linear-gradient(90deg, var(--bg3) 25%, var(--border) 50%, var(--bg3) 75%);
       background-size: 400% 100%;
       animation: shimmer 1.5s infinite;
-      border-radius: 6px;
+      border-radius: 8px;
     }
     @keyframes shimmer { to { background-position: -200% 0; } }
 
     /* ── footer ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 28px 0;
+      padding: 24px 0;
       font-size: 12px;
       color: var(--muted);
     }
     footer .inner {
       max-width: 860px; margin: 0 auto; padding: 0 24px;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px;
     }
 
-    /* ── responsive ── */
     @media (max-width: 600px) {
       .nav-links { display: none; }
       .dl-primary { width: 100%; justify-content: center; }
@@ -288,9 +274,8 @@
 <nav>
   <div class="inner">
     <div class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold)">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M12 12v9M8 17l4 4 4-4M4 12a8 8 0 0 1 16 0"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/><path d="M12 12v9M8 17l4 4 4-4M4 12a8 8 0 0 1 16 0"/>
       </svg>
       Warframe Profile
     </div>
@@ -309,13 +294,10 @@
   <div class="hero">
     <div class="badge">国际服 · 仅 Windows · 免费开源</div>
     <h1>快速查看你的<br><span>战甲档案</span></h1>
-    <p class="subtitle">
-      轻量桌面工具，无需登录，一键读取 EE.log 并展示
-      精通、装备、统计、氏族等完整档案数据。
-    </p>
+    <p class="subtitle">轻量桌面工具，无需登录，一键读取 EE.log 并展示精通、装备、统计、氏族等完整档案数据。</p>
     <div class="dl-area" id="hero-dl">
-      <div class="skeleton" style="width:200px;height:52px;border-radius:12px;"></div>
-      <div class="skeleton" style="width:140px;height:16px;margin-top:4px;"></div>
+      <div class="skeleton" style="width:196px;height:50px;border-radius:12px;"></div>
+      <div class="skeleton" style="width:160px;height:14px;margin-top:4px;"></div>
     </div>
     <div class="platform-pills">
       <span class="pill">PC</span>
@@ -343,14 +325,14 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         </div>
         <h3>自动读取 EE.log</h3>
-        <p>一键检测本机 EE.log，自动提取账号 ID，无需手动填写。</p>
+        <p>一键检测本机日志文件，自动提取账号 ID，无需手动填写。</p>
       </div>
       <div class="feature">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <h3>多平台 · 多语言</h3>
-        <p>支持五大游戏平台，提供简中/英文等多语言 UI，官方术语翻译。</p>
+        <p>支持五大游戏平台，提供简中等多语言 UI，使用游戏内官方术语。</p>
       </div>
       <div class="feature">
         <div class="feature-icon">
@@ -361,7 +343,7 @@
       </div>
       <div class="feature">
         <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
         <h3>本地运行 · 隐私安全</h3>
         <p>所有数据直接从 Warframe 官方 API 读取，不经过任何第三方服务器。</p>
@@ -371,7 +353,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M13 2v7h7"/></svg>
         </div>
         <h3>官方数据驱动</h3>
-        <p>使用 warframe-public-export 官方翻译数据，所有名称均为游戏内原文。</p>
+        <p>基于 warframe-public-export 官方导出数据，所有名称均为游戏内原文。</p>
       </div>
     </div>
   </section>
@@ -380,12 +362,12 @@
   <section id="download">
     <div class="section-label">下载</div>
     <h2>获取最新版本</h2>
-    <div class="notice" style="margin-bottom:28px;">
+    <div class="notice">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      本工具仅支持 <strong style="color:var(--text)">国际服</strong> 账号。国服玩家可在应用查询页底部找到对应入口。
+      本工具仅支持 <strong style="color:var(--brown)">国际服</strong> 账号。国服玩家可在应用查询页底部找到对应入口。
     </div>
     <div id="dl-section">
-      <div class="skeleton" style="height:120px;border-radius:12px;"></div>
+      <div class="skeleton" style="height:110px;border-radius:12px;"></div>
     </div>
   </section>
 
@@ -394,9 +376,9 @@
     <div class="section-label">更新日志</div>
     <h2>版本历史</h2>
     <div id="changelog-list">
-      <div class="skeleton" style="height:60px;border-radius:12px;margin-bottom:12px;"></div>
-      <div class="skeleton" style="height:60px;border-radius:12px;margin-bottom:12px;"></div>
-      <div class="skeleton" style="height:60px;border-radius:12px;"></div>
+      <div class="skeleton" style="height:52px;border-radius:12px;margin-bottom:10px;"></div>
+      <div class="skeleton" style="height:52px;border-radius:12px;margin-bottom:10px;"></div>
+      <div class="skeleton" style="height:52px;border-radius:12px;"></div>
     </div>
   </section>
 
@@ -410,8 +392,7 @@
 </footer>
 
 <script>
-const REPO = 'wxhn1225/warframe-profile';
-// 优先从同域名（github.io）读取静态 JSON，无需访问 api.github.com
+const REPO       = 'wxhn1225/warframe-profile';
 const LOCAL_JSON = './releases.json';
 const API_URL    = `https://api.github.com/repos/${REPO}/releases?per_page=10`;
 
@@ -419,7 +400,6 @@ function fmtDate(iso) {
   return new Date(iso).toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric' });
 }
 
-// simple markdown-ish → HTML
 function mdToHtml(md) {
   if (!md) return '<p style="color:var(--muted)">暂无说明</p>';
   const lines = md.split('\n');
@@ -427,9 +407,10 @@ function mdToHtml(md) {
   for (let line of lines) {
     line = line.trim();
     if (!line) { if (inList) { html += '</ul>'; inList = false; } continue; }
-    if (line.startsWith('### ')) { if(inList){html+='</ul>';inList=false;} html += `<p style="font-weight:600;margin-top:10px;">${esc(line.slice(4))}</p>`; }
-    else if (line.startsWith('## ')){ if(inList){html+='</ul>';inList=false;} html += `<p style="font-weight:600;margin-top:10px;">${esc(line.slice(3))}</p>`; }
-    else if (line.startsWith('- ') || line.startsWith('* ')) {
+    if (line.startsWith('### ') || line.startsWith('## ')) {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += `<p style="font-weight:600;margin-top:10px;">${esc(line.replace(/^#{2,3}\s*/, ''))}</p>`;
+    } else if (line.startsWith('- ') || line.startsWith('* ')) {
       if (!inList) { html += '<ul>'; inList = true; }
       html += `<li>${esc(line.slice(2))}</li>`;
     } else {
@@ -445,15 +426,11 @@ function esc(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-function assetUrl(assets, suffix) {
-  const a = assets.find(a => a.name.endsWith(suffix) && a.name.includes('-zh'));
-  return a?.browser_download_url || null;
-}
-
 function dlBtns(assets) {
-  const exeZh  = assetUrl(assets, '.exe') || `https://github.com/${REPO}/releases/latest`;
+  const exeZh   = assets.find(a => a.name.endsWith('.exe') && a.name.includes('-zh'));
   const exeFull = assets.find(a => a.name.endsWith('.exe') && a.name.includes('-full'));
-  let html = `<a class="dl-btn" href="${exeZh}" target="_blank" rel="noopener">
+  const fallback = `https://github.com/${REPO}/releases/latest`;
+  let html = `<a class="dl-btn" href="${exeZh?.browser_download_url || fallback}" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     简中版 .exe</a>`;
   if (exeFull) {
@@ -467,7 +444,6 @@ function dlBtns(assets) {
   return html;
 }
 
-// 先尝试本地静态文件（github.io，国内可访问），失败再走 GitHub API
 const loadReleases = () =>
   fetch(LOCAL_JSON)
     .then(r => { if (!r.ok) throw new Error('local not found'); return r.json(); })
@@ -475,29 +451,26 @@ const loadReleases = () =>
 
 loadReleases()
   .then(releases => {
-    if (!Array.isArray(releases) || !releases.length) throw new Error('no releases');
-
+    if (!Array.isArray(releases) || !releases.length) throw new Error('empty');
     const latest = releases[0];
-    const ver = latest.tag_name;
     const exe = latest.assets?.find(a => a.name.endsWith('.exe') && a.name.includes('-zh'));
 
-    // ── hero download ──
+    // hero
     document.getElementById('hero-dl').innerHTML = `
       <a class="dl-primary" href="${exe?.browser_download_url || `https://github.com/${REPO}/releases/latest`}" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         下载最新版
       </a>
       <span class="dl-meta">
-        <span class="ver">${ver}</span> · Windows x64 · 简中版
-        · 发布于 ${fmtDate(latest.published_at)}
+        <span class="ver">${latest.tag_name}</span> · Windows x64 · 简中版 · ${fmtDate(latest.published_at)}
       </span>`;
 
-    // ── download section ──
+    // download section
     document.getElementById('dl-section').innerHTML = `
       <div class="release-card">
         <div class="release-head" style="cursor:default;">
           <div class="release-tag">
-            <span class="tag-name">${ver}</span>
+            <span class="tag-name">${latest.tag_name}</span>
             <span class="tag-latest">latest</span>
           </div>
           <span class="release-date">${fmtDate(latest.published_at)}</span>
@@ -506,37 +479,33 @@ loadReleases()
         <div class="dl-row">${dlBtns(latest.assets || [])}</div>
       </div>`;
 
-    // ── changelog ──
-    const clHtml = releases.map((rel, i) => {
+    // changelog
+    document.getElementById('changelog-list').innerHTML = releases.map((rel, i) => {
       const id = `rel-${i}`;
       return `
         <div class="release-card">
           <div class="release-head" onclick="toggle('${id}')">
             <div class="release-tag">
               <span class="tag-name">${rel.tag_name}</span>
-              ${i===0?'<span class="tag-latest">latest</span>':''}
+              ${i === 0 ? '<span class="tag-latest">latest</span>' : ''}
             </div>
             <span class="release-date">${fmtDate(rel.published_at)}</span>
           </div>
-          <div class="release-body ${i===0?'':'collapsed'}" id="${id}">${mdToHtml(rel.body)}</div>
+          <div class="release-body ${i === 0 ? '' : 'collapsed'}" id="${id}">${mdToHtml(rel.body)}</div>
           <div class="dl-row">${dlBtns(rel.assets || [])}</div>
         </div>`;
     }).join('');
-    document.getElementById('changelog-list').innerHTML = clHtml;
   })
   .catch(() => {
-    const fallback = `<p style="color:var(--muted);font-size:14px;">
-      无法加载版本信息，请前往
-      <a href="https://github.com/${REPO}/releases" target="_blank">GitHub Releases</a>
-      手动下载。</p>`;
+    const fb = `<p style="font-size:14px;color:var(--muted)">无法加载版本信息，请前往
+      <a href="https://github.com/${REPO}/releases" target="_blank">GitHub Releases</a> 手动下载。</p>`;
     ['hero-dl','dl-section','changelog-list'].forEach(id => {
-      document.getElementById(id).innerHTML = fallback;
+      document.getElementById(id).innerHTML = fb;
     });
   });
 
 function toggle(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle('collapsed');
+  document.getElementById(id).classList.toggle('collapsed');
 }
 </script>
 </body>
