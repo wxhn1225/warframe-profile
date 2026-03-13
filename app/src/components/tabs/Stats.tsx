@@ -33,6 +33,8 @@ const STAT_TABS = [
   { id: "enemies", label: "敌人" },
   { id: "scans", label: "扫描" },
   { id: "nodes", label: "节点" },
+  { id: "races", label: "赛道" },
+  { id: "pvp", label: "PvP" },
   { id: "mastery", label: "精通" },
 ] as const;
 
@@ -177,8 +179,20 @@ export default function Stats(props: Props) {
                   ["近战击杀", formatNumber(stats().MeleeKills ?? 0)],
                   ["拾取物品", formatNumber(stats().PickupCount ?? 0)],
                   ["破解成功", formatNumber(stats().CiphersSolved ?? 0)],
+                  ...(stats().CiphersFailed != null ? [["破解失败", formatNumber(stats().CiphersFailed!)]] as [string,string][] : []),
                   ["总破解时间", (stats().CipherTime ?? 0).toFixed(1) + " s"],
                   ["PvP 积分", formatNumber(stats().Rating ?? 0)],
+                  ...(stats().DojoObstacleScore != null ? [["自定义障碍赛", formatNumber(stats().DojoObstacleScore!)]] as [string,string][] : []),
+                  ...(stats().FomorianEventScore != null ? [["弹弓行动", formatNumber(stats().FomorianEventScore!)]] as [string,string][] : []),
+                  ...(stats().FlotillaEventScore != null ? [["猩红之矛", formatNumber(stats().FlotillaEventScore!)]] as [string,string][] : []),
+                  ...(stats().FlotillaGroundBadgesTier1 != null ? [["猩红之矛·影 I", formatNumber(stats().FlotillaGroundBadgesTier1!)]] as [string,string][] : []),
+                  ...(stats().FlotillaGroundBadgesTier2 != null ? [["猩红之矛·影 II", formatNumber(stats().FlotillaGroundBadgesTier2!)]] as [string,string][] : []),
+                  ...(stats().FlotillaGroundBadgesTier3 != null ? [["猩红之矛·影 III", formatNumber(stats().FlotillaGroundBadgesTier3!)]] as [string,string][] : []),
+                  ...(stats().FlotillaSpaceBadgesTier1 != null ? [["猩红之矛·行动 I", formatNumber(stats().FlotillaSpaceBadgesTier1!)]] as [string,string][] : []),
+                  ...(stats().FlotillaSpaceBadgesTier2 != null ? [["猩红之矛·行动 II", formatNumber(stats().FlotillaSpaceBadgesTier2!)]] as [string,string][] : []),
+                  ...(stats().FlotillaSpaceBadgesTier3 != null ? [["猩红之矛·行动 III", formatNumber(stats().FlotillaSpaceBadgesTier3!)]] as [string,string][] : []),
+                  ...(stats().SentinelGameScore != null ? [["哨兵游戏", formatNumber(stats().SentinelGameScore!)]] as [string,string][] : []),
+                  ...(stats().ZephyrScore != null ? [["天马活动", formatNumber(stats().ZephyrScore!)]] as [string,string][] : []),
                   ...(props.result.DailyFocus != null
                     ? [["今日剩余专精", formatNumber(props.result.DailyFocus)]] as [string, string][]
                     : []),
@@ -340,6 +354,66 @@ export default function Stats(props: Props) {
                         <tr class="border-b border-[#ede4d8] hover:bg-[#fdf5ec]">
                           <td class="py-1.5 pr-4 text-[#3d2e1e]">{resolveNodeName(m.type)}</td>
                           <td class="py-1.5 text-right tabular-nums text-[#5a4030]">{formatNumber(m.highScore)}</td>
+                        </tr>
+                      )}
+                    </For>
+                  </tbody>
+                </table>
+              </div>
+            </Show>
+          </Show>
+
+          {/* ── 赛道 ── */}
+          <Show when={statTab() === "races"}>
+            <Show when={stats().Races && Object.keys(stats().Races!).length > 0} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
+              <div class="overflow-auto max-h-[70vh] pr-2">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-4 font-medium">赛道</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 font-medium text-right">最高分</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <For each={Object.entries(stats().Races!).sort((a, b) => b[1].highScore - a[1].highScore)}>
+                      {([key, val]) => (
+                        <tr class="border-b border-[#ede4d8] hover:bg-[#fdf5ec]">
+                          <td class="py-1.5 pr-4 text-[#3d2e1e]">
+                            {t(props.dict, `/Lotus/Language/Races/${key}`) || key}
+                          </td>
+                          <td class="py-1.5 text-right tabular-nums text-[#5a4030]">{formatNumber(val.highScore)}</td>
+                        </tr>
+                      )}
+                    </For>
+                  </tbody>
+                </table>
+              </div>
+            </Show>
+          </Show>
+
+          {/* ── PvP ── */}
+          <Show when={statTab() === "pvp"}>
+            <Show when={stats().PVP?.length} fallback={<p class="text-sm text-[#a89880]">暂无数据</p>}>
+              <div class="overflow-auto max-h-[70vh] pr-2">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="text-left text-xs text-[#8a7060] border-b border-[#e0d0bc]">
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-4 font-medium">装备</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 pr-3 font-medium text-right">击杀</th>
+                      <th class="sticky top-0 bg-[#fdf8f2] z-10 pb-2 font-medium text-right">死亡</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <For each={stats().PVP!}>
+                      {(p) => (
+                        <tr class="border-b border-[#ede4d8] hover:bg-[#fdf5ec]">
+                          <td class="py-1.5 pr-4 text-[#3d2e1e]">{resolveName(p.type)}</td>
+                          <td class="py-1.5 pr-3 text-right tabular-nums text-[#5a4030]">
+                            {formatNumber((p.suitKills ?? 0) + (p.weaponKills ?? 0))}
+                          </td>
+                          <td class="py-1.5 text-right tabular-nums text-[#8a7060]">
+                            {p.suitDeaths != null ? formatNumber(p.suitDeaths) : "—"}
+                          </td>
                         </tr>
                       )}
                     </For>

@@ -29,6 +29,7 @@ const PLATFORMS = [
 export default function SetupPanel(props: Props) {
   const [logError, setLogError] = createSignal<string | null>(null);
   const [logLoading, setLogLoading] = createSignal(false);
+  const [showGuofu, setShowGuofu] = createSignal(false);
 
   const applyParsed = (result: ParsedLogin) => {
     props.setAccountId(result.account_id);
@@ -162,8 +163,41 @@ export default function SetupPanel(props: Props) {
           >
             {props.loading ? "查询中..." : "查询个人档案"}
           </button>
+
+          {/* 国服入口 */}
+          <p class="text-center">
+            <button
+              onClick={() => setShowGuofu(true)}
+              class="text-xs text-[#b0a090] hover:text-[#7a6050] transition-colors underline-offset-2 hover:underline"
+            >
+              国服玩家查询入口
+            </button>
+          </p>
         </div>
       </div>
+
+      {/* 国服二维码弹窗 */}
+      <Show when={showGuofu()}>
+        <div
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          onClick={() => setShowGuofu(false)}
+        >
+          <div
+            class="bg-[#fdf8f2] rounded-xl p-6 shadow-xl max-w-xs w-full mx-4 flex flex-col items-center gap-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p class="text-sm font-medium text-[#2a1f14]">国服个人档案查询</p>
+            <p class="text-xs text-[#8a7060] text-center">扫描二维码前往国服个人档案查询页面</p>
+            <img src="/guofu.webp" alt="国服查询二维码" class="w-48 h-48 object-contain rounded" />
+            <button
+              onClick={() => setShowGuofu(false)}
+              class="text-xs text-[#8a7060] hover:text-[#2a1f14] transition-colors"
+            >
+              关闭
+            </button>
+          </div>
+        </div>
+      </Show>
     </div>
   );
 }

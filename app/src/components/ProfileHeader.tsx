@@ -1,6 +1,6 @@
 import { Show, For } from "solid-js";
 import type { ProfileResult } from "../types/profile";
-import { sanitiseName } from "../lib/utils";
+import { sanitiseName, formatNumber } from "../lib/utils";
 import { t } from "../lib/dict";
 
 interface Props {
@@ -96,6 +96,13 @@ export default function ProfileHeader(props: Props) {
             </div>
           </Show>
 
+          {/* 称号 */}
+          <Show when={r().TitleType}>
+            <p class="text-xs text-[#9a8878] mt-0.5">
+              {t(props.dict, r().TitleType!) || r().TitleType!.split("/").pop()?.replace(/([A-Z])/g, " $1").trim()}
+            </p>
+          </Show>
+
           {/* 氏族 */}
           <Show when={r().GuildName}>
             <p class="text-sm text-[#5a4632] mt-1.5">
@@ -105,6 +112,9 @@ export default function ProfileHeader(props: Props) {
                 <span class="text-[#9a8474] text-xs ml-2">
                   {CLAN_TIERS[r().GuildTier!]} · 等级 {r().GuildClass}
                 </span>
+              </Show>
+              <Show when={r().GuildXp != null}>
+                <span class="text-[#9a8474] text-xs ml-2">· 贡献 {formatNumber(r().GuildXp!)} XP</span>
               </Show>
             </p>
           </Show>

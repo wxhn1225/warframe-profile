@@ -16,6 +16,10 @@ export interface ProfileResult {
   GuildName?: string;
   GuildTier?: number;
   GuildClass?: number;
+  GuildXp?: number;
+  GuildEmblem?: boolean;
+  TitleType?: string;
+  Wishlist?: string[];
   Affiliations?: Affiliation[];
   ChallengeProgress?: ChallengeProgress[];
   Missions?: Mission[];
@@ -123,6 +127,13 @@ export interface OperatorLoadOut {
   Skins?: string[];
 }
 
+export interface PvpStat {
+  type: string;
+  suitKills?: number;
+  suitDeaths?: number;
+  weaponKills?: number;
+}
+
 export interface Stats {
   TimePlayedSec?: number;
   Income?: number;
@@ -133,6 +144,7 @@ export interface Stats {
   MissionsDumped?: number;
   MeleeKills?: number;
   CiphersSolved?: number;
+  CiphersFailed?: number;
   CipherTime?: number;
   ReviveCount?: number;
   HealCount?: number;
@@ -140,6 +152,19 @@ export interface Stats {
   PickupCount?: number;
   Rating?: number;
   Rank?: number;
+  DojoObstacleScore?: number;
+  FomorianEventScore?: number;
+  FlotillaEventScore?: number;
+  FlotillaGroundBadgesTier1?: number;
+  FlotillaGroundBadgesTier2?: number;
+  FlotillaGroundBadgesTier3?: number;
+  FlotillaSpaceBadgesTier1?: number;
+  FlotillaSpaceBadgesTier2?: number;
+  FlotillaSpaceBadgesTier3?: number;
+  SentinelGameScore?: number;
+  ZephyrScore?: number;
+  Races?: Record<string, { highScore: number }>;
+  PVP?: PvpStat[];
   Tutorial?: Record<string, { stage: number }>;
   Weapons?: WeaponStat[];
   Enemies?: EnemyStat[];
