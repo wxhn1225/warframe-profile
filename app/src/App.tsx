@@ -58,9 +58,7 @@ export default function App() {
         await relaunch();
       }
     } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
-      console.error("Update failed:", msg);
-      setUpdateError(msg);
+      setUpdateError("error");
     } finally {
       setUpdateLoading(false);
     }

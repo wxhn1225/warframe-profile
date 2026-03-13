@@ -36,8 +36,8 @@ export default function Header(props: Props) {
                 </Show>
               </button>
               <Show when={props.updateError}>
-                <span class="text-[10px] text-red-400 max-w-[200px] truncate" title={props.updateError!}>
-                  更新失败：{props.updateError}
+                <span class="text-[10px] text-red-400">
+                  更新失败，请稍后重试
                 </span>
               </Show>
             </div>
