@@ -12,270 +12,186 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:      #09090b;
-      --bg2:     #18181b;
-      --bg3:     #27272a;
-      --border:  #3f3f46;
-      --text:    #fafafa;
-      --muted:   #a1a1aa;
-      --subtle:  #71717a;
-      --white:   #ffffff;
-      --radius:  10px;
+      --bg:     #09090b;
+      --bg2:    #18181b;
+      --bg3:    #27272a;
+      --border: #3f3f46;
+      --text:   #fafafa;
+      --muted:  #a1a1aa;
+      --subtle: #71717a;
+      --white:  #ffffff;
+      --radius: 10px;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+      background: var(--bg); color: var(--text);
+      line-height: 1.6; min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
-
     a { color: var(--text); text-decoration: none; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
 
-    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
-
-    /* ── nav ── */
+    /* nav */
     nav {
       position: sticky; top: 0; z-index: 50;
       border-bottom: 1px solid var(--border);
-      background: rgba(9,9,11,.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 0;
+      background: rgba(9,9,11,.88);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     }
     nav .inner {
       display: flex; align-items: center; justify-content: space-between;
-      max-width: 800px; margin: 0 auto; padding: 0 24px;
-      height: 56px;
+      max-width: 720px; margin: 0 auto; padding: 0 24px; height: 54px;
     }
-    .logo {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 14px; font-weight: 600; color: var(--text);
-    }
+    .logo { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
     .logo-icon {
-      width: 28px; height: 28px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border: 1px solid var(--border);
+      border-radius: 6px; display: flex; align-items: center; justify-content: center;
       background: var(--bg2);
     }
-    .logo-icon svg { width: 14px; height: 14px; color: var(--muted); }
-    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .logo-icon svg { width: 13px; height: 13px; color: var(--muted); }
+    .nav-links { display: flex; align-items: center; gap: 2px; }
     .nav-links a {
-      font-size: 13px; color: var(--muted);
-      padding: 6px 10px; border-radius: 6px;
+      font-size: 13px; color: var(--muted); padding: 5px 10px; border-radius: 6px;
       transition: color .15s, background .15s;
     }
     .nav-links a:hover { color: var(--text); background: var(--bg2); }
 
-    /* ── hero ── */
-    .hero {
-      padding: 96px 0 80px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-glow {
-      position: absolute;
-      width: 600px; height: 300px;
-      top: -60px; left: 50%; transform: translateX(-50%);
-      background: radial-gradient(ellipse, rgba(255,255,255,.04) 0%, transparent 70%);
+    /* hero */
+    .hero { padding: 88px 0 72px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ''; position: absolute; width: 560px; height: 280px;
+      top: -50px; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(ellipse, rgba(255,255,255,.05) 0%, transparent 70%);
       pointer-events: none;
     }
     .badge {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 12px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 12px; color: var(--muted);
-      background: var(--bg2);
-      margin-bottom: 24px;
+      padding: 4px 12px; border: 1px solid var(--border); border-radius: 20px;
+      font-size: 12px; color: var(--muted); background: var(--bg2); margin-bottom: 22px;
     }
-    .badge-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 6px #22c55e;
-    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e; }
     h1 {
-      font-size: clamp(32px, 6vw, 52px);
-      font-weight: 700;
-      letter-spacing: -.03em;
-      line-height: 1.1;
-      color: var(--white);
-      margin-bottom: 20px;
+      font-size: clamp(30px, 6vw, 50px); font-weight: 700;
+      letter-spacing: -.03em; line-height: 1.1; color: var(--white); margin-bottom: 18px;
     }
-    .subtitle {
-      font-size: 16px;
-      color: var(--muted);
-      max-width: 460px;
-      margin: 0 auto 40px;
-      line-height: 1.65;
-    }
+    .subtitle { font-size: 15px; color: var(--muted); max-width: 420px; margin: 0 auto 36px; line-height: 1.65; }
 
-    /* ── cta buttons ── */
-    .cta-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    /* download block in hero */
+    .hero-dl-block {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 12px;
+    }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 20px;
-      background: var(--white);
-      color: var(--bg);
-      font-weight: 600; font-size: 14px;
-      border-radius: var(--radius);
-      border: none; cursor: pointer;
-      transition: opacity .15s, transform .15s;
-      text-decoration: none;
+      padding: 11px 24px; background: var(--white); color: var(--bg);
+      font-weight: 600; font-size: 14px; border-radius: var(--radius);
+      border: none; cursor: pointer; transition: opacity .15s, transform .15s; text-decoration: none;
     }
     .btn-primary:hover { opacity: .9; transform: translateY(-1px); }
-    .btn-primary svg { width: 15px; height: 15px; }
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 20px;
-      background: transparent;
-      color: var(--muted);
-      font-size: 14px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: color .15s, border-color .15s, transform .15s;
-      text-decoration: none;
-    }
-    .btn-ghost:hover { color: var(--text); border-color: var(--subtle); transform: translateY(-1px); }
-    .btn-ghost svg { width: 15px; height: 15px; }
+    .btn-primary svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-    .dl-meta { margin-top: 14px; font-size: 12px; color: var(--subtle); }
+    /* code box */
+    .code-box {
+      display: inline-flex; align-items: center; gap: 0;
+      border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+      background: var(--bg2);
+    }
+    .code-label { padding: 8px 12px; font-size: 13px; color: var(--muted); border-right: 1px solid var(--border); }
+    .code-val {
+      padding: 8px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px; font-weight: 600; color: var(--white);
+      letter-spacing: .05em;
+    }
+    .code-copy {
+      padding: 8px 12px; border-left: 1px solid var(--border);
+      cursor: pointer; color: var(--subtle); font-size: 12px;
+      transition: color .15s, background .15s; background: transparent; border: none;
+      border-left: 1px solid var(--border);
+    }
+    .code-copy:hover { color: var(--text); background: var(--bg3); }
+
+    .dl-meta { font-size: 12px; color: var(--subtle); }
     .dl-meta .ver { font-family: 'JetBrains Mono', monospace; color: var(--muted); }
 
-    /* ── platforms ── */
-    .platforms {
-      display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
-      margin-top: 32px;
-    }
-    .plat {
-      padding: 3px 12px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 11px; color: var(--subtle);
-    }
+    /* platforms */
+    .platforms { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-top: 28px; }
+    .plat { padding: 3px 11px; border: 1px solid var(--border); border-radius: 20px; font-size: 11px; color: var(--subtle); }
 
-    /* ── divider ── */
     hr { border: none; border-top: 1px solid var(--border); }
+    section { padding: 52px 0; }
+    .sec-label { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--subtle); margin-bottom: 10px; }
+    h2 { font-size: 21px; font-weight: 700; letter-spacing: -.02em; color: var(--white); margin-bottom: 22px; }
 
-    /* ── section ── */
-    section { padding: 56px 0; }
-    .sec-label {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--subtle); margin-bottom: 10px;
-    }
-    h2 {
-      font-size: 22px; font-weight: 700;
-      letter-spacing: -.02em;
-      color: var(--white);
-      margin-bottom: 24px;
-    }
-
-    /* ── notice ── */
     .notice {
       display: flex; gap: 10px; align-items: flex-start;
-      padding: 12px 16px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--bg2);
-      font-size: 13px; color: var(--muted);
-      margin-bottom: 20px;
+      padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--bg2); font-size: 13px; color: var(--muted); margin-bottom: 18px;
     }
     .notice svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; color: var(--subtle); }
 
-    /* ── release cards ── */
-    .release-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--bg2);
-      overflow: hidden;
-      margin-bottom: 10px;
+    /* download cards */
+    .dl-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--bg2); overflow: hidden; margin-bottom: 10px;
     }
-    .release-head {
+    .dl-card-head {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 16px;
-      cursor: pointer;
-      transition: background .15s;
-      user-select: none;
+      padding: 14px 16px; border-bottom: 1px solid var(--border);
     }
-    .release-head:hover { background: var(--bg3); }
-    .release-lhs { display: flex; align-items: center; gap: 10px; }
-    .tag-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px; font-weight: 500;
-      color: var(--text);
-    }
-    .tag-latest {
-      font-size: 10px; padding: 2px 7px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--subtle);
-      background: var(--bg3);
-    }
-    .release-date { font-size: 12px; color: var(--subtle); }
-    .release-body {
-      padding: 14px 16px;
-      border-top: 1px solid var(--border);
-      font-size: 13px; color: var(--muted);
-      line-height: 1.7;
-    }
-    .release-body ul { padding-left: 16px; }
-    .release-body li { margin-bottom: 3px; }
-    .release-body p { margin-bottom: 6px; }
-    .release-body strong { color: var(--text); font-weight: 500; }
-    .release-body.collapsed { display: none; }
+    .dl-card-lhs { display: flex; align-items: center; gap: 10px; }
+    .tag-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; }
+    .tag-latest { font-size: 10px; padding: 2px 7px; border: 1px solid var(--border); border-radius: 10px; color: var(--subtle); background: var(--bg3); }
+    .dl-card-date { font-size: 12px; color: var(--subtle); }
 
-    .dl-row {
-      display: flex; gap: 8px; flex-wrap: wrap;
-      padding: 12px 16px;
-      border-top: 1px solid var(--border);
+    .dl-card-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .dl-item {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
     }
-    .dl-btn {
+    .dl-item-name { font-size: 13px; color: var(--muted); }
+    .dl-item-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .dl-link {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 13px;
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      font-size: 12px; color: var(--muted);
-      background: var(--bg3);
-      cursor: pointer; text-decoration: none;
-      transition: color .15s, border-color .15s;
+      padding: 7px 14px; border: 1px solid var(--border); border-radius: 7px;
+      font-size: 13px; color: var(--text); background: var(--bg3);
+      cursor: pointer; text-decoration: none; transition: border-color .15s;
     }
-    .dl-btn:hover { color: var(--text); border-color: var(--subtle); }
-    .dl-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .dl-link:hover { border-color: var(--subtle); }
+    .dl-link svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .dl-code-inline {
+      display: inline-flex; align-items: center; gap: 0;
+      border: 1px solid var(--border); border-radius: 7px; overflow: hidden;
+      background: var(--bg2); font-size: 12px;
+    }
+    .dl-code-inline span:first-child { padding: 7px 10px; color: var(--subtle); border-right: 1px solid var(--border); }
+    .dl-code-inline .code-v { padding: 7px 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--white); }
+    .dl-code-inline button {
+      padding: 7px 10px; background: transparent; border: none; border-left: 1px solid var(--border);
+      color: var(--subtle); cursor: pointer; font-size: 11px; transition: color .15s, background .15s;
+    }
+    .dl-code-inline button:hover { color: var(--text); background: var(--bg3); }
 
-    /* ── skeleton ── */
+    /* skeleton */
     .skeleton {
       background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3) 50%, var(--bg2) 75%);
-      background-size: 400% 100%;
-      animation: shimmer 1.6s infinite;
-      border-radius: 8px;
+      background-size: 400% 100%; animation: shimmer 1.6s infinite; border-radius: 8px;
     }
     @keyframes shimmer { to { background-position: -200% 0; } }
 
-    /* ── footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
-    }
+    footer { border-top: 1px solid var(--border); padding: 22px 0; }
     footer .inner {
-      max-width: 800px; margin: 0 auto; padding: 0 24px;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 8px;
+      max-width: 720px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
       font-size: 12px; color: var(--subtle);
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 540px) {
       .nav-links { display: none; }
-      .cta-row { flex-direction: column; align-items: stretch; }
-      .btn-primary, .btn-ghost { justify-content: center; }
+      .hero-dl-block { width: 100%; }
+      .btn-primary { width: 100%; justify-content: center; }
+      .dl-item { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -293,8 +209,6 @@
     </div>
     <div class="nav-links">
       <a href="#download">下载</a>
-      <a href="#changelog">更新日志</a>
-      <a href="https://github.com/wxhn1225/warframe-profile" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
 </nav>
@@ -302,15 +216,16 @@
 <div class="container">
 
   <div class="hero">
-    <div class="hero-glow"></div>
-    <div class="badge"><span class="badge-dot"></span>国际服 · 免费开源</div>
+    <div class="badge"><span class="badge-dot"></span>国际服 · 免费工具</div>
     <h1>Warframe<br>Profile Viewer</h1>
     <p class="subtitle">无需登录，一键读取 EE.log，快速查看国际服玩家完整档案数据。</p>
-    <div class="cta-row" id="hero-dl">
-      <div class="skeleton" style="width:148px;height:42px;border-radius:10px;"></div>
-      <div class="skeleton" style="width:120px;height:42px;border-radius:10px;"></div>
+
+    <div id="hero-area">
+      <div class="skeleton" style="width:200px;height:44px;border-radius:10px;margin:0 auto 12px;"></div>
+      <div class="skeleton" style="width:220px;height:38px;border-radius:8px;margin:0 auto;"></div>
     </div>
-    <div class="dl-meta" id="hero-meta">&nbsp;</div>
+
+    <div class="dl-meta" id="hero-meta" style="margin-top:14px;">&nbsp;</div>
     <div class="platforms">
       <span class="plat">PC</span>
       <span class="plat">PlayStation</span>
@@ -327,22 +242,10 @@
     <h2>最新版本</h2>
     <div class="notice">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      本工具仅支持<strong style="color:var(--text)">国际服</strong>账号。国服玩家可在应用查询页底部找到对应入口。
+      本工具仅支持<strong style="color:var(--text);margin:0 3px">国际服</strong>账号。国服玩家可在应用查询页底部找到对应入口。
     </div>
     <div id="dl-section">
-      <div class="skeleton" style="height:100px;border-radius:10px;"></div>
-    </div>
-  </section>
-
-  <hr />
-
-  <section id="changelog">
-    <div class="sec-label">更新日志</div>
-    <h2>版本历史</h2>
-    <div id="changelog-list">
-      <div class="skeleton" style="height:50px;border-radius:10px;margin-bottom:8px;"></div>
-      <div class="skeleton" style="height:50px;border-radius:10px;margin-bottom:8px;"></div>
-      <div class="skeleton" style="height:50px;border-radius:10px;"></div>
+      <div class="skeleton" style="height:120px;border-radius:10px;"></div>
     </div>
   </section>
 
@@ -351,45 +254,28 @@
 <footer>
   <div class="inner">
     <span>© 2025–2026 Warframe Profile</span>
-    <span>本项目与 Digital Extremes 无关联 · MIT License</span>
+    <span>本项目与 Digital Extremes 无关联</span>
   </div>
 </footer>
 
 <script>
-const REPO = 'wxhn1225/warframe-profile';
+const iconDl = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
 
 function fmtDate(s) {
   return new Date(s).toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric' });
 }
 function esc(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-function mdToHtml(md) {
-  if (!md) return '<p style="color:var(--subtle)">暂无说明</p>';
-  const lines = md.split('\n');
-  let html = '', inList = false;
-  for (let line of lines) {
-    line = line.trim();
-    if (!line) { if (inList) { html += '</ul>'; inList = false; } continue; }
-    if (/^#{1,3}\s/.test(line)) {
-      if (inList) { html += '</ul>'; inList = false; }
-      html += `<p style="font-weight:500;margin-top:10px;color:var(--text)">${esc(line.replace(/^#{1,3}\s*/,''))}</p>`;
-    } else if (/^[-*]\s/.test(line)) {
-      if (!inList) { html += '<ul>'; inList = true; }
-      html += `<li>${esc(line.slice(2))}</li>`;
-    } else {
-      if (inList) { html += '</ul>'; inList = false; }
-      html += `<p>${esc(line)}</p>`;
-    }
-  }
-  if (inList) html += '</ul>';
-  return html;
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-const iconDl = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
-const iconGh  = `<svg viewBox="0 0 16 16" fill="currentColor" width="15" height="15"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>`;
+function copyText(text, btn) {
+  navigator.clipboard?.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '已复制';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
 
-// ── 下载区：读 downloads.json（网盘链接，手动维护）──
 fetch('./downloads.json')
   .then(r => { if (!r.ok) throw 0; return r.json(); })
   .then(list => {
@@ -397,73 +283,60 @@ fetch('./downloads.json')
     const latest = list[0];
     const first  = latest.downloads?.[0];
 
-    // hero 按钮
-    document.getElementById('hero-dl').innerHTML = `
-      <a class="btn-primary" href="${esc(first?.url || '#')}" target="_blank" rel="noopener">
+    // ── hero ──
+    let heroHtml = `<div class="hero-dl-block">
+      <a class="btn-primary" href="${esc(first?.url||'#')}" target="_blank" rel="noopener">
         ${iconDl} 下载最新版
-      </a>
-      <a class="btn-ghost" href="https://github.com/${REPO}" target="_blank" rel="noopener">
-        ${iconGh} GitHub
       </a>`;
+    if (first?.code) {
+      heroHtml += `<div class="code-box">
+        <span class="code-label">提取码</span>
+        <span class="code-val">${esc(first.code)}</span>
+        <button class="code-copy" onclick="copyText('${esc(first.code)}',this)">复制</button>
+      </div>`;
+    }
+    heroHtml += `</div>`;
+    document.getElementById('hero-area').innerHTML = heroHtml;
     document.getElementById('hero-meta').innerHTML =
       `<span class="ver">v${esc(latest.version)}</span> · Windows x64 · ${fmtDate(latest.date)}`;
 
-    // 下载卡片
-    const dlBtns = (latest.downloads || []).map(d => {
-      const code = d.code ? `<span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--subtle);margin-left:4px;">提取码：${esc(d.code)}</span>` : '';
-      return `<a class="dl-btn" href="${esc(d.url)}" target="_blank" rel="noopener">${iconDl} ${esc(d.label)}</a>${code}`;
+    // ── download section ──
+    let dlItems = (latest.downloads || []).map(d => {
+      let codeHtml = '';
+      if (d.code) {
+        codeHtml = `<div class="dl-code-inline">
+          <span>提取码</span>
+          <span class="code-v">${esc(d.code)}</span>
+          <button onclick="copyText('${esc(d.code)}',this)">复制</button>
+        </div>`;
+      }
+      return `<div class="dl-item">
+        <span class="dl-item-name">${esc(d.label)}</span>
+        <div class="dl-item-right">
+          <a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">${iconDl} 打开云盘</a>
+          ${codeHtml}
+        </div>
+      </div>`;
     }).join('');
 
     document.getElementById('dl-section').innerHTML = `
-      <div class="release-card">
-        <div class="release-head" style="cursor:default">
-          <div class="release-lhs">
+      <div class="dl-card">
+        <div class="dl-card-head">
+          <div class="dl-card-lhs">
             <span class="tag-name">v${esc(latest.version)}</span>
             <span class="tag-latest">latest</span>
           </div>
-          <span class="release-date">${fmtDate(latest.date)}</span>
+          <span class="dl-card-date">${fmtDate(latest.date)}</span>
         </div>
-        ${latest.notes ? `<div class="release-body">${mdToHtml(latest.notes)}</div>` : ''}
-        <div class="dl-row" style="align-items:center">${dlBtns}</div>
+        <div class="dl-card-body">${dlItems}</div>
       </div>`;
   })
   .catch(() => {
-    document.getElementById('hero-dl').innerHTML =
-      `<a class="btn-ghost" href="https://github.com/${REPO}/releases" target="_blank" rel="noopener">${iconGh} GitHub Releases</a>`;
-    document.getElementById('hero-meta').innerHTML = '';
+    document.getElementById('hero-area').innerHTML =
+      `<p style="font-size:13px;color:var(--muted)">下载信息暂不可用</p>`;
     document.getElementById('dl-section').innerHTML =
-      `<p style="font-size:13px;color:var(--muted)">下载信息暂不可用，请前往 <a href="https://github.com/${REPO}/releases" style="color:var(--text);text-decoration:underline" target="_blank">GitHub Releases</a>。</p>`;
+      `<p style="font-size:13px;color:var(--muted)">暂无下载信息，请稍后刷新。</p>`;
   });
-
-// ── 更新日志：读 releases.json（CI 自动生成）──
-fetch('./releases.json')
-  .then(r => { if (!r.ok) throw 0; return r.json(); })
-  .catch(() => fetch(`https://api.github.com/repos/${REPO}/releases?per_page=10`).then(r => r.json()))
-  .then(releases => {
-    if (!Array.isArray(releases) || !releases.length) throw 0;
-    document.getElementById('changelog-list').innerHTML = releases.map((r, i) => {
-      const id  = `r${i}`;
-      const tag = r.tag_name || `v${r.version}`;
-      const dt  = fmtDate(r.published_at || r.date);
-      return `
-        <div class="release-card">
-          <div class="release-head" onclick="tog('${id}')">
-            <div class="release-lhs">
-              <span class="tag-name">${esc(tag)}</span>
-              ${i===0?'<span class="tag-latest">latest</span>':''}
-            </div>
-            <span class="release-date">${dt}</span>
-          </div>
-          <div class="release-body ${i===0?'':'collapsed'}" id="${id}">${mdToHtml(r.body || r.notes || '')}</div>
-        </div>`;
-    }).join('');
-  })
-  .catch(() => {
-    document.getElementById('changelog-list').innerHTML =
-      `<p style="font-size:13px;color:var(--muted)">更新日志暂不可用。</p>`;
-  });
-
-function tog(id) { document.getElementById(id).classList.toggle('collapsed'); }
 </script>
 </body>
 </html>
