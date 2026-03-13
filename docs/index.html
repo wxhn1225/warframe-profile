@@ -12,19 +12,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #ddd0be;
-      --bg2:      #e8ddd0;
-      --bg3:      #d0c4b0;
-      --border:   #bfb09a;
-      --brown:    #4a3020;
-      --brown-md: #7a5a40;
-      --brown-lt: #9a7858;
-      --accent:   #6a4020;
-      --accent-lt:#8a5830;
-      --text:     #261a0e;
-      --muted:    #7a6450;
-      --radius:   12px;
+      --bg:      #09090b;
+      --bg2:     #18181b;
+      --bg3:     #27272a;
+      --border:  #3f3f46;
+      --text:    #fafafa;
+      --muted:   #a1a1aa;
+      --subtle:  #71717a;
+      --white:   #ffffff;
+      --radius:  10px;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
@@ -32,220 +31,231 @@
       color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a { color: var(--text); text-decoration: none; }
 
-    .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
 
     /* ── nav ── */
     nav {
-      background: var(--bg2);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 0;
       position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid var(--border);
+      background: rgba(9,9,11,.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 0;
     }
     nav .inner {
       display: flex; align-items: center; justify-content: space-between;
-      max-width: 860px; margin: 0 auto; padding: 0 24px;
+      max-width: 800px; margin: 0 auto; padding: 0 24px;
+      height: 56px;
     }
     .logo {
-      display: flex; align-items: center; gap: 9px;
-      font-weight: 600; font-size: 15px; color: var(--brown);
+      display: flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 600; color: var(--text);
     }
-    .logo svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--accent); }
-    .nav-links { display: flex; gap: 20px; }
-    .nav-links a { font-size: 13px; color: var(--muted); transition: color .2s; }
-    .nav-links a:hover { color: var(--brown); text-decoration: none; }
+    .logo-icon {
+      width: 28px; height: 28px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg2);
+    }
+    .logo-icon svg { width: 14px; height: 14px; color: var(--muted); }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a {
+      font-size: 13px; color: var(--muted);
+      padding: 6px 10px; border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--bg2); }
 
     /* ── hero ── */
     .hero {
-      padding: 72px 0 56px;
+      padding: 96px 0 80px;
       text-align: center;
       position: relative;
+      overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 55% at 50% 0%, rgba(160,100,50,.08), transparent);
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 300px;
+      top: -60px; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(ellipse, rgba(255,255,255,.04) 0%, transparent 70%);
       pointer-events: none;
     }
     .badge {
-      display: inline-block;
-      padding: 4px 14px;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px;
       border: 1px solid var(--border);
       border-radius: 20px;
-      font-size: 12px;
-      color: var(--muted);
+      font-size: 12px; color: var(--muted);
       background: var(--bg2);
-      margin-bottom: 22px;
-      letter-spacing: .03em;
+      margin-bottom: 24px;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
     }
     h1 {
-      font-size: clamp(30px, 6vw, 50px);
+      font-size: clamp(32px, 6vw, 52px);
       font-weight: 700;
-      letter-spacing: -.02em;
-      line-height: 1.15;
-      margin-bottom: 16px;
-      color: var(--brown);
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 20px;
     }
-    h1 span { color: var(--accent); }
     .subtitle {
-      font-size: 15px;
+      font-size: 16px;
       color: var(--muted);
-      max-width: 500px;
-      margin: 0 auto 36px;
-      line-height: 1.7;
+      max-width: 460px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
     }
 
-    /* ── download ── */
-    .dl-area { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-    .dl-primary {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 600;
-      font-size: 15px;
-      padding: 13px 28px;
+    /* ── cta buttons ── */
+    .cta-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: var(--white);
+      color: var(--bg);
+      font-weight: 600; font-size: 14px;
       border-radius: var(--radius);
-      cursor: pointer;
-      transition: background .2s, transform .15s;
-      border: none;
+      border: none; cursor: pointer;
+      transition: opacity .15s, transform .15s;
       text-decoration: none;
     }
-    .dl-primary:hover { background: var(--accent-lt); transform: translateY(-1px); text-decoration: none; }
-    .dl-primary:active { transform: translateY(0); }
-    .dl-primary svg { width: 17px; height: 17px; flex-shrink: 0; }
-    .dl-meta { font-size: 12px; color: var(--muted); }
-    .dl-meta .ver { font-family: 'JetBrains Mono', monospace; color: var(--accent); }
-
-    /* ── pills ── */
-    .platform-pills {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
-      margin-top: 28px;
-    }
-    .pill {
-      padding: 4px 14px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 12px;
+    .btn-primary:hover { opacity: .9; transform: translateY(-1px); }
+    .btn-primary svg { width: 15px; height: 15px; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: transparent;
       color: var(--muted);
-      background: var(--bg2);
-    }
-
-    /* ── section ── */
-    section { padding: 60px 0; }
-    section + section { border-top: 1px solid var(--border); }
-    .section-label {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--accent-lt); margin-bottom: 10px;
-    }
-    h2 { font-size: 24px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 28px; color: var(--brown); }
-
-    /* ── features ── */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-    }
-    .feature {
-      background: var(--bg2);
+      font-size: 14px;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
+      cursor: pointer;
+      transition: color .15s, border-color .15s, transform .15s;
+      text-decoration: none;
     }
-    .feature-icon {
-      width: 34px; height: 34px;
-      background: rgba(120,70,30,.08);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 12px;
+    .btn-ghost:hover { color: var(--text); border-color: var(--subtle); transform: translateY(-1px); }
+    .btn-ghost svg { width: 15px; height: 15px; }
+
+    .dl-meta { margin-top: 14px; font-size: 12px; color: var(--subtle); }
+    .dl-meta .ver { font-family: 'JetBrains Mono', monospace; color: var(--muted); }
+
+    /* ── platforms ── */
+    .platforms {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
+      margin-top: 32px;
     }
-    .feature-icon svg { width: 17px; height: 17px; color: var(--accent); }
-    .feature h3 { font-size: 14px; font-weight: 600; margin-bottom: 5px; color: var(--brown); }
-    .feature p  { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .plat {
+      padding: 3px 12px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11px; color: var(--subtle);
+    }
+
+    /* ── divider ── */
+    hr { border: none; border-top: 1px solid var(--border); }
+
+    /* ── section ── */
+    section { padding: 56px 0; }
+    .sec-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--subtle); margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 22px; font-weight: 700;
+      letter-spacing: -.02em;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    /* ── notice ── */
+    .notice {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg2);
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .notice svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; color: var(--subtle); }
 
     /* ── release cards ── */
     .release-card {
-      background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      background: var(--bg2);
       overflow: hidden;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .release-head {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border);
+      padding: 14px 16px;
       cursor: pointer;
-      user-select: none;
       transition: background .15s;
+      user-select: none;
     }
     .release-head:hover { background: var(--bg3); }
-    .release-tag { display: flex; align-items: center; gap: 10px; }
+    .release-lhs { display: flex; align-items: center; gap: 10px; }
     .tag-name {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 14px; font-weight: 500;
-      color: var(--accent);
+      font-size: 13px; font-weight: 500;
+      color: var(--text);
     }
     .tag-latest {
-      font-size: 10px; padding: 2px 8px;
-      background: rgba(120,70,30,.08);
+      font-size: 10px; padding: 2px 7px;
       border: 1px solid var(--border);
-      border-radius: 10px; color: var(--accent-lt);
+      border-radius: 10px;
+      color: var(--subtle);
+      background: var(--bg3);
     }
-    .release-date { font-size: 12px; color: var(--muted); }
+    .release-date { font-size: 12px; color: var(--subtle); }
     .release-body {
-      padding: 14px 18px;
-      font-size: 13px; color: var(--text);
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--muted);
       line-height: 1.7;
     }
-    .release-body ul { padding-left: 18px; }
-    .release-body li { margin-bottom: 4px; }
-    .release-body p  { margin-bottom: 6px; }
+    .release-body ul { padding-left: 16px; }
+    .release-body li { margin-bottom: 3px; }
+    .release-body p { margin-bottom: 6px; }
+    .release-body strong { color: var(--text); font-weight: 500; }
     .release-body.collapsed { display: none; }
 
     .dl-row {
       display: flex; gap: 8px; flex-wrap: wrap;
-      padding: 12px 18px;
+      padding: 12px 16px;
       border-top: 1px solid var(--border);
-      background: var(--bg3);
     }
     .dl-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 7px 14px;
+      padding: 6px 13px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 12px;
-      color: var(--brown-md);
-      background: var(--bg2);
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color .2s, color .2s;
+      border-radius: 7px;
+      font-size: 12px; color: var(--muted);
+      background: var(--bg3);
+      cursor: pointer; text-decoration: none;
+      transition: color .15s, border-color .15s;
     }
-    .dl-btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+    .dl-btn:hover { color: var(--text); border-color: var(--subtle); }
     .dl-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
-
-    /* ── notice ── */
-    .notice {
-      background: rgba(120,70,30,.05);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 13px 16px;
-      font-size: 13px;
-      color: var(--muted);
-      display: flex; gap: 10px; align-items: flex-start;
-      margin-bottom: 24px;
-    }
-    .notice svg { width: 15px; height: 15px; color: var(--accent-lt); flex-shrink: 0; margin-top: 2px; }
 
     /* ── skeleton ── */
     .skeleton {
-      background: linear-gradient(90deg, var(--bg3) 25%, var(--border) 50%, var(--bg3) 75%);
+      background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3) 50%, var(--bg2) 75%);
       background-size: 400% 100%;
-      animation: shimmer 1.5s infinite;
+      animation: shimmer 1.6s infinite;
       border-radius: 8px;
     }
     @keyframes shimmer { to { background-position: -200% 0; } }
@@ -254,18 +264,18 @@
     footer {
       border-top: 1px solid var(--border);
       padding: 24px 0;
-      font-size: 12px;
-      color: var(--muted);
     }
     footer .inner {
-      max-width: 860px; margin: 0 auto; padding: 0 24px;
+      max-width: 800px; margin: 0 auto; padding: 0 24px;
       display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 10px;
+      flex-wrap: wrap; gap: 8px;
+      font-size: 12px; color: var(--subtle);
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 560px) {
       .nav-links { display: none; }
-      .dl-primary { width: 100%; justify-content: center; }
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-ghost { justify-content: center; }
     }
   </style>
 </head>
@@ -274,9 +284,11 @@
 <nav>
   <div class="inner">
     <div class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="8" r="4"/><path d="M12 12v9M8 17l4 4 4-4M4 12a8 8 0 0 1 16 0"/>
-      </svg>
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="3.5"/><path d="M12 11.5v8M9 17l3 3 3-3"/>
+        </svg>
+      </div>
       Warframe Profile
     </div>
     <div class="nav-links">
@@ -289,45 +301,48 @@
 
 <div class="container">
 
-  <!-- Hero -->
   <div class="hero">
-    <div class="badge">国际服 · 仅 Windows · 免费开源</div>
-    <h1>快速查看你的<br><span>战甲档案</span></h1>
-    <p class="subtitle">轻量桌面工具，无需登录，一键读取 EE.log 并展示精通、装备、统计、氏族等完整档案数据。</p>
-    <div class="dl-area" id="hero-dl">
-      <div class="skeleton" style="width:196px;height:50px;border-radius:12px;"></div>
-      <div class="skeleton" style="width:160px;height:14px;margin-top:4px;"></div>
+    <div class="hero-glow"></div>
+    <div class="badge"><span class="badge-dot"></span>国际服 · 免费开源</div>
+    <h1>Warframe<br>Profile Viewer</h1>
+    <p class="subtitle">无需登录，一键读取 EE.log，快速查看国际服玩家完整档案数据。</p>
+    <div class="cta-row" id="hero-dl">
+      <div class="skeleton" style="width:148px;height:42px;border-radius:10px;"></div>
+      <div class="skeleton" style="width:120px;height:42px;border-radius:10px;"></div>
     </div>
-    <div class="platform-pills">
-      <span class="pill">PC</span>
-      <span class="pill">PlayStation</span>
-      <span class="pill">Xbox</span>
-      <span class="pill">Switch</span>
-      <span class="pill">Mobile</span>
+    <div class="dl-meta" id="hero-meta">&nbsp;</div>
+    <div class="platforms">
+      <span class="plat">PC</span>
+      <span class="plat">PlayStation</span>
+      <span class="plat">Xbox</span>
+      <span class="plat">Switch</span>
+      <span class="plat">Mobile</span>
     </div>
   </div>
 
-  <!-- Download -->
+  <hr />
+
   <section id="download">
-    <div class="section-label">下载</div>
-    <h2>获取最新版本</h2>
+    <div class="sec-label">下载</div>
+    <h2>最新版本</h2>
     <div class="notice">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      本工具仅支持 <strong style="color:var(--brown)">国际服</strong> 账号。国服玩家可在应用查询页底部找到对应入口。
+      本工具仅支持<strong style="color:var(--text)">国际服</strong>账号。国服玩家可在应用查询页底部找到对应入口。
     </div>
     <div id="dl-section">
-      <div class="skeleton" style="height:110px;border-radius:12px;"></div>
+      <div class="skeleton" style="height:100px;border-radius:10px;"></div>
     </div>
   </section>
 
-  <!-- Changelog -->
+  <hr />
+
   <section id="changelog">
-    <div class="section-label">更新日志</div>
+    <div class="sec-label">更新日志</div>
     <h2>版本历史</h2>
     <div id="changelog-list">
-      <div class="skeleton" style="height:52px;border-radius:12px;margin-bottom:10px;"></div>
-      <div class="skeleton" style="height:52px;border-radius:12px;margin-bottom:10px;"></div>
-      <div class="skeleton" style="height:52px;border-radius:12px;"></div>
+      <div class="skeleton" style="height:50px;border-radius:10px;margin-bottom:8px;"></div>
+      <div class="skeleton" style="height:50px;border-radius:10px;margin-bottom:8px;"></div>
+      <div class="skeleton" style="height:50px;border-radius:10px;"></div>
     </div>
   </section>
 
@@ -335,8 +350,8 @@
 
 <footer>
   <div class="inner">
-    <span>© 2025–2026 Warframe Profile — MIT License</span>
-    <span>本项目与 Digital Extremes 无关联</span>
+    <span>© 2025–2026 Warframe Profile</span>
+    <span>本项目与 Digital Extremes 无关联 · MIT License</span>
   </div>
 </footer>
 
@@ -350,16 +365,16 @@ function fmtDate(iso) {
 }
 
 function mdToHtml(md) {
-  if (!md) return '<p style="color:var(--muted)">暂无说明</p>';
+  if (!md) return '<p style="color:var(--subtle)">暂无说明</p>';
   const lines = md.split('\n');
   let html = '', inList = false;
   for (let line of lines) {
     line = line.trim();
     if (!line) { if (inList) { html += '</ul>'; inList = false; } continue; }
-    if (line.startsWith('### ') || line.startsWith('## ')) {
+    if (/^#{1,3}\s/.test(line)) {
       if (inList) { html += '</ul>'; inList = false; }
-      html += `<p style="font-weight:600;margin-top:10px;">${esc(line.replace(/^#{2,3}\s*/, ''))}</p>`;
-    } else if (line.startsWith('- ') || line.startsWith('* ')) {
+      html += `<p style="font-weight:500;margin-top:10px;color:var(--text)">${esc(line.replace(/^#{1,3}\s*/,''))}</p>`;
+    } else if (/^[-*]\s/.test(line)) {
       if (!inList) { html += '<ul>'; inList = true; }
       html += `<li>${esc(line.slice(2))}</li>`;
     } else {
@@ -375,87 +390,76 @@ function esc(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+const iconDl = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
+const iconGh  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+
 function dlBtns(assets) {
-  const exeZh   = assets.find(a => a.name.endsWith('.exe') && a.name.includes('-zh'));
-  const exeFull = assets.find(a => a.name.endsWith('.exe') && a.name.includes('-full'));
-  const fallback = `https://github.com/${REPO}/releases/latest`;
-  let html = `<a class="dl-btn" href="${exeZh?.browser_download_url || fallback}" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    简中版 .exe</a>`;
-  if (exeFull) {
-    html += `<a class="dl-btn" href="${exeFull.browser_download_url}" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      多语言版 .exe</a>`;
-  }
-  html += `<a class="dl-btn" href="https://github.com/${REPO}/releases" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    所有发行版</a>`;
-  return html;
+  const zh   = assets.find(a => a.name.endsWith('.exe') && a.name.includes('-zh'));
+  const full = assets.find(a => a.name.endsWith('.exe') && a.name.includes('-full'));
+  let h = `<a class="dl-btn" href="${zh?.browser_download_url||`https://github.com/${REPO}/releases/latest`}" target="_blank" rel="noopener">${iconDl} 简中版 .exe</a>`;
+  if (full) h += `<a class="dl-btn" href="${full.browser_download_url}" target="_blank" rel="noopener">${iconDl} 多语言版 .exe</a>`;
+  h += `<a class="dl-btn" href="https://github.com/${REPO}/releases" target="_blank" rel="noopener">${iconGh} 所有发行版</a>`;
+  return h;
 }
 
-const loadReleases = () =>
-  fetch(LOCAL_JSON)
-    .then(r => { if (!r.ok) throw new Error('local not found'); return r.json(); })
-    .catch(() => fetch(API_URL).then(r => r.json()));
+const load = () =>
+  fetch(LOCAL_JSON).then(r => { if (!r.ok) throw 0; return r.json(); })
+  .catch(() => fetch(API_URL).then(r => r.json()));
 
-loadReleases()
-  .then(releases => {
-    if (!Array.isArray(releases) || !releases.length) throw new Error('empty');
-    const latest = releases[0];
-    const exe = latest.assets?.find(a => a.name.endsWith('.exe') && a.name.includes('-zh'));
+load().then(releases => {
+  if (!Array.isArray(releases) || !releases.length) throw 0;
+  const latest = releases[0];
+  const exe = latest.assets?.find(a => a.name.endsWith('.exe') && a.name.includes('-zh'));
 
-    // hero
-    document.getElementById('hero-dl').innerHTML = `
-      <a class="dl-primary" href="${exe?.browser_download_url || `https://github.com/${REPO}/releases/latest`}" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        下载最新版
-      </a>
-      <span class="dl-meta">
-        <span class="ver">${latest.tag_name}</span> · Windows x64 · 简中版 · ${fmtDate(latest.published_at)}
-      </span>`;
+  // hero
+  document.getElementById('hero-dl').innerHTML = `
+    <a class="btn-primary" href="${exe?.browser_download_url||`https://github.com/${REPO}/releases/latest`}" target="_blank" rel="noopener">
+      ${iconDl} 下载最新版
+    </a>
+    <a class="btn-ghost" href="https://github.com/${REPO}" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" fill="currentColor" width="15" height="15"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>`;
+  document.getElementById('hero-meta').innerHTML =
+    `<span class="ver">${latest.tag_name}</span> · Windows x64 · ${fmtDate(latest.published_at)}`;
 
-    // download section
-    document.getElementById('dl-section').innerHTML = `
-      <div class="release-card">
-        <div class="release-head" style="cursor:default;">
-          <div class="release-tag">
-            <span class="tag-name">${latest.tag_name}</span>
-            <span class="tag-latest">latest</span>
-          </div>
-          <span class="release-date">${fmtDate(latest.published_at)}</span>
+  // download section
+  document.getElementById('dl-section').innerHTML = `
+    <div class="release-card">
+      <div class="release-head" style="cursor:default">
+        <div class="release-lhs">
+          <span class="tag-name">${latest.tag_name}</span>
+          <span class="tag-latest">latest</span>
         </div>
-        <div class="release-body">${mdToHtml(latest.body)}</div>
-        <div class="dl-row">${dlBtns(latest.assets || [])}</div>
-      </div>`;
+        <span class="release-date">${fmtDate(latest.published_at)}</span>
+      </div>
+      <div class="release-body">${mdToHtml(latest.body)}</div>
+      <div class="dl-row">${dlBtns(latest.assets||[])}</div>
+    </div>`;
 
-    // changelog
-    document.getElementById('changelog-list').innerHTML = releases.map((rel, i) => {
-      const id = `rel-${i}`;
-      return `
-        <div class="release-card">
-          <div class="release-head" onclick="toggle('${id}')">
-            <div class="release-tag">
-              <span class="tag-name">${rel.tag_name}</span>
-              ${i === 0 ? '<span class="tag-latest">latest</span>' : ''}
-            </div>
-            <span class="release-date">${fmtDate(rel.published_at)}</span>
+  // changelog
+  document.getElementById('changelog-list').innerHTML = releases.map((r, i) => {
+    const id = `r${i}`;
+    return `
+      <div class="release-card">
+        <div class="release-head" onclick="tog('${id}')">
+          <div class="release-lhs">
+            <span class="tag-name">${r.tag_name}</span>
+            ${i===0?'<span class="tag-latest">latest</span>':''}
           </div>
-          <div class="release-body ${i === 0 ? '' : 'collapsed'}" id="${id}">${mdToHtml(rel.body)}</div>
-          <div class="dl-row">${dlBtns(rel.assets || [])}</div>
-        </div>`;
-    }).join('');
-  })
-  .catch(() => {
-    const fb = `<p style="font-size:14px;color:var(--muted)">无法加载版本信息，请前往
-      <a href="https://github.com/${REPO}/releases" target="_blank">GitHub Releases</a> 手动下载。</p>`;
-    ['hero-dl','dl-section','changelog-list'].forEach(id => {
-      document.getElementById(id).innerHTML = fb;
-    });
-  });
+          <span class="release-date">${fmtDate(r.published_at)}</span>
+        </div>
+        <div class="release-body ${i===0?'':'collapsed'}" id="${id}">${mdToHtml(r.body)}</div>
+        <div class="dl-row">${dlBtns(r.assets||[])}</div>
+      </div>`;
+  }).join('');
+}).catch(() => {
+  const fb = `<p style="font-size:13px;color:var(--muted)">无法加载版本信息，请前往 <a href="https://github.com/${REPO}/releases" style="color:var(--text);text-decoration:underline" target="_blank">GitHub Releases</a> 手动下载。</p>`;
+  ['hero-dl','dl-section','changelog-list'].forEach(id => document.getElementById(id).innerHTML = fb);
+  document.getElementById('hero-meta').innerHTML = '';
+});
 
-function toggle(id) {
-  document.getElementById(id).classList.toggle('collapsed');
-}
+function tog(id) { document.getElementById(id).classList.toggle('collapsed'); }
 </script>
 </body>
 </html>
