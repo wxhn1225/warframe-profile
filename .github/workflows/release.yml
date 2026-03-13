@@ -152,3 +152,52 @@ jobs:
             app/src-tauri/target/release/bundle/nsis/*-${{ matrix.variant }}.exe.sig
             app/src-tauri/target/release/bundle/msi/*-${{ matrix.variant }}.msi
             latest-${{ matrix.variant }}.json
+
+  update-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Generate docs/releases.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Wait a moment so all release assets are visible
+          sleep 10
+          gh api "repos/${{ github.repository }}/releases?per_page=20" > /tmp/releases_raw.json
+          python3 - <<'PYEOF'
+          import json
+
+          raw = json.load(open('/tmp/releases_raw.json'))
+          data = []
+          for r in raw:
+              data.append({
+                  'tag_name':     r['tag_name'],
+                  'name':         r.get('name') or r['tag_name'],
+                  'body':         r.get('body') or '',
+                  'published_at': r['published_at'],
+                  'assets': [
+                      {'name': a['name'], 'browser_download_url': a['browser_download_url']}
+                      for a in r.get('assets', [])
+                  ]
+              })
+          import os; os.makedirs('docs', exist_ok=True)
+          json.dump(data, open('docs/releases.json', 'w'), ensure_ascii=False, indent=2)
+          print(f"Written {len(data)} releases to docs/releases.json")
+          PYEOF
+
+      - name: Commit docs/releases.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/releases.json
+          git diff --staged --quiet && echo "No changes" || \
+            git commit -m "chore: update docs/releases.json for ${{ github.ref_name }} [skip ci]" && \
+            git push origin main

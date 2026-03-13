@@ -411,7 +411,9 @@
 
 <script>
 const REPO = 'wxhn1225/warframe-profile';
-const API  = `https://api.github.com/repos/${REPO}/releases?per_page=10`;
+// 优先从同域名（github.io）读取静态 JSON，无需访问 api.github.com
+const LOCAL_JSON = './releases.json';
+const API_URL    = `https://api.github.com/repos/${REPO}/releases?per_page=10`;
 
 function fmtDate(iso) {
   return new Date(iso).toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric' });
@@ -465,8 +467,13 @@ function dlBtns(assets) {
   return html;
 }
 
-fetch(API)
-  .then(r => r.json())
+// 先尝试本地静态文件（github.io，国内可访问），失败再走 GitHub API
+const loadReleases = () =>
+  fetch(LOCAL_JSON)
+    .then(r => { if (!r.ok) throw new Error('local not found'); return r.json(); })
+    .catch(() => fetch(API_URL).then(r => r.json()));
+
+loadReleases()
   .then(releases => {
     if (!Array.isArray(releases) || !releases.length) throw new Error('no releases');
 
