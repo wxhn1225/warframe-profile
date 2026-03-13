@@ -38,7 +38,15 @@ async fn auto_detect_log() -> Result<ParsedLogin, String> {
         .join("Warframe")
         .join("EE.log");
     let file = std::fs::File::open(&path)
-        .map_err(|e| format!("无法读取 EE.log（{}）：{}", path.display(), e))?;
+        .map_err(|e| {
+            // 只显示系统错误类型，不暴露具体路径
+            let kind = e.kind();
+            match kind {
+                std::io::ErrorKind::NotFound => "未找到 EE.log，请确认已运行过 Warframe".to_string(),
+                std::io::ErrorKind::PermissionDenied => "无权限读取 EE.log，请检查文件权限".to_string(),
+                _ => "无法读取 EE.log，请尝试手动选择文件".to_string(),
+            }
+        })?;
     parse_login_from_reader(file)
 }
 
@@ -61,13 +69,21 @@ async fn fetch_profile(account_id: String, platform: String) -> Result<String, S
     let client = Client::builder()
         .timeout(Duration::from_secs(30))
         .build()
-        .map_err(|e| format!("创建请求客户端失败: {}", e))?;
+        .map_err(|_| "初始化请求失败，请重试".to_string())?;
 
     let resp = client
         .get(&url)
         .send()
         .await
-        .map_err(|e| format!("网络请求失败: {}", e))?;
+        .map_err(|e| {
+            if e.is_timeout() {
+                "请求超时，请检查网络连接后重试".to_string()
+            } else if e.is_connect() {
+                "无法连接到服务器，请检查网络连接".to_string()
+            } else {
+                "网络请求失败，请检查网络连接后重试".to_string()
+            }
+        })?;
 
     let status = resp.status();
     if status == 409 {
@@ -82,7 +98,7 @@ async fn fetch_profile(account_id: String, platform: String) -> Result<String, S
 
     resp.text()
         .await
-        .map_err(|e| format!("读取响应失败: {}", e))
+        .map_err(|_| "读取响应失败，请重试".to_string())
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
