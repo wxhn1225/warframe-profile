@@ -57,6 +57,13 @@
       transition: color .15s, background .15s;
     }
     .nav-links a:hover { color: var(--text); background: var(--bg2); }
+    .nav-gh {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--muted); padding: 5px 10px; border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+    .nav-gh:hover { color: var(--text); background: var(--bg2); }
+    .nav-gh svg { width: 15px; height: 15px; }
 
     /* hero */
     .hero { padding: 88px 0 72px; text-align: center; position: relative; overflow: hidden; }
@@ -78,9 +85,8 @@
     }
     .subtitle { font-size: 15px; color: var(--muted); max-width: 420px; margin: 0 auto 36px; line-height: 1.65; }
 
-    /* download block in hero */
-    .hero-dl-block {
-      display: inline-flex; flex-direction: column; align-items: center; gap: 12px;
+    .hero-btns {
+      display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center;
     }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
@@ -90,32 +96,19 @@
     }
     .btn-primary:hover { opacity: .9; transform: translateY(-1px); }
     .btn-primary svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 11px 18px; background: transparent; color: var(--muted);
+      font-size: 14px; border-radius: var(--radius);
+      border: 1px solid var(--border); cursor: pointer;
+      transition: color .15s, border-color .15s, transform .15s; text-decoration: none;
+    }
+    .btn-secondary:hover { color: var(--text); border-color: var(--subtle); transform: translateY(-1px); }
+    .btn-secondary svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-    /* code box */
-    .code-box {
-      display: inline-flex; align-items: center; gap: 0;
-      border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
-      background: var(--bg2);
-    }
-    .code-label { padding: 8px 12px; font-size: 13px; color: var(--muted); border-right: 1px solid var(--border); }
-    .code-val {
-      padding: 8px 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 15px; font-weight: 600; color: var(--white);
-      letter-spacing: .05em;
-    }
-    .code-copy {
-      padding: 8px 12px; border-left: 1px solid var(--border);
-      cursor: pointer; color: var(--subtle); font-size: 12px;
-      transition: color .15s, background .15s; background: transparent; border: none;
-      border-left: 1px solid var(--border);
-    }
-    .code-copy:hover { color: var(--text); background: var(--bg3); }
-
-    .dl-meta { font-size: 12px; color: var(--subtle); }
+    .dl-meta { font-size: 12px; color: var(--subtle); margin-top: 14px; }
     .dl-meta .ver { font-family: 'JetBrains Mono', monospace; color: var(--muted); }
 
-    /* platforms */
     .platforms { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-top: 28px; }
     .plat { padding: 3px 11px; border: 1px solid var(--border); border-radius: 20px; font-size: 11px; color: var(--subtle); }
 
@@ -144,8 +137,8 @@
     .tag-name { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; }
     .tag-latest { font-size: 10px; padding: 2px 7px; border: 1px solid var(--border); border-radius: 10px; color: var(--subtle); background: var(--bg3); }
     .dl-card-date { font-size: 12px; color: var(--subtle); }
+    .dl-card-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
 
-    .dl-card-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
     .dl-item {
       display: flex; align-items: center; justify-content: space-between;
       gap: 12px; flex-wrap: wrap;
@@ -160,18 +153,30 @@
     }
     .dl-link:hover { border-color: var(--subtle); }
     .dl-link svg { width: 13px; height: 13px; flex-shrink: 0; }
-    .dl-code-inline {
-      display: inline-flex; align-items: center; gap: 0;
-      border: 1px solid var(--border); border-radius: 7px; overflow: hidden;
-      background: var(--bg2); font-size: 12px;
+    .dl-size { font-size: 12px; color: var(--subtle); }
+
+    /* changelog */
+    .changelog-card {
+      border: 1px solid var(--border); border-radius: var(--radius);
+      background: var(--bg2); margin-bottom: 10px; overflow: hidden;
     }
-    .dl-code-inline span:first-child { padding: 7px 10px; color: var(--subtle); border-right: 1px solid var(--border); }
-    .dl-code-inline .code-v { padding: 7px 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--white); }
-    .dl-code-inline button {
-      padding: 7px 10px; background: transparent; border: none; border-left: 1px solid var(--border);
-      color: var(--subtle); cursor: pointer; font-size: 11px; transition: color .15s, background .15s;
+    .changelog-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; cursor: pointer; user-select: none;
+      transition: background .15s;
     }
-    .dl-code-inline button:hover { color: var(--text); background: var(--bg3); }
+    .changelog-head:hover { background: var(--bg3); }
+    .changelog-head-lhs { display: flex; align-items: center; gap: 10px; }
+    .changelog-head svg { width: 14px; height: 14px; color: var(--subtle); transition: transform .2s; }
+    .changelog-body {
+      padding: 0 16px; max-height: 0; overflow: hidden;
+      transition: max-height .25s ease, padding .25s ease;
+    }
+    .changelog-body.open { max-height: 600px; padding: 0 16px 16px; }
+    .changelog-body pre {
+      font-family: 'Inter', sans-serif; font-size: 13px; color: var(--muted);
+      white-space: pre-wrap; word-break: break-word; line-height: 1.7;
+    }
 
     /* skeleton */
     .skeleton {
@@ -186,11 +191,13 @@
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
       font-size: 12px; color: var(--subtle);
     }
+    footer a { color: var(--subtle); transition: color .15s; }
+    footer a:hover { color: var(--muted); }
 
     @media (max-width: 540px) {
       .nav-links { display: none; }
-      .hero-dl-block { width: 100%; }
-      .btn-primary { width: 100%; justify-content: center; }
+      .hero-btns { flex-direction: column; width: 100%; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
       .dl-item { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -209,6 +216,11 @@
     </div>
     <div class="nav-links">
       <a href="#download">下载</a>
+      <a href="#changelog">更新日志</a>
+      <a class="nav-gh" href="https://github.com/wxhn1225/warframe-profile" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.907-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
     </div>
   </div>
 </nav>
@@ -221,11 +233,10 @@
     <p class="subtitle">无需登录，一键读取 EE.log，快速查看国际服玩家完整档案数据。</p>
 
     <div id="hero-area">
-      <div class="skeleton" style="width:200px;height:44px;border-radius:10px;margin:0 auto 12px;"></div>
-      <div class="skeleton" style="width:220px;height:38px;border-radius:8px;margin:0 auto;"></div>
+      <div class="skeleton" style="width:180px;height:44px;border-radius:10px;margin:0 auto;"></div>
     </div>
+    <div class="dl-meta" id="hero-meta">&nbsp;</div>
 
-    <div class="dl-meta" id="hero-meta" style="margin-top:14px;">&nbsp;</div>
     <div class="platforms">
       <span class="plat">PC</span>
       <span class="plat">PlayStation</span>
@@ -245,7 +256,18 @@
       本工具仅支持<strong style="color:var(--text);margin:0 3px">国际服</strong>账号。国服玩家可在应用查询页底部找到对应入口。
     </div>
     <div id="dl-section">
-      <div class="skeleton" style="height:120px;border-radius:10px;"></div>
+      <div class="skeleton" style="height:110px;border-radius:10px;"></div>
+    </div>
+  </section>
+
+  <hr />
+
+  <section id="changelog">
+    <div class="sec-label">更新日志</div>
+    <h2>历史版本</h2>
+    <div id="cl-section">
+      <div class="skeleton" style="height:52px;border-radius:10px;margin-bottom:8px;"></div>
+      <div class="skeleton" style="height:52px;border-radius:10px;"></div>
     </div>
   </section>
 
@@ -254,12 +276,20 @@
 <footer>
   <div class="inner">
     <span>© 2025–2026 Warframe Profile</span>
-    <span>本项目与 Digital Extremes 无关联</span>
+    <span>
+      <a href="https://github.com/wxhn1225/warframe-profile" target="_blank" rel="noopener">GitHub</a>
+      &nbsp;·&nbsp; 本项目与 Digital Extremes 无关联
+    </span>
   </div>
 </footer>
 
 <script>
+const REPO = 'wxhn1225/warframe-profile';
+const GH_API = `https://api.github.com/repos/${REPO}/releases?per_page=10`;
+const FALLBACK = './releases.json';
+
 const iconDl = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`;
+const iconChevron = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
 
 function fmtDate(s) {
   return new Date(s).toLocaleDateString('zh-CN', { year:'numeric', month:'long', day:'numeric' });
@@ -268,75 +298,151 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function copyText(text, btn) {
-  navigator.clipboard?.writeText(text).then(() => {
-    const orig = btn.textContent;
-    btn.textContent = '已复制';
-    setTimeout(() => btn.textContent = orig, 1500);
-  });
+// parse release assets from GitHub API release object
+function buildDownloadItems(release) {
+  const assets = release.assets || [];
+  const tag = release.tag_name;
+  // match zh and full exe installers
+  const zh   = assets.find(a => a.name.includes('-setup') && a.name.endsWith('.exe') && (a.name.includes('-zh') || (!a.name.includes('-full'))));
+  const full = assets.find(a => a.name.includes('-setup') && a.name.endsWith('.exe') && a.name.includes('-full'));
+
+  let items = [];
+  if (zh) {
+    const sizeMB = (zh.size / 1024 / 1024).toFixed(1);
+    items.push({ label: '简中版 .exe', url: zh.browser_download_url, size: sizeMB + ' MB' });
+  }
+  if (full) {
+    const sizeMB = (full.size / 1024 / 1024).toFixed(1);
+    items.push({ label: '多语言版 .exe', url: full.browser_download_url, size: sizeMB + ' MB' });
+  }
+  // fallback: any exe
+  if (!items.length) {
+    assets.filter(a => a.name.endsWith('.exe') && !a.name.endsWith('.sig')).forEach(a => {
+      items.push({ label: a.name, url: a.browser_download_url, size: (a.size/1024/1024).toFixed(1)+' MB' });
+    });
+  }
+  return items;
 }
 
-fetch('./downloads.json')
-  .then(r => { if (!r.ok) throw 0; return r.json(); })
-  .then(list => {
-    if (!list?.length) throw 0;
-    const latest = list[0];
-    const first  = latest.downloads?.[0];
+function renderDlItem(d, isFirst) {
+  return `<div class="dl-item">
+    <span class="dl-item-name">${esc(d.label)}</span>
+    <div class="dl-item-right">
+      ${d.size ? `<span class="dl-size">${esc(d.size)}</span>` : ''}
+      <a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">${iconDl} 下载</a>
+    </div>
+  </div>`;
+}
 
-    // ── hero ──
-    let heroHtml = `<div class="hero-dl-block">
-      <a class="btn-primary" href="${esc(first?.url||'#')}" target="_blank" rel="noopener">
-        ${iconDl} 下载最新版
-      </a>`;
-    if (first?.code) {
-      heroHtml += `<div class="code-box">
-        <span class="code-label">提取码</span>
-        <span class="code-val">${esc(first.code)}</span>
-        <button class="code-copy" onclick="copyText('${esc(first.code)}',this)">复制</button>
-      </div>`;
-    }
-    heroHtml += `</div>`;
-    document.getElementById('hero-area').innerHTML = heroHtml;
-    document.getElementById('hero-meta').innerHTML =
-      `<span class="ver">v${esc(latest.version)}</span> · Windows x64 · ${fmtDate(latest.date)}`;
+function renderRelease(release, idx) {
+  const tag    = release.tag_name;
+  const date   = fmtDate(release.published_at);
+  const body   = (release.body || '').trim();
+  const items  = buildDownloadItems(release);
+  const isLatest = idx === 0;
 
-    // ── download section ──
-    let dlItems = (latest.downloads || []).map(d => {
-      let codeHtml = '';
-      if (d.code) {
-        codeHtml = `<div class="dl-code-inline">
-          <span>提取码</span>
-          <span class="code-v">${esc(d.code)}</span>
-          <button onclick="copyText('${esc(d.code)}',this)">复制</button>
-        </div>`;
-      }
-      return `<div class="dl-item">
-        <span class="dl-item-name">${esc(d.label)}</span>
-        <div class="dl-item-right">
-          <a class="dl-link" href="${esc(d.url)}" target="_blank" rel="noopener">${iconDl} 打开云盘</a>
-          ${codeHtml}
-        </div>
-      </div>`;
-    }).join('');
+  const dlHtml = items.length
+    ? items.map((d, i) => renderDlItem(d, i === 0)).join('')
+    : `<p style="font-size:13px;color:var(--subtle)">暂无安装包资源</p>`;
 
+  if (isLatest) {
     document.getElementById('dl-section').innerHTML = `
       <div class="dl-card">
         <div class="dl-card-head">
           <div class="dl-card-lhs">
-            <span class="tag-name">v${esc(latest.version)}</span>
+            <span class="tag-name">${esc(tag)}</span>
             <span class="tag-latest">latest</span>
           </div>
-          <span class="dl-card-date">${fmtDate(latest.date)}</span>
+          <span class="dl-card-date">${date}</span>
         </div>
-        <div class="dl-card-body">${dlItems}</div>
+        <div class="dl-card-body">${dlHtml}</div>
       </div>`;
-  })
-  .catch(() => {
+
+    // hero
+    const primaryItem = items[0];
+    if (primaryItem) {
+      document.getElementById('hero-area').innerHTML = `
+        <div style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;">
+          <a class="btn-primary" href="${esc(primaryItem.url)}" target="_blank" rel="noopener">
+            ${iconDl} 下载最新版
+          </a>
+          <a class="btn-secondary" href="https://github.com/${REPO}/releases/tag/${esc(tag)}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.907-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.2 22 16.447 22 12.021 22 6.484 17.522 2 12 2z"/></svg>
+            所有版本
+          </a>
+        </div>`;
+      document.getElementById('hero-meta').innerHTML =
+        `<span class="ver">${esc(tag)}</span> · Windows x64 · ${date}`;
+    } else {
+      document.getElementById('hero-area').innerHTML =
+        `<a class="btn-secondary" href="https://github.com/${REPO}/releases" target="_blank" rel="noopener">前往 GitHub Releases 下载</a>`;
+      document.getElementById('hero-meta').innerHTML = '';
+    }
+  }
+
+  // changelog entry
+  return `<div class="changelog-card">
+    <div class="changelog-head" onclick="toggleCl(this)">
+      <div class="changelog-head-lhs">
+        <span class="tag-name">${esc(tag)}</span>
+        ${isLatest ? '<span class="tag-latest">latest</span>' : ''}
+        <span style="font-size:12px;color:var(--subtle)">${date}</span>
+      </div>
+      ${iconChevron}
+    </div>
+    <div class="changelog-body">
+      <pre>${body ? esc(body) : '（无发布说明）'}</pre>
+    </div>
+  </div>`;
+}
+
+function toggleCl(head) {
+  const body = head.nextElementSibling;
+  const svg  = head.querySelector('svg');
+  const open = body.classList.toggle('open');
+  if (svg) svg.style.transform = open ? 'rotate(180deg)' : '';
+}
+
+async function loadReleases() {
+  let releases = null;
+
+  // 1. try GitHub API
+  try {
+    const r = await fetch(GH_API, { headers: { Accept: 'application/vnd.github+json' } });
+    if (r.ok) releases = await r.json();
+  } catch {}
+
+  // 2. fallback to CI-generated releases.json
+  if (!releases?.length) {
+    try {
+      const r = await fetch(FALLBACK);
+      if (r.ok) {
+        const local = await r.json();
+        // local format: [{tag_name, name, body, published_at}] — no assets
+        releases = local.map(x => ({ ...x, assets: [] }));
+      }
+    } catch {}
+  }
+
+  if (!releases?.length) {
     document.getElementById('hero-area').innerHTML =
-      `<p style="font-size:13px;color:var(--muted)">下载信息暂不可用</p>`;
+      `<a class="btn-secondary" href="https://github.com/${REPO}/releases" target="_blank" rel="noopener">前往 GitHub Releases 下载</a>`;
+    document.getElementById('hero-meta').innerHTML = '';
     document.getElementById('dl-section').innerHTML =
-      `<p style="font-size:13px;color:var(--muted)">暂无下载信息，请稍后刷新。</p>`;
-  });
+      `<p style="font-size:13px;color:var(--muted)">暂无发布信息，请前往 <a href="https://github.com/${REPO}/releases" target="_blank" style="color:var(--text);text-decoration:underline">GitHub Releases</a> 查看。</p>`;
+    document.getElementById('cl-section').innerHTML = '';
+    return;
+  }
+
+  const clHtml = releases.map((rel, i) => renderRelease(rel, i)).join('');
+  document.getElementById('cl-section').innerHTML = clHtml;
+
+  // auto-open first changelog
+  const firstHead = document.querySelector('.changelog-head');
+  if (firstHead) toggleCl(firstHead);
+}
+
+loadReleases();
 </script>
 </body>
 </html>
